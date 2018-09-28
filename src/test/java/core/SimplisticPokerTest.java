@@ -4,13 +4,13 @@ import junit.framework.TestCase;
 
 public class SimplisticPokerTest extends TestCase {
 	 public void testStrategy1() {
-	        CardDeck        cardDeck        = new CardDeck();
-	        Card[]          straight        = cardDeck.getStraight();
-	        Card[]          royalFlush      = cardDeck.getRoyalFlush();
-	        Card[]          highCard        = cardDeck.getHighCard();
-	        Card[]          threeOfAKind    = cardDeck.getThreeOfAKind();
-	        Boolean         isAi            = true;
-	        Player          ai              = new Player(isAi);
+	        CardDeck cardDeck     = new CardDeck();
+	        Card[]   straight     = cardDeck.getStraight();
+	        Card[]   royalFlush   = cardDeck.getRoyalFlush();
+	        Card[]   highCard     = cardDeck.getHighCard();
+	        Card[]   threeOfAKind = cardDeck.getThreeOfAKind();
+	        Boolean  isAi         = true;
+	        Player   ai           = new Player(isAi);
 
 	        ai.setHand(straight);
 	        assertEquals(false, ai.wantsToExchange());
