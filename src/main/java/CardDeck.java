@@ -16,14 +16,18 @@ public class CardDeck {
 		CardDeck cardDeck = new CardDeck(path);
 		System.out.println(cardDeck.toString());
 		Card[] straight = cardDeck.drawStraight();
-		Card[] straight2 = cardDeck.drawStraight();
 		System.out.println(cardDeck.toString());
 		System.out.println("got card:");
 		for(int i = 0; i < straight.length; i++) {
 			System.out.println(straight[i].toString());
-			System.out.println(straight2[i].toString());
-
 		}
+		Card[] hand = new Card[5];
+		System.out.println("drawing card..");
+		for(int i = 0; i < hand.length; i++) {
+			hand[i] = cardDeck.drawCard();
+			System.out.println(hand[i].toString());
+		}
+		System.out.println(cardDeck.toString());
 	}
 	
 	public String toString() {
@@ -34,12 +38,34 @@ public class CardDeck {
 		return cardText;
 	}
 	
+	public Card[] drawThreeOfAKind() {
+		Card   first        = new Card("S", "10"); 
+		Card   second       = new Card("H", "3"); 
+		Card   third        = new Card("C", "A"); 
+		Card   forth        = new Card("D", "A"); 
+		Card   fifth        = new Card("S", "A");
+		Card[] threeOfAKind = {first, second, third, forth, fifth};
+		
+		return threeOfAKind;
+	}
+	
+	public Card[] drawHighCard() {
+		Card   first    = new Card("S", "10"); 
+		Card   second   = new Card("H", "3"); 
+		Card   third    = new Card("C", "4"); 
+		Card   forth    = new Card("D", "3"); 
+		Card   fifth    = new Card("S", "A");
+		Card[] highCard = {first, second, third, forth, fifth};
+		
+		return highCard;
+	}
+	
 	public Card[] drawRoyalFlush() {
-		Card first        = new Card("S", "10"); 
-		Card second       = new Card("S", "J"); 
-		Card third        = new Card("S", "Q"); 
-		Card forth        = new Card("S", "K"); 
-		Card fifth        = new Card("S", "A");
+		Card   first      = new Card("S", "10"); 
+		Card   second     = new Card("S", "J"); 
+		Card   third      = new Card("S", "Q"); 
+		Card   forth      = new Card("S", "K"); 
+		Card   fifth      = new Card("S", "A");
 		Card[] royalFlush = {first, second, third, forth, fifth};
 		
 		return royalFlush;
@@ -53,7 +79,6 @@ public class CardDeck {
 			for(Card card : cards) {
 				if(nextRank != null) {				
 					if(!card.getRank().equals(nextRank)) {
-						cards.add(card);
 						continue;
 					}
 				}
@@ -61,27 +86,35 @@ public class CardDeck {
 					break;
 				}
 				straight[arr_size++] = card;
-				System.out.println("iterating: " + card.toString());
-				if(card.getRank().equals(ace)) {
-					nextRank = "2";
-				}
-				else if(card.getRank().equals(jack)) {
-					nextRank = queen;
-				}
-				else if(card.getRank().equals(queen)) {
-					nextRank = king;
-				}
-				else if(card.getRank().equals(king)) {
-					nextRank = ace;
-				}
-				else {
-					nextRank = "" + (Integer.parseInt(card.getRank()) + 1);
-				}
+				nextRank = incrementRank(card.getRank());
+			}
+			for(int i = 0; i < arr_size; i++) {
+				cards.remove(straight[i]);
 			}
 			
 		}
-
 		return straight;
+	}
+	
+	private String incrementRank(String rank) {
+		String nextRank = "";
+		if(rank.equals(ace)) {
+			nextRank = "2";
+		}
+		else if(rank.equals(jack)) {
+			nextRank = queen;
+		}
+		else if(rank.equals(queen)) {
+			nextRank = king;
+		}
+		else if(rank.equals(king)) {
+			nextRank = ace;
+		}
+		else {
+			nextRank = "" + (Integer.parseInt(rank) + 1);
+		}
+		
+		return nextRank;
 	}
 	
 	public boolean contains(Card card) {
