@@ -8,6 +8,26 @@ public class Player {
 	private final String king  = "K";
 	private final String ace   = "A";
 	
+	public static void main(String[] args) {
+		String cardPath   = "./src/main/resources/card.txt";
+		CardDeck cardDeck = new CardDeck(cardPath);
+		Card first        = new Card("D", "J");
+		Card second       = new Card("C", "2");
+		Card third        = new Card("S", "K");
+		Card forth        = new Card("H", "A");
+		Card fifth        = new Card("D", "10");
+		Card[] hand       = {first, second, third, forth, fifth};
+		boolean isAi      = true;
+		Player player     = new Player(hand, isAi);
+		System.out.println("isStraightFlush:" + player.isStraightFlush());
+		System.out.println("isRoyalFlush:" + player.isRoyalFlush());
+		System.out.println("isFourofAKind:" + player.isFourOfAKind());
+		System.out.println("isFullHouse:" + player.isFullHouse());
+		System.out.println("isFlush:" + player.isFlush());
+		System.out.println("isStraight:" + player.isStraight());
+		System.out.println("wants to exchange: " + player.wantsToExchange());
+	}
+	
 	public Player(Card[] hand, boolean isAi) {
 		this.hand = hand;
 		this.isAi = isAi;
@@ -19,11 +39,78 @@ public class Player {
 	}
 	
 	public boolean wantsToExchange() {
-		boolean wantsToChange = null;
 		if(isStraightOrBetter()) {
-			wantsToChange = false;
+			return false;
 		}
-		return wantsToChange;
+		return true;
+	}
+	
+	private boolean isFullHouse() {
+		Card[]  hand          = sortCard(this.hand);
+		int     matchCount    = 0;
+		int     matchedNum    = 0;
+		boolean changedTarget = false;
+		String  targetRank    = hand[0].getRank();
+			
+		for(int i = 0; i < hand.length; i++) {
+			if(hand[i].getRank().equals(targetRank)) {
+				matchCount++;
+			}
+			else if(changedTarget) {
+				return false;
+			}
+			else {
+				changedTarget = true;
+				matchedNum    = matchCount;
+				matchCount    = 1;
+				targetRank    = hand[i].getRank();
+			}
+		}
+		if(matchCount != 2 || matchedNum != 3) {
+			if(matchCount != 3 || matchedNum != 2) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	private boolean isFourOfAKind() {
+		if(hasFourSameRank()) {
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean hasFourSameRank() {
+		Card[] hand           = sortCard(this.hand);
+		String targetRank     = hand[0].getRank();
+		boolean changedTarget = false;
+		for(int i = 0; i < hand.length; i++) {
+			if(hand[i].getRank().equals(targetRank)) {
+				continue;
+			}
+			else if(changedTarget) {
+				return false;
+			}
+			else {
+				changedTarget = true;
+			}
+		}
+		return true;
+	}
+	
+	private boolean isStraight() {
+		if(!handHasSameSuit() && handIsSequence()) {
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean isFlush() {
+		if(handHasSameSuit() && !handIsSequence()) {
+			return true;
+		}
+		return false;
 	}
 	
 	private boolean isStraightOrBetter() {
@@ -61,7 +148,7 @@ public class Player {
 	private boolean handIsSequence() {
 		Card[] hand = sortCard(this.hand);
 		String rank = hand[0].getRank();
-		
+
 		for(int i = 0; i < hand.length; i++) {
 			if(!hand[i].getRank().equals(rank)) {
 				return false;
@@ -76,6 +163,9 @@ public class Player {
 		String nextRank = "";
 		if(rank.equals(ace)) {
 			nextRank = "2";
+		}
+		else if(rank.equals("10")) {
+			nextRank = jack;
 		}
 		else if(rank.equals(jack)) {
 			nextRank = queen;
@@ -94,16 +184,17 @@ public class Player {
 	}
 	
 	private int toIntRank(String rank) {
-		if(rank == "A") {
-			return 1;
+		System.out.println(rank);
+		if(rank.equals("A")) {
+			return 14;
 		}
-		if(rank == "K") {
+		if(rank.equals("K")) {
 			return 13;
 		}
-		if(rank == "Q") {
+		if(rank.equals("Q")) {
 			return 12;
 		}
-		if(rank == "J") {
+		if(rank.equals("J")) {
 			return 11;
 		}
 		return Integer.parseInt(rank);
@@ -144,7 +235,7 @@ public class Player {
 	}
 	
 	private boolean isGreaterThan(Card card_1, Card card_2) {
-		if(toIntRank(card_1.getRank()) > toIntRank(card_2)) {
+		if(toIntRank(card_1.getRank()) > toIntRank(card_2.getRank())) {
 			return true;
 		}
 		return false;
@@ -152,11 +243,11 @@ public class Player {
 	
 	private boolean handHasThisRank(String rank) {
 		for(int i = 0; i < hand.length; i++) {
-			if(!hand[i].getRank().equals(rank)) {
-				return false;
+			if(hand[i].getRank().equals(rank)) {
+				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 	
 	private boolean handHasSameSuit() {
