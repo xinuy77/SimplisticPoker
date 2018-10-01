@@ -37,44 +37,44 @@ public class CardDeck {
 	}
 	
 	public Card[] drawThreeOfAKind() {
-		Card   first        = new Card("S", "10"); 
-		Card   second       = new Card("H", "3"); 
-		Card   third        = new Card("C", "A"); 
-		Card   forth        = new Card("D", "A"); 
-		Card   fifth        = new Card("S", "A");
+		Card   first        = new Card(util.spade, "10"); 
+		Card   second       = new Card(util.heart, "3"); 
+		Card   third        = new Card(util.club, util.ace); 
+		Card   forth        = new Card(util.diamond, util.ace); 
+		Card   fifth        = new Card(util.spade, util.ace);
 		Card[] threeOfAKind = {first, second, third, forth, fifth};
 		
 		return threeOfAKind;
 	}
 	
 	public Card[] drawHighCard() {
-		Card   first    = new Card("S", "10"); 
-		Card   second   = new Card("H", "3"); 
-		Card   third    = new Card("C", "4"); 
-		Card   forth    = new Card("D", "3"); 
-		Card   fifth    = new Card("S", "A");
+		Card   first    = new Card(util.spade, "10"); 
+		Card   second   = new Card(util.heart, "3"); 
+		Card   third    = new Card(util.club, "4"); 
+		Card   forth    = new Card(util.diamond, "3"); 
+		Card   fifth    = new Card(util.spade, util.ace);
 		Card[] highCard = {first, second, third, forth, fifth};
 		
 		return highCard;
 	}
 	
 	public Card[] drawRoyalFlush() {
-		Card   first      = new Card("S", "10"); 
-		Card   second     = new Card("S", "J"); 
-		Card   third      = new Card("S", "Q"); 
-		Card   forth      = new Card("S", "K"); 
-		Card   fifth      = new Card("S", "A");
+		Card   first      = new Card(util.spade, "10"); 
+		Card   second     = new Card(util.spade, util.jack); 
+		Card   third      = new Card(util.spade, util.queen); 
+		Card   forth      = new Card(util.spade, util.king); 
+		Card   fifth      = new Card(util.spade, util.ace);
 		Card[] royalFlush = {first, second, third, forth, fifth};
 		
 		return royalFlush;
 	}
 	
 	public Card[] drawStraight() {
-		Card   first      = new Card("S", "10"); 
-		Card   second     = new Card("H", "J"); 
-		Card   third      = new Card("C", "Q"); 
-		Card   forth      = new Card("D", "K"); 
-		Card   fifth      = new Card("C", "A");
+		Card   first      = new Card(util.spade, "10"); 
+		Card   second     = new Card(util.heart, util.jack); 
+		Card   third      = new Card(util.club, util.queen); 
+		Card   forth      = new Card(util.diamond, util.king); 
+		Card   fifth      = new Card(util.club, util.ace);
 		Card[] straight = {first, second, third, forth, fifth};
 
 		/*Card[] straight = new Card[5];
@@ -99,6 +99,39 @@ public class CardDeck {
 			
 		}*/
 		return straight;
+	}
+	
+	public Card[] drawStraightFlush() {
+		Card   first         = new Card(util.spade, "8"); 
+		Card   second        = new Card(util.spade, "7"); 
+		Card   third         = new Card(util.spade, "6"); 
+		Card   forth         = new Card(util.spade, "5"); 
+		Card   fifth         = new Card(util.spade, "4");
+		Card[] straightFlush = {first, second, third, forth, fifth};
+		
+		return straightFlush;
+	}
+	
+	public Card[] drawFullHouse() {
+		Card   first         = new Card(util.spade, "J"); 
+		Card   second        = new Card(util.heart, "J"); 
+		Card   third         = new Card(util.diamond, "J"); 
+		Card   forth         = new Card(util.club, "10"); 
+		Card   fifth         = new Card(util.club, "10");
+		Card[] straightFlush = {first, second, third, forth, fifth};
+		
+		return straightFlush;
+	}
+	
+	public Card[] drawFlush() {
+		Card   first         = new Card(util.spade, "4"); 
+		Card   second        = new Card(util.spade, util.jack); 
+		Card   third         = new Card(util.spade, "8"); 
+		Card   forth         = new Card(util.spade, "2"); 
+		Card   fifth         = new Card(util.spade, "9");
+		Card[] straightFlush = {first, second, third, forth, fifth};
+		
+		return straightFlush;
 	}
 	
 	public boolean contains(Card card) {
