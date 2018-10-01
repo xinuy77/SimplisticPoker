@@ -16,7 +16,7 @@ public class SimplisticPokerTest extends TestCase {
 		Player   ai           = new Player(null, isAi);
 		
 		ai.setHand(straight);
-		assertEquals(true, ai.wantsToExchange());
+		assertEquals(false, ai.wantsToExchange());
 		
 		ai.setHand(royalFlush);
 		assertEquals(false, ai.wantsToExchange());

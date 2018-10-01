@@ -3,10 +3,7 @@ package core;
 public class Player {
 	private boolean isAi;
 	private Card[]  hand;
-	private final String jack  = "J";
-	private final String queen = "Q";
-	private final String king  = "K";
-	private final String ace   = "A";
+	private Util    util = new Util();
 	
 	public static void main(String[] args) {
 		String cardPath   = "./src/main/resources/card.txt";
@@ -33,6 +30,9 @@ public class Player {
 		this.isAi = isAi;
 	}
 	
+	public boolean isAi() {
+		return isAi;
+	}
 	
 	public void setHand(Card[] card) {
 		hand = card;
@@ -46,7 +46,7 @@ public class Player {
 	}
 	
 	private boolean isFullHouse() {
-		Card[]  hand          = sortCard(this.hand);
+		Card[]  hand          = util.sortCard(this.hand);
 		int     matchCount    = 0;
 		int     matchedNum    = 0;
 		boolean changedTarget = false;
@@ -82,7 +82,7 @@ public class Player {
 	}
 	
 	private boolean hasFourSameRank() {
-		Card[] hand           = sortCard(this.hand);
+		Card[] hand           = util.sortCard(this.hand);
 		String targetRank     = hand[0].getRank();
 		boolean changedTarget = false;
 		for(int i = 0; i < hand.length; i++) {
@@ -134,10 +134,10 @@ public class Player {
 	
 	private boolean isRoyalFlush() {
 		if(handHasSameSuit()) {
-			if(handHasThisRank("A") &&
-			   handHasThisRank("K") &&
-			   handHasThisRank("Q") &&
-			   handHasThisRank("J") &&
+			if(handHasThisRank(util.ace) &&
+			   handHasThisRank(util.king) &&
+			   handHasThisRank(util.queen) &&
+			   handHasThisRank(util.jack) &&
 			   handHasThisRank("10")) {
 				return true;
 			}
@@ -146,99 +146,17 @@ public class Player {
 	}
 	
 	private boolean handIsSequence() {
-		Card[] hand = sortCard(this.hand);
+		Card[] hand = util.sortCard(this.hand);
 		String rank = hand[0].getRank();
 
 		for(int i = 0; i < hand.length; i++) {
 			if(!hand[i].getRank().equals(rank)) {
 				return false;
 			}
-			rank = incrementRank(rank);
+			rank = util.incrementRank(rank);
 		}
 		
 		return true;
-	}
-	
-	private String incrementRank(String rank) {
-		String nextRank = "";
-		if(rank.equals(ace)) {
-			nextRank = "2";
-		}
-		else if(rank.equals("10")) {
-			nextRank = jack;
-		}
-		else if(rank.equals(jack)) {
-			nextRank = queen;
-		}
-		else if(rank.equals(queen)) {
-			nextRank = king;
-		}
-		else if(rank.equals(king)) {
-			nextRank = ace;
-		}
-		else {
-			nextRank = "" + (Integer.parseInt(rank) + 1);
-		}
-		
-		return nextRank;
-	}
-	
-	private int toIntRank(String rank) {
-		System.out.println(rank);
-		if(rank.equals("A")) {
-			return 14;
-		}
-		if(rank.equals("K")) {
-			return 13;
-		}
-		if(rank.equals("Q")) {
-			return 12;
-		}
-		if(rank.equals("J")) {
-			return 11;
-		}
-		return Integer.parseInt(rank);
-	}
-	
-	private String toStringRank(int rank) {
-		if(rank == 1) {
-			return "A";
-		}
-		if(rank == 13) {
-			return "K";
-		}
-		if(rank == 12) {
-			return "Q";
-		}
-		if(rank == 11) {
-			return "J";
-		}
-		return "" + rank;
-	}
-	
-	private Card[] sortCard(Card[] arr) {
-		int n = arr.length; 
-    	for (int i=1; i<n; ++i) { 
-            Card key = arr[i]; 
-            int  j   = i-1; 
-  
-            /* Move elements of arr[0..i-1], that are 
-               greater than key, to one position ahead 
-               of their current position */
-            while (j>=0 && isGreaterThan(arr[j], key)) { 
-                arr[j+1] = arr[j]; 
-                j = j-1; 
-            } 
-            arr[j+1] = key; 
-        } 
-    	return arr;
-	}
-	
-	private boolean isGreaterThan(Card card_1, Card card_2) {
-		if(toIntRank(card_1.getRank()) > toIntRank(card_2.getRank())) {
-			return true;
-		}
-		return false;
 	}
 	
 	private boolean handHasThisRank(String rank) {

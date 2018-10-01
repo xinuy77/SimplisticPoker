@@ -7,10 +7,7 @@ import java.io.IOException;
 public class CardDeck {
 	//String path = "./src/main/resources/card.txt";
 	private HashSet<Card> cards;
-	private final String jack  = "J";
-	private final String queen = "Q";
-	private final String king  = "K";
-	private final String ace  = "A";
+	private Util          util = new Util();
 	
 	public static void main(String[] args) {
 		String path = "./src/main/resources/card.txt";
@@ -87,7 +84,8 @@ public class CardDeck {
 					break;
 				}
 				straight[arr_size++] = card;
-				nextRank = incrementRank(card.getRank());
+				System.out.println(card.getRank());
+				nextRank = util.incrementRank(card.getRank());
 			}
 			for(int i = 0; i < arr_size; i++) {
 				cards.remove(straight[i]);
@@ -95,27 +93,6 @@ public class CardDeck {
 			
 		}
 		return straight;
-	}
-	
-	private String incrementRank(String rank) {
-		String nextRank = "";
-		if(rank.equals(ace)) {
-			nextRank = "2";
-		}
-		else if(rank.equals(jack)) {
-			nextRank = queen;
-		}
-		else if(rank.equals(queen)) {
-			nextRank = king;
-		}
-		else if(rank.equals(king)) {
-			nextRank = ace;
-		}
-		else {
-			nextRank = "" + (Integer.parseInt(rank) + 1);
-		}
-		
-		return nextRank;
 	}
 	
 	public boolean contains(Card card) {
