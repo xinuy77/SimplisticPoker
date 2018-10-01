@@ -7,6 +7,7 @@ public class SimplisticPokerTest extends TestCase {
 	private final String cardPath = "./src/main/resources/card.txt";
 	
 	public void testStrategy1() {
+		System.out.println("Executing test strategy 1");
 		CardDeck cardDeck     = new CardDeck(cardPath);
 		Card[]   straight     = cardDeck.drawStraight();
 		Card[]   royalFlush   = cardDeck.drawRoyalFlush();
@@ -26,6 +27,7 @@ public class SimplisticPokerTest extends TestCase {
 		
 		ai.setHand(highCard);
 		assertEquals(true, ai.wantsToExchange());
+		System.out.println("Executing test strategy 1 done");
 	}
 	
 	private void testOneCardAway(Player ai, Card[] hand, CardDeck cardDeck) {

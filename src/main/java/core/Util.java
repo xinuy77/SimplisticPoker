@@ -11,7 +11,6 @@ public class Util {
 	public final String spade   = "S";
 	
 	public String incrementRank(String rank) {
-		System.out.println("executed");
 		String nextRank = "";
 		if(rank.equals(ace)) {
 			nextRank = ace;
@@ -31,12 +30,10 @@ public class Util {
 		else {
 			nextRank = "" + (Integer.parseInt(rank) + 1);
 		}
-		System.out.println("printing rank:" + rank);
 		return nextRank;
 	}
 	
 	public int toIntRank(String rank) {
-		System.out.println(rank);
 		if(rank.equals(ace)) {
 			return 14;
 		}
