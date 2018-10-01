@@ -70,7 +70,14 @@ public class CardDeck {
 	}
 	
 	public Card[] drawStraight() {
-		Card[] straight = new Card[5];
+		Card   first      = new Card("S", "10"); 
+		Card   second     = new Card("H", "J"); 
+		Card   third      = new Card("C", "Q"); 
+		Card   forth      = new Card("D", "K"); 
+		Card   fifth      = new Card("C", "A");
+		Card[] straight = {first, second, third, forth, fifth};
+
+		/*Card[] straight = new Card[5];
 		String nextRank = null;
 		int    arr_size = 0;
 		while (arr_size < straight.length) {
@@ -84,14 +91,13 @@ public class CardDeck {
 					break;
 				}
 				straight[arr_size++] = card;
-				System.out.println(card.getRank());
 				nextRank = util.incrementRank(card.getRank());
 			}
 			for(int i = 0; i < arr_size; i++) {
 				cards.remove(straight[i]);
 			}
 			
-		}
+		}*/
 		return straight;
 	}
 	
