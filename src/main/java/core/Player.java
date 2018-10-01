@@ -3,6 +3,7 @@ package core;
 public class Player {
 	private boolean isAi;
 	private Card[]  hand;
+	private Card[]  exchange;
 	private Util    util = new Util();
 	
 	public static void main(String[] args) {
@@ -22,7 +23,13 @@ public class Player {
 		System.out.println("isFullHouse:" + player.isFullHouse());
 		System.out.println("isFlush:" + player.isFlush());
 		System.out.println("isStraight:" + player.isStraight());
+		System.out.println("isOneCardAwayRF:" + player.isCardAwayFromRoyalFlush());
+
 		System.out.println("wants to exchange: " + player.wantsToExchange());
+	}
+	
+	public Card[] getExchangeCard() {
+		return exchange;
 	}
 	
 	public Player(Card[] hand, boolean isAi) {
@@ -38,9 +45,55 @@ public class Player {
 		hand = card;
 	}
 	
+	private Card getNonRoyalFlushCard() {
+		for(int i = 0; )
+	}
+	
+	private boolean isCardAwayFromRoyalFlush() {
+		int n             = 4;
+		int containsCount = 0;
+		Card card;
+		if(handHasSameSuit(n)) {
+			if(handHasThisRank(util.ace)) {
+				containsCount++;
+			}
+			if(handHasThisRank(util.king)) {
+				containsCount++;
+			}
+			if(handHasThisRank(util.queen)) {
+				containsCount++;
+			}
+			if(handHasThisRank(util.jack)) {
+				containsCount++;
+			}
+			if(handHasThisRank("10")) {
+				containsCount++;
+			}
+		}
+		if(containsCount == n) {
+			getNonRoyalFlushCard();
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean isOneCardAway() {
+		if(isCardAwayFromRoyalFlush()/*    ||
+		   isCardAwayFromStraightFlush() ||
+		   isCardAwayFromFullHouse()     ||
+		   isCardAwayFromFlush()         ||
+		   isCardAwayFromStraight()*/) {
+			return true;
+		}
+		return false;
+	}
+	
 	public boolean wantsToExchange() {
 		if(isStraightOrBetter()) {
 			return false;
+		}
+		else if(isOneCardAway()) {
+			return true;
 		}
 		return true;
 	}
@@ -176,6 +229,21 @@ public class Player {
 			}
 		}
 		return true;
+	}
+	
+	// return true if hand has n same suit
+	private boolean handHasSameSuit(int n) {
+		String suit      = hand[0].getSuit();
+		int    sameCount = 0;
+		for(int i = 0; i < hand.length; i++) {
+			if(hand[i].getSuit().equals(suit)) {
+				sameCount++;
+			}
+		}
+		if(sameCount == n) {
+			return true;
+		}
+		return false;
 	}
 	
 	private boolean handContains(Card card) {
