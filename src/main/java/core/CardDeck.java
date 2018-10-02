@@ -1,5 +1,6 @@
 package core;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -26,6 +27,21 @@ public class CardDeck {
 			System.out.println(hand[i].toString());
 		}
 		System.out.println(cardDeck.toString());
+	}
+	
+	public void removeCardFromDeck(Card[] cards) {
+		Iterator<Card> iterator     = this.cards.iterator();
+		int            cardCurIndex = 0;
+		while (iterator.hasNext()) {
+		    Card card      = iterator.next();
+		    String curRank = card.getRank();
+		    String curSuit = card.getSuit();
+		    if(curRank.equals(cards[cardCurIndex].getRank()) &&
+		       curSuit.equals(cards[cardCurIndex].getSuit())) {
+		        iterator.remove();
+		        cardCurIndex++;
+		    }
+		}
 	}
 	
 	public String toString() {
