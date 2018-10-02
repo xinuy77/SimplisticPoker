@@ -16,7 +16,7 @@ public class Player {
 		Card first        = new Card("S", "4");
 		Card second       = new Card("S", "5");
 		Card third        = new Card("S", "6");
-		Card forth        = new Card("C", "8");
+		Card forth        = new Card("C", "Q");
 		Card fifth        = new Card("S", "8");
 		Card[] hand       = {first, second, third, forth, fifth};
 		boolean isAi      = true;
@@ -201,7 +201,12 @@ public class Player {
 			}
 			int indexNotInSequence = getOneIndexNotInSequence();
 			if(indexNotInSequence != -1) {
-				exchangeIndex.add(indexNotInSequence);
+				if(differentSuitIndex != -1) {
+					exchangeIndex.add(differentSuitIndex);
+				}
+				else {
+					exchangeIndex.add(indexNotInSequence);
+				}
 				return true;
 			}
 		}
