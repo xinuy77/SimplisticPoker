@@ -13,11 +13,11 @@ public class Player {
 	public static void main(String[] args) {
 		String cardPath   = "./src/main/resources/card.txt";
 		CardDeck cardDeck = new CardDeck(cardPath);
-		Card first        = new Card("C", "4");
-		Card second       = new Card("D", "5");
-		Card third        = new Card("D", "6");
-		Card forth        = new Card("D", "7");
-		Card fifth        = new Card("D", "8");
+		Card first        = new Card("S", "4");
+		Card second       = new Card("S", "5");
+		Card third        = new Card("S", "6");
+		Card forth        = new Card("C", "8");
+		Card fifth        = new Card("S", "8");
 		Card[] hand       = {first, second, third, forth, fifth};
 		boolean isAi      = true;
 		Player player     = new Player(hand, isAi);
@@ -27,16 +27,18 @@ public class Player {
 		System.out.println("isFullHouse:" + player.isFullHouse());
 		System.out.println("isFlush:" + player.isFlush());
 		System.out.println("isStraight:" + player.isStraight());
-		System.out.println("isOneCardAwayRF:" + player.isOneCardAwayFromRoyalFlush());
+		//System.out.println("isOneCardAwayRF:" + player.isOneCardAwayFromRoyalFlush());
 		System.out.println("isOneCardAwaySF:" + player.isOneCardAwayFromStraightFlush());
-		System.out.println("has four rank in sequence:" + player.hasNRankInSequence(4));
+		/*System.out.println("has four rank in sequence:" + player.hasNRankInSequence(4));
 		System.out.println("has three rank in sequence:" + player.hasNRankInSequence(3));
 		System.out.println("is One card away from full house:" + player.isOneCardAwayFromFullHouse());
 		System.out.println("is One card away from flush:" + player.isOneCardAwayFromFlush());
-		System.out.println("is One card away from straight:" + player.isOneCardAwayFromStraight());
+		System.out.println("is One card away from straight:" + player.isOneCardAwayFromStraight());*/
+		System.out.println("is One card away :" + player.isOneCardAway());
+		System.out.println("wants to exchange :" + player.wantsToExchange());
 		System.out.println("Here is card which ai want to exchange: " + player.toStringExchangeCard());
 		System.out.println("Here is result of sequence counter: " + Arrays.toString(player.getSequenceCounter()));
-		System.out.println("wants to exchange: " + player.wantsToExchange());
+		//System.out.println("wants to exchange: " + player.wantsToExchange());
 	}
 	
 	public ArrayList<Integer> getExchangeIndex() {
@@ -44,11 +46,14 @@ public class Player {
 	}
 	
 	public Player(Card[] hand, boolean isAi) {
-		this.hand = util.sortCard(hand);
-		this.isAi = isAi;
-		for(int i = 0; i < hand.length; i++) {
-			System.out.println(hand[i].toString());
+		if(hand != null) {
+			this.hand = util.sortCard(hand);
 		}
+		this.isAi = isAi;
+	}
+	
+	public void resetExchange() {
+		exchangeIndex.clear();
 	}
 	
 	public boolean isAi() {
@@ -56,7 +61,7 @@ public class Player {
 	}
 	
 	public void setHand(Card[] card) {
-		hand = util.sortCard(card);
+		this.hand = util.sortCard(card);
 	}
 	
 	public String toStringExchangeCard() {
@@ -256,10 +261,21 @@ public class Player {
 	}
 	
 	private boolean isOneCardAwayFromRoyalFlush() {
-		int n             = 4;
-		int containsCount = 0;
+		int n               = 4;
+		int containsCount   = 0;
+		int suspiciousIndex = -1;
 		if(isRoyalFlush()) {
 			return false;
+		}
+		HashMap<String, Integer> suitCount = getSuitCount();
+		if(suitCount.containsValue(4)) {
+			String suit = util.getKeyByValue(suitCount, 1);
+			for(int i = 0; i < hand.length; i++) {
+				if(hand[i].getSuit().equals(suit)) {
+					suspiciousIndex = i;
+					break;
+				}
+			}
 		}
 		if(handHasSameSuit(n) || handHasSameSuit()) {
 			if(handHasThisRank(util.ace)) {
@@ -279,29 +295,48 @@ public class Player {
 			}
 		}	
 		if(containsCount == n || containsCount == 5) {
-			exchangeIndex.add(0);
+			if(suspiciousIndex != -1) {
+				exchangeIndex.add(suspiciousIndex);
+			}
+			else {
+				exchangeIndex.add(0);
+			}
 			return true;
 		}
 		return false;
 	}
 	
 	private boolean isOneCardAway() {
-		/*
-		if(isOneCardAwayFromRoyalFlush() /*||
-		   isOneCardAwayFromStraightFlush() ||
-		   isCardAwayFromFullHouse()     ||
-		   isCardAwayFromFlush()         ||
-		   isCardAwayFromStraight()) {
+		if(isOneCardAwayFromRoyalFlush()) {
+			System.out.println("was one card away from RF");
 			return true;
-		}*/
+		}
+		else if(isOneCardAwayFromStraightFlush()) {
+			System.out.println("was one card away from SF");
+			return true;
+		}
+		else if(isOneCardAwayFromFullHouse()) {
+			System.out.println("was one card away from FF");
+			return true;
+		}
+		else if(isOneCardAwayFromFlush()) {
+			System.out.println("was one card away from FFF");
+			return true;
+		}
+		else if(isOneCardAwayFromStraight()) {
+			System.out.println("was one card away from S");
+			return true;
+		}
 		return false;
 	}
 	
 	public boolean wantsToExchange() {
 		if(isStraightOrBetter()) {
+			System.out.println("Was straight or better");
 			return false;
 		}
 		else if(isOneCardAway()) {
+			System.out.println("Was one card away");
 			return true;
 		}
 		return true;

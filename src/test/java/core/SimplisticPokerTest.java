@@ -1,5 +1,7 @@
 package core;
 
+import java.util.Arrays;
+
 import junit.framework.TestCase;
 
 public class SimplisticPokerTest extends TestCase {
@@ -32,16 +34,32 @@ public class SimplisticPokerTest extends TestCase {
 	
 	private void testOneCardAway(Player ai, Card[] hand, CardDeck cardDeck) {
 		ai.setHand(hand);
+		cardDeck.removeCardFromDeck(hand);
 		assertEquals(false, ai.wantsToExchange());
-		System.out.println(ai.getExchangeCard());
 		
-		for(int i = 0; i < hand.length; i++) {
+		/*
+		//for(int i = 0; i < hand.length; i++) {
 			Card[] tmp = hand;
 			tmp[i]     = cardDeck.drawCard();
+			System.out.println(Arrays.toString(hand));
 			ai.setHand(tmp);
 			assertEquals(true, ai.wantsToExchange());
-			System.out.println(ai.getExchangeCard());
+			System.out.println(ai.toStringExchangeCard());
+			ai.resetExchange();
+	//	}*/
+		hand[3] = cardDeck.drawCard();//cardDeck.drawCard();
+		while(hand[3].getRank() == "7") {
+			hand[3] = cardDeck.drawCard();
 		}
+		System.out.println("line 54");
+		System.out.println(Arrays.toString(hand));
+		System.out.println("line 56");
+		ai.setHand(hand);
+		System.out.println("line 58");
+		assertEquals(true, ai.wantsToExchange());
+		System.out.println("line 60");
+		System.out.println(ai.toStringExchangeCard());
+		ai.resetExchange();
 	}
 	
 	
@@ -56,10 +74,16 @@ public class SimplisticPokerTest extends TestCase {
 		Boolean  isAi          = true;   
 		Player   ai            = new Player(null, isAi);
 		
+		System.out.println("Testing Royal Flush");
 		testOneCardAway(ai, royalFlush, cardDeck);
+		
+		System.out.println("Testing Straight Flush");
 		testOneCardAway(ai, straightFlush, cardDeck);
+		System.out.println("Testing Full House");
 		testOneCardAway(ai, fullHouse, cardDeck);
+		System.out.println("Testing Flush");
 		testOneCardAway(ai, flush, cardDeck);
+		System.out.println("Testing Straight");
 		testOneCardAway(ai, straight, cardDeck);
 	}
 }
