@@ -1,6 +1,7 @@
 package core;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class Player {
@@ -12,11 +13,11 @@ public class Player {
 	public static void main(String[] args) {
 		String cardPath   = "./src/main/resources/card.txt";
 		CardDeck cardDeck = new CardDeck(cardPath);
-		Card first        = new Card("D", "10");
-		Card second       = new Card("H", "Q");
-		Card third        = new Card("C", "K");
-		Card forth        = new Card("S", "8");
-		Card fifth        = new Card("D", "9");
+		Card first        = new Card("D", "4");
+		Card second       = new Card("D", "5");
+		Card third        = new Card("D", "7");
+		Card forth        = new Card("D", "8");
+		Card fifth        = new Card("C", "10");
 		Card[] hand       = {first, second, third, forth, fifth};
 		boolean isAi      = true;
 		Player player     = new Player(hand, isAi);
@@ -31,7 +32,9 @@ public class Player {
 		System.out.println("has four rank in sequence:" + player.hasNRankInSequence(4));
 		System.out.println("has three rank in sequence:" + player.hasNRankInSequence(3));
 		System.out.println("is One card away from full house:" + player.isOneCardAwayFromFullHouse());
+		System.out.println("is One card away from flush:" + player.isOneCardAwayFromFlush());
 		System.out.println("Here is card which ai want to exchange: " + player.toStringExchangeCard());
+		//System.out.println("Here is result of sequence counter: " + Player.);
 		System.out.println("wants to exchange: " + player.wantsToExchange());
 	}
 	
@@ -61,6 +64,24 @@ public class Player {
 			result += hand[exchangeIndex.get(i)].toString();
 		}
 		return result;
+	}
+	
+	private boolean isOneCardAwayFromFlush() {
+		if(isFlush()) {
+			return false;
+		}
+		HashMap<String, Integer> sameSuitCount = getSuitCount();
+		if(sameSuitCount.containsValue(4)) {
+			String exchangeSuit = util.getKeyByValue(sameSuitCount, 1);
+			for(int i = 0; i < hand.length; i++) {
+				String tmpSuit = hand[i].getSuit();
+				if(tmpSuit.equals(exchangeSuit)) {
+					exchangeIndex.add(i);
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 	
 	private boolean isOneCardAwayFromFullHouse() {
@@ -104,10 +125,16 @@ public class Player {
 		return false;
 	}
 	
+	private boolean isOneCardAwayFromStraight() {
+		
+		return false;
+	}
+	
 	private boolean isOneCardAwayFromStraightFlush() {
 		HashMap<String, Integer> sameSuitCount = getSuitCount();
 		String                   targetRank;
 		int                      unExpectedIndex;
+		int                      differentSuitIndex = -1;
 		if(isStraightFlush()) {
 			return false;
 		}
@@ -115,12 +142,27 @@ public class Player {
 			targetRank = util.getKeyByValue(sameSuitCount, 4);
 			for(int i = 0; i < hand.length; i++) {
 				if(!hand[i].getSuit().equals(targetRank)) {
-					exchangeIndex.add(i);
-					return true;
+					differentSuitIndex = i;
+					break;
 				}
 			}
 		}
-		else if(sameSuitCount.containsValue(5)) {
+		if(sameSuitCount.containsValue(5) || sameSuitCount.containsValue(4)) {
+			unExpectedIndex = hasNRankInSequence(5);
+			if(unExpectedIndex == -2 && differentSuitIndex != -1) {
+				exchangeIndex.add(differentSuitIndex);
+				return true;
+			}
+			unExpectedIndex = hasNRankInSequence(4);
+		
+			if(unExpectedIndex == 1) {
+				exchangeIndex.add(0);
+				return true;
+			}
+			if(unExpectedIndex == 4) {
+				exchangeIndex.add(4);
+				return true;
+			}
 			unExpectedIndex = hasNRankInSequence(3);
 			if(unExpectedIndex == 4) {
 				exchangeIndex.add(4);
@@ -130,17 +172,46 @@ public class Player {
 				exchangeIndex.add(0);
 				return true;
 			}
-			unExpectedIndex = hasNRankInSequence(4);
-			if(unExpectedIndex == 1) {
-				exchangeIndex.add(0);
-				return true;
-			}
-			if(unExpectedIndex == 4) {
-				exchangeIndex.add(4);
-				return true;
+			int[] sequenceCounter = getSequenceCounter();
+			if(util.countValueInArr(sequenceCounter, 2) == 2) {
+				if(sequenceCounter[1] == 2 && sequenceCounter[3] == 2) {
+					String firstLastSequence   = util.incrementRank(util.incrementRank(hand[2].getRank()));
+					String secondFirstSequence = hand[3].getRank();
+					if(firstLastSequence.equals(secondFirstSequence)) {
+						exchangeIndex.add(0);
+						return true;
+					}
+				}
+				else if(sequenceCounter[0] == 2 && sequenceCounter[2] == 2) {
+					String firstLastSequence   = util.incrementRank(util.incrementRank(hand[1].getRank()));
+					String secondFirstSequence = hand[2].getRank();
+					if(firstLastSequence.equals(secondFirstSequence)) {
+						exchangeIndex.add(4);
+						return true;
+					}
+					
+				}	
 			}
 		}
 		return false;
+	}
+	
+	private int[] getSequenceCounter() {
+		int[] sequenceCount = {1, 1, 1, 1, 1};
+		int   curSequenceIndex = 0;
+		String targetRank   = util.incrementRank(hand[0].getRank());
+		for(int i = 1; i < hand.length; i++) {
+			String tmpRank = hand[i].getRank();
+			if(tmpRank.equals(targetRank)) {
+				sequenceCount[curSequenceIndex] = sequenceCount[curSequenceIndex] + 1;
+			}
+			else {
+				curSequenceIndex = i;
+				targetRank       = hand[i].getRank();
+			}
+			targetRank = util.incrementRank(targetRank);
+		}
+		return sequenceCount;
 	}
 	
 	private int hasNRankInSequence(int n) {
@@ -168,6 +239,9 @@ public class Player {
 		}
 		for(int i = 0; i < sameRankCounter.length; i++) {
 			if(sameRankCounter[i] == n) {
+				if(unexpectedIndex == -1) {
+					return -2;
+				}
 				return unexpectedIndex;
 			}
 		}
