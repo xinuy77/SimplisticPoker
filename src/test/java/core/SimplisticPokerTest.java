@@ -2,6 +2,7 @@ package core;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 import junit.framework.TestCase;
 
@@ -180,37 +181,83 @@ public class SimplisticPokerTest extends TestCase {
 			counter++;
 		}	
 	}
-	
-	private static void generatePermutation(Card[] arr, int index){
-	    if(index >= arr.length - 1){ 
-	    	handPermute.add(arr);
-	        return;
+	/*
+	private String generatePermutation(Card[] arr, int index){
+		ArrayList<Card[]> permutes = new ArrayList<Card[]>();
+		String permutation = "";
+	    if(index >= arr.length - 1) { 
+	    	permutes.add(arr);
+	        return Arrays.toString(arr);
 	    }
 	    for(int i = index; i < arr.length; i++){ 
 	        Card t     = arr[index];
 	        arr[index] = arr[i];
-	        arr[i]     = t;
-	        generatePermutation(arr, index+1);
-	        t = arr[index];
+	        arr[i]     = t;  
+	        //ArrayList<Card[]> previousRec = generatePermutation(arr, index+1);
+	        permutation += generatePermutation(arr, index + 1);
+	        /*for(int j = 0; j < previousRec.size(); j++) {
+	        	permutes.add(previousRec.get(j));
+	        }*/
+	 /*       t = arr[index];
 	        arr[index] = arr[i];
 	        arr[i] = t;
 	    }
+	    return permutation;
 	}
 	
-	public void testStrategy3() {
-		Card[] hand_1 = {new Card("C", "10"), new Card("C", "2"), new Card("C", "5"), new Card("H", "7"), new Card("S", "K")};
-		Card[] hand_2 = {new Card("C", "10"), new Card("C", "2"), new Card("C", "5"), new Card("C", "7"), new Card("C", "K")};
-		Card[] hand_3 = {new Card("H", "10"), new Card("S", "2"), new Card("C", "5"), new Card("H", "7"), new Card("D", "K")};
+	public String getPermutation(Card[] arr) {
+		//ArrayList<Card[]> permutation = generatePermutation(arr, 0);
+		String permutation = generatePermutation(arr,0);
+		//for(int i = 0; i < permutation.size(); i++) {
+			System.out.println("permutes:" + permutation);//Arrays.toString(permutation.get(i)));
+	//	}
+		return permutation;
+	}*/
+	
+	public boolean hasTwoCorrectExchangeCard(Card[] hand, Card[] exchangeCard) { 
+		int exchangeIndex_1 = util.getCardIndex(hand, exchangeCard[0]);
+		int exchangeIndex_2 = util.getCardIndex(hand, exchangeCard[1]);
 		
-		generatePermutation(hand_1, 0);
-		for(int i = 0; i < handPermute.size(); i++) {
-			Card[] hand = handPermute.get(i);
-			String permutation = "";
-			for(int j = 0; j < hand.length; j++) {
-				permutation += hand[j].getSuit();
+		if(exchangeCard.length == 2) {
+			System.out.println(Arrays.toString(hand));
+			System.out.println(exchangeIndex_1);
+			System.out.println(hand[exchangeIndex_2]);
+			if(util.containsCardInArr(exchangeCard, hand[exchangeIndex_1]) && 
+			   util.containsCardInArr(exchangeCard, hand[exchangeIndex_2])) {
+				return true;
 			}
-			System.out.println(permutation);
 		}
-		assertEquals(true, true);
+		return false;
+	}
+	
+	public void testStrategy3() { 
+		Card[] hand_1 = {new Card("C", "10"), new Card("C", "2"), new Card("C", "5"), new Card("H", "7"), new Card("S", "K")}; // CCCHK 3 card same suit
+		Card[] hand_2 = {new Card("C", "10"), new Card("C", "2"), new Card("C", "5"), new Card("C", "7"), new Card("C", "K")}; // CCCCC all card same suit
+		Card[] hand_3 = {new Card("C", "10"), new Card("S", "2"), new Card("C", "5"), new Card("H", "7"), new Card("C", "K")}; // CSCHC 3 card same suit
+		Card[] hand_4 = {new Card("H", "10"), new Card("S", "2"), new Card("C", "5"), new Card("C", "7"), new Card("C", "K")}; // HSCCC 3 card same suit
+		Player ai     = new Player(hand_1, true);
+		
+		assertEquals(true, ai.wantsToExchange());
+		Card[] exchangeCard_1 = ai.getExchangeCardArr();
+ 		boolean hasCorrectExchangeCard = hasTwoCorrectExchangeCard(hand_1, exchangeCard_1);
+		assertEquals(true, hasCorrectExchangeCard);
+		
+		ai.resetExchange();
+		ai.setHand(hand_2);
+		assertEquals(false, ai.wantsToExchange());
+		
+		ai.resetExchange();
+		ai.setHand(hand_3);
+		assertEquals(true, ai.wantsToExchange());
+		Card[] exchangeCard_2  = ai.getExchangeCardArr();
+		hasCorrectExchangeCard = hasTwoCorrectExchangeCard(hand_3, exchangeCard_2);
+		assertEquals(true, hasCorrectExchangeCard);
+		
+		ai.resetExchange();
+		ai.setHand(hand_4);
+		assertEquals(true, ai.wantsToExchange());
+		Card[] exchangeCard_3  = ai.getExchangeCardArr();
+		hasCorrectExchangeCard = hasTwoCorrectExchangeCard(hand_4, exchangeCard_3);
+		assertEquals(true, hasCorrectExchangeCard);
 	}
 }
