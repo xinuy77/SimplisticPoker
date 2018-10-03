@@ -20,4 +20,13 @@ public class Card {
 	public String getRank() {
 		return rank;
 	}
+	
+	public boolean equals(Card card) {
+		String rank = card.getRank();
+		String suit = card.getSuit();
+		if(rank.equals(this.rank) && suit.equals(this.suit)) {
+			return true;
+		}
+		return false;
+	}
 }

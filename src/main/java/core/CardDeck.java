@@ -1,4 +1,6 @@
 package core;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.io.BufferedReader;
@@ -29,19 +31,21 @@ public class CardDeck {
 		System.out.println(cardDeck.toString());
 	}
 	
-	public void removeCardFromDeck(Card[] cards) {
-		Iterator<Card> iterator     = this.cards.iterator();
-		int            cardCurIndex = 0;
-		while (iterator.hasNext()) {
-		    Card card      = iterator.next();
-		    String curRank = card.getRank();
-		    String curSuit = card.getSuit();
-		    if(curRank.equals(cards[cardCurIndex].getRank()) &&
-		       curSuit.equals(cards[cardCurIndex].getSuit())) {
-		        iterator.remove();
-		        cardCurIndex++;
-		    }
+	public void removeCardFromDeck(Card[] hand) {
+		int    cardCurIndex = 0;
+		Card[] removeCandidates = new Card[5];
+		while(cardCurIndex < 4) {
+			for(Card card: cards) {
+			    String curRank = card.getRank();
+			    String curSuit = card.getSuit();
+			    if(curRank.equals(hand[cardCurIndex].getRank()) &&
+			       curSuit.equals(hand[cardCurIndex].getSuit())) {
+			    	removeCandidates[cardCurIndex] = card;
+			        cardCurIndex++;
+			    }
+			}
 		}
+		cards.removeAll(Arrays.asList(removeCandidates));
 	}
 	
 	public String toString() {
@@ -60,6 +64,7 @@ public class CardDeck {
 		Card   fifth        = new Card(util.spade, util.ace);
 		Card[] threeOfAKind = {first, second, third, forth, fifth};
 		
+		removeCardFromDeck(threeOfAKind);
 		return threeOfAKind;
 	}
 	
@@ -71,6 +76,7 @@ public class CardDeck {
 		Card   fifth    = new Card(util.spade, util.ace);
 		Card[] highCard = {first, second, third, forth, fifth};
 		
+		removeCardFromDeck(highCard);
 		return highCard;
 	}
 	
@@ -82,6 +88,7 @@ public class CardDeck {
 		Card   fifth      = new Card(util.spade, util.ace);
 		Card[] royalFlush = {first, second, third, forth, fifth};
 		
+		removeCardFromDeck(royalFlush);
 		return royalFlush;
 	}
 	
@@ -114,6 +121,7 @@ public class CardDeck {
 			}
 			
 		}*/
+		removeCardFromDeck(straight);
 		return straight;
 	}
 	
@@ -125,6 +133,7 @@ public class CardDeck {
 		Card   fifth         = new Card(util.spade, "4");
 		Card[] straightFlush = {first, second, third, forth, fifth};
 		
+		removeCardFromDeck(straightFlush);
 		return straightFlush;
 	}
 	
@@ -134,9 +143,10 @@ public class CardDeck {
 		Card   third         = new Card(util.diamond, "J"); 
 		Card   forth         = new Card(util.club, "10"); 
 		Card   fifth         = new Card(util.club, "10");
-		Card[] straightFlush = {first, second, third, forth, fifth};
+		Card[] fullHouse     = {first, second, third, forth, fifth};
 		
-		return straightFlush;
+		removeCardFromDeck(fullHouse);
+		return fullHouse;
 	}
 	
 	public Card[] drawFlush() {
@@ -145,9 +155,9 @@ public class CardDeck {
 		Card   third         = new Card(util.spade, "8"); 
 		Card   forth         = new Card(util.spade, "2"); 
 		Card   fifth         = new Card(util.spade, "9");
-		Card[] straightFlush = {first, second, third, forth, fifth};
+		Card[] flush = {first, second, third, forth, fifth};
 		
-		return straightFlush;
+		return flush;
 	}
 	
 	public boolean contains(Card card) {
@@ -192,6 +202,9 @@ public class CardDeck {
 		
 		for(int i = 0; i < cardTextArr.length; i++) {
 			rank = cardTextArr[i].substring(1, 2);
+			if(rank.equals("1")) {
+				rank += "0";
+			}
 			suit = cardTextArr[i].substring(0, 1);
 			card = new Card(suit, rank);
 			cards.add(card);
