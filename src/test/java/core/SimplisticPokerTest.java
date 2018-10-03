@@ -201,5 +201,16 @@ public class SimplisticPokerTest extends TestCase {
 		Card[] hand_1 = {new Card("C", "10"), new Card("C", "2"), new Card("C", "5"), new Card("H", "7"), new Card("S", "K")};
 		Card[] hand_2 = {new Card("C", "10"), new Card("C", "2"), new Card("C", "5"), new Card("C", "7"), new Card("C", "K")};
 		Card[] hand_3 = {new Card("H", "10"), new Card("S", "2"), new Card("C", "5"), new Card("H", "7"), new Card("D", "K")};
+		
+		generatePermutation(hand_1, 0);
+		for(int i = 0; i < handPermute.size(); i++) {
+			Card[] hand = handPermute.get(i);
+			String permutation = "";
+			for(int j = 0; j < hand.length; j++) {
+				permutation += hand[j].getSuit();
+			}
+			System.out.println(permutation);
+		}
+		assertEquals(true, true);
 	}
 }
