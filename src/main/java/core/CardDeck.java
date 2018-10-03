@@ -41,6 +41,7 @@ public class CardDeck {
 				}
 			    String curRank = card.getRank();
 			    String curSuit = card.getSuit();
+			    System.out.println("comparing " + card.toString() + " " + hand[cardCurIndex].toString());
 			    if(curRank.equals(hand[cardCurIndex].getRank()) &&
 			       curSuit.equals(hand[cardCurIndex].getSuit())) {
 			    	removeCandidates[cardCurIndex] = card;
@@ -67,7 +68,6 @@ public class CardDeck {
 		Card   fifth        = new Card(util.spade, util.ace);
 		Card[] threeOfAKind = {first, second, third, forth, fifth};
 		
-		removeCardFromDeck(threeOfAKind);
 		return threeOfAKind;
 	}
 	
@@ -79,7 +79,6 @@ public class CardDeck {
 		Card   fifth    = new Card(util.spade, util.ace);
 		Card[] highCard = {first, second, third, forth, fifth};
 		
-		removeCardFromDeck(highCard);
 		return highCard;
 	}
 	
@@ -91,7 +90,6 @@ public class CardDeck {
 		Card   fifth      = new Card(util.spade, util.ace);
 		Card[] royalFlush = {first, second, third, forth, fifth};
 		
-		removeCardFromDeck(royalFlush);
 		return royalFlush;
 	}
 	
@@ -124,7 +122,6 @@ public class CardDeck {
 			}
 			
 		}*/
-		removeCardFromDeck(straight);
 		return straight;
 	}
 	
@@ -136,7 +133,6 @@ public class CardDeck {
 		Card   fifth         = new Card(util.spade, "4");
 		Card[] straightFlush = {first, second, third, forth, fifth};
 		
-		removeCardFromDeck(straightFlush);
 		return straightFlush;
 	}
 	
@@ -148,7 +144,6 @@ public class CardDeck {
 		Card   fifth         = new Card(util.club, "10");
 		Card[] fullHouse     = {first, second, third, forth, fifth};
 		
-		removeCardFromDeck(fullHouse);
 		return fullHouse;
 	}
 	
