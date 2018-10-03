@@ -130,6 +130,23 @@ public class Player {
 		return false;
 	}
 	
+	public HashMap<String, Integer> getPairCounter() {
+		HashMap<String, Integer> pairCounter = new HashMap<String, Integer>();
+		String curRank                       = null;
+		int    curCounter                    = 0;
+		for(int i = 0; i < hand.length; i++) {
+			curRank = hand[i].getRank();
+			if(pairCounter.containsKey(curRank)) {
+				curCounter = pairCounter.get(curRank);
+				pairCounter.put(curRank, ++curCounter);
+			}
+			else {
+				pairCounter.put(curRank, 1);
+			}
+		}
+		return pairCounter;
+	}
+	
 	private boolean isOneCardAwayFromFullHouse() {
 		HashMap<String, Integer> pairCounter = new HashMap<String, Integer>();
 		String curRank                       = null;
@@ -256,7 +273,7 @@ public class Player {
 		return false;
 	}
 	
-	private int[] getSequenceCounter() {
+	public int[] getSequenceCounter() {
 		int[] sequenceCount = {1, 1, 1, 1, 1};
 		int   curSequenceIndex = 0;
 		String targetRank   = util.incrementRank(hand[0].getRank());

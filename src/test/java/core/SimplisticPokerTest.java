@@ -7,10 +7,12 @@ import junit.framework.TestCase;
 public class SimplisticPokerTest extends TestCase {
 	
 	private final String cardPath = "./src/main/resources/card.txt";
+	private Util util             = new Util();
 	
-/*	public void testStrategy1() {
+	public void testStrategy1() {
 		System.out.println("Executing test strategy 1");
 		CardDeck cardDeck     = new CardDeck(cardPath);
+		System.out.println(15);
 		Card[]   straight     = cardDeck.drawStraight();
 		Card[]   royalFlush   = cardDeck.drawRoyalFlush();
 		Card[]   highCard     = cardDeck.drawHighCard();
@@ -31,9 +33,8 @@ public class SimplisticPokerTest extends TestCase {
 		assertEquals(true, ai.wantsToExchange());
 		System.out.println("Executing test strategy 1 done");
 	}
-	*/
 	
-	public void testOneCardAwayRoyalFlush() {
+	public void testOneCardAwayRFStrategy2() {
 		CardDeck cardDeck = new CardDeck(cardPath);
 		Card[]   hand_1   = {new Card("C", "10"), new Card("C", "J"), new Card("C", "Q"), new Card("C", "K"), new Card("C", "A")};
 		Player   ai       = new Player(hand_1, true);
@@ -60,12 +61,8 @@ public class SimplisticPokerTest extends TestCase {
 			counter++;
 		}	
 	}
-	/*
-	public boolean canMakeSequence() {
-		
-	}*/
 	
-	public void testOneCardAwayStraight() {
+	public void testOneCardAwaySStrategy2() {
 		CardDeck cardDeck = new CardDeck(cardPath);
 		Card[]   hand_1   = {new Card("H", "2"), new Card("C", "3"), new Card("S", "4"), new Card("D", "5"), new Card("C", "6")};
 		Player   ai       = new Player(hand_1, true);
@@ -91,7 +88,7 @@ public class SimplisticPokerTest extends TestCase {
 		}	
 	}
 	
-	public void testOneCardAwayStraightFlush() {
+	public void testOneCardAwaySFStrategy2() {
 		CardDeck cardDeck = new CardDeck(cardPath);
 		Card[]   hand_1   = {new Card("H", "2"), new Card("H", "3"), new Card("H", "4"), new Card("H", "5"), new Card("H", "6")};
 		Player   ai       = new Player(hand_1, true);
@@ -118,7 +115,7 @@ public class SimplisticPokerTest extends TestCase {
 		}	
 	}
 	
-	public void testOneCardAwayFullHouse() {
+	public void testOneCardAwayFHStrategy2() {
 		CardDeck cardDeck = new CardDeck(cardPath);
 		Card[]   hand_1   = {new Card("H", "10"), new Card("D", "10"), new Card("C", "10"), new Card("S", "9"), new Card("H", "9")};
 		Player   ai       = new Player(hand_1, true);
@@ -143,34 +140,46 @@ public class SimplisticPokerTest extends TestCase {
 			System.out.println("nC: " + newCard);
 			System.out.println(newCard.equals(ai.getExchangeCardArr()[0]));
 			boolean newCardIsExchangeCard = newCard.equals(ai.getExchangeCardArr()[0]);
+			if(newCardIsExchangeCard == false) {
+				if(ai.getPairCounter().containsValue(3)) {
+					newCardIsExchangeCard = true;
+				}
+			}
 			System.out.println(newCardIsExchangeCard);
 			assertEquals(true, newCardIsExchangeCard);
 			ai.resetExchange();
 			counter++;
-		}	
+		}
 	}
 	
-	public void testStrategy2() {
-		System.out.println("--Testing Royal Flush--");
-		testOneCardAwayRoyalFlush();
-		System.out.println("--Testing Royal Flush Done--");
-		System.out.println("--Testing Straight--");
-		testOneCardAwayStraight();
-		System.out.println("--Testing Straight Done--");
-		System.out.println("--Testing Straight Flush--");
-		testOneCardAwayStraightFlush();
-		System.out.println("--Testing Straight Flush Done--");
-		System.out.println("--Testing FullHouse--");
-		testOneCardAwayFullHouse();
-		System.out.println("--Testing FullHouse Done--");
-		/*
-		System.out.println("Testing Straight Flush");
-		testOneCardAway(ai, straightFlush, cardDeck);
-		System.out.println("Testing Full House");
-		testOneCardAway(ai, fullHouse, cardDeck);
-		System.out.println("Testing Flush");
-		testOneCardAway(ai, flush, cardDeck);
-		System.out.println("Testing Straight");
-		testOneCardAway(ai, straight, cardDeck);*/
+	public void testOneCardAwayFStrategy2() {
+		CardDeck cardDeck = new CardDeck(cardPath);
+		Card[]   hand_1   = {new Card("C", "10"), new Card("C", "2"), new Card("C", "5"), new Card("C", "7"), new Card("C", "K")};
+		Player   ai       = new Player(hand_1, true);
+		int      counter  = 0;
+		
+		cardDeck.removeCardFromDeck(hand_1);
+		assertEquals(false, ai.wantsToExchange());
+		
+		while(counter < 5) {
+			Card[]  tmpHand_1   = hand_1.clone();
+			Card    newCard     = cardDeck.drawCard();
+			boolean newCardIsExchangeCard;
+			tmpHand_1[counter] = newCard;
+			ai.setHand(tmpHand_1);
+			if(ai.isStraightOrBetter()) {
+				continue;
+			}
+			System.out.println("Current Hand " + Arrays.toString(tmpHand_1));
+			System.out.println("Should exchange: " + newCard);
+			assertEquals(true, ai.wantsToExchange());
+			System.out.println("wants to exchange: " + ai.toStringExchangeCard());
+			System.out.println("Wants to exchange only one: " + ai.toStringExchangeOnlyOneCard());
+			System.out.println(newCard.equals(ai.getExchangeCardArr()[0]));
+			newCardIsExchangeCard = newCard.equals(ai.getExchangeCardArr()[0]);
+			assertEquals(true, newCardIsExchangeCard);
+			ai.resetExchange();
+			counter++;
+		}	
 	}
 }
