@@ -1,18 +1,18 @@
 package core;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import junit.framework.TestCase;
 
 public class SimplisticPokerTest extends TestCase {
 	
-	private final String cardPath = "./src/main/resources/card.txt";
-	private Util util             = new Util();
+	private final String cardPath         = "./src/main/resources/card.txt";
+	private Util util                     = new Util();
+	private static ArrayList<Card[]> handPermute = new ArrayList<Card[]>();
 	
 	public void testStrategy1() {
-		System.out.println("Executing test strategy 1");
 		CardDeck cardDeck     = new CardDeck(cardPath);
-		System.out.println(15);
 		Card[]   straight     = cardDeck.drawStraight();
 		Card[]   royalFlush   = cardDeck.drawRoyalFlush();
 		Card[]   highCard     = cardDeck.drawHighCard();
@@ -31,24 +31,21 @@ public class SimplisticPokerTest extends TestCase {
 		
 		ai.setHand(highCard);
 		assertEquals(true, ai.wantsToExchange());
-		System.out.println("Executing test strategy 1 done");
 	}
 	
 	public void testOneCardAwayRFStrategy2() {
 		CardDeck cardDeck = new CardDeck(cardPath);
 		Card[]   hand_1   = {new Card("C", "10"), new Card("C", "J"), new Card("C", "Q"), new Card("C", "K"), new Card("C", "A")};
 		Player   ai       = new Player(hand_1, true);
-		
+		int      counter  = 0;
 		// test when hand is RF
 		assertEquals(false, ai.wantsToExchange());
-		
 		cardDeck.removeCardFromDeck(hand_1);
-		int counter = 0;
 		
 		// test all hand (10, J, Q, K, A) when card in 1 away from RF
 		while(counter < 5) {
-			Card[] tmpHand_1 = hand_1.clone();
-			Card   newCard   = cardDeck.drawCard();
+			Card[] tmpHand_1   = hand_1.clone();
+			Card   newCard     = cardDeck.drawCard();
 			tmpHand_1[counter] = newCard;
 			ai.setHand(tmpHand_1);
 			if(ai.isStraightOrBetter()) {
@@ -66,13 +63,14 @@ public class SimplisticPokerTest extends TestCase {
 		CardDeck cardDeck = new CardDeck(cardPath);
 		Card[]   hand_1   = {new Card("H", "2"), new Card("C", "3"), new Card("S", "4"), new Card("D", "5"), new Card("C", "6")};
 		Player   ai       = new Player(hand_1, true);
+		int counter        = 0;
 		cardDeck.removeCardFromDeck(hand_1);
 		// test when hand is S
-		int counter = 0;
 		assertEquals(false, ai.wantsToExchange());
+		
 		while(counter < 5) {
-			Card[] tmpHand_1 = hand_1.clone();
-			Card   newCard   = cardDeck.drawCard();
+			Card[] tmpHand_1   = hand_1.clone();
+			Card   newCard     = cardDeck.drawCard();
 			tmpHand_1[counter] = newCard;
 			ai.setHand(tmpHand_1);
 			if(ai.isStraightOrBetter()) {
@@ -97,8 +95,8 @@ public class SimplisticPokerTest extends TestCase {
 		int counter = 0;
 		assertEquals(false, ai.wantsToExchange());
 		while(counter < 5) {
-			Card[] tmpHand_1 = hand_1.clone();
-			Card   newCard   = cardDeck.drawCard();
+			Card[] tmpHand_1   = hand_1.clone();
+			Card   newCard     = cardDeck.drawCard();
 			tmpHand_1[counter] = newCard;
 			ai.setHand(tmpHand_1);
 			if(ai.isStraightOrBetter()) {
@@ -124,8 +122,8 @@ public class SimplisticPokerTest extends TestCase {
 		int counter = 0;
 		assertEquals(false, ai.wantsToExchange());
 		while(counter < 5) {
-			Card[] tmpHand_1 = hand_1.clone();
-			Card   newCard   = cardDeck.drawCard();
+			Card[] tmpHand_1   = hand_1.clone();
+			Card   newCard     = cardDeck.drawCard();
 			tmpHand_1[counter] = newCard;
 			ai.setHand(tmpHand_1);
 			if(ai.isStraightOrBetter()) {
@@ -181,5 +179,27 @@ public class SimplisticPokerTest extends TestCase {
 			ai.resetExchange();
 			counter++;
 		}	
+	}
+	
+	private static void generatePermutation(Card[] arr, int index){
+	    if(index >= arr.length - 1){ 
+	    	handPermute.add(arr);
+	        return;
+	    }
+	    for(int i = index; i < arr.length; i++){ 
+	        Card t     = arr[index];
+	        arr[index] = arr[i];
+	        arr[i]     = t;
+	        generatePermutation(arr, index+1);
+	        t = arr[index];
+	        arr[index] = arr[i];
+	        arr[i] = t;
+	    }
+	}
+	
+	public void testStrategy3() {
+		Card[] hand_1 = {new Card("C", "10"), new Card("C", "2"), new Card("C", "5"), new Card("H", "7"), new Card("S", "K")};
+		Card[] hand_2 = {new Card("C", "10"), new Card("C", "2"), new Card("C", "5"), new Card("C", "7"), new Card("C", "K")};
+		Card[] hand_3 = {new Card("H", "10"), new Card("S", "2"), new Card("C", "5"), new Card("H", "7"), new Card("D", "K")};
 	}
 }
