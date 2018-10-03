@@ -1,6 +1,9 @@
 package core;
 
 import java.security.KeyStore.Entry;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -13,6 +16,8 @@ public class Util {
 	public final String club    = "C";
 	public final String heart   = "H";
 	public final String spade   = "S";
+	
+	
 	
 	public String incrementRank(String rank) {
 		String nextRank = "";
@@ -102,6 +107,25 @@ public class Util {
 		return counter;
 	}
 	
+	public int countCardArr(Card[] arr) {
+		int counter = 0;
+		for(int i = 0; i < arr.length; i++) {
+			if(arr[i] != null) {
+				counter++;
+			}
+		}
+		return counter;
+	}
+	
+	public boolean containsCardInArr(Card[] arr, Card card) {
+		for(int i = 0; i < arr.length; i++) {
+			if(arr[i].equals(card)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public boolean intArrayContains(int[] arr, int value) {
 		for(int i = 0; i < arr.length; i++) {
 			if(arr[i] == value) {
@@ -109,6 +133,16 @@ public class Util {
 			}
 		}
 		return false;
+	}
+	
+	public int getCardIndex(Card[] arr, Card card) {
+		int index = -1;
+		for(int i = 0; i < arr.length; i++) {
+			if(arr[i].equals(card)) {
+				index = i;
+			}
+		}
+		return index;
 	}
 	
 	public boolean isGreaterThan(Card card_1, Card card_2) {
