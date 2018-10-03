@@ -39,7 +39,6 @@ public class CardDeck {
 				}
 			    String curRank = card.getRank();
 			    String curSuit = card.getSuit();
-			    System.out.println("comparing " + card.toString() + " " + hand[cardCurIndex].toString());
 			    if(curRank.equals(hand[cardCurIndex].getRank()) &&
 			       curSuit.equals(hand[cardCurIndex].getSuit())) {
 			    	removeCandidates[cardCurIndex] = card;
