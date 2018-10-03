@@ -1,5 +1,8 @@
 package core;
 
+
+
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import junit.framework.TestCase;
@@ -49,7 +52,6 @@ public class SimplisticPokerTest extends TestCase {
 			if(ai.isStraightOrBetter()) {
 				continue;
 			}
-			System.out.println("Testing One Card Away RF: " + Arrays.toString(tmpHand_1));
 			assertEquals(true, ai.wantsToExchange());
 			assertEquals(true, newCard.equals(ai.getExchangeCardArr()[0]));
 			ai.resetExchange();
@@ -61,7 +63,7 @@ public class SimplisticPokerTest extends TestCase {
 		CardDeck cardDeck = new CardDeck(cardPath);
 		Card[]   hand_1   = {new Card("H", "2"), new Card("C", "3"), new Card("S", "4"), new Card("D", "5"), new Card("C", "6")};
 		Player   ai       = new Player(hand_1, true);
-		int counter        = 0;
+		int counter       = 0;
 		cardDeck.removeCardFromDeck(hand_1);
 		// test when hand is S
 		assertEquals(false, ai.wantsToExchange());
@@ -74,10 +76,7 @@ public class SimplisticPokerTest extends TestCase {
 			if(ai.isStraightOrBetter()) {
 				continue;
 			}
-			System.out.println("Testing One Card Away S: " + Arrays.toString(tmpHand_1));
-			System.out.println("Should exchange: " + newCard);
 			assertEquals(true, ai.wantsToExchange());
-			System.out.println("Wants to exchange: " + ai.toStringExchangeOnlyOneCard());
 			assertEquals(true, ai.containsInExchangeOnlyOneCardArr(newCard));
 			ai.resetExchange();
 			counter++;
@@ -88,9 +87,9 @@ public class SimplisticPokerTest extends TestCase {
 		CardDeck cardDeck = new CardDeck(cardPath);
 		Card[]   hand_1   = {new Card("H", "2"), new Card("H", "3"), new Card("H", "4"), new Card("H", "5"), new Card("H", "6")};
 		Player   ai       = new Player(hand_1, true);
+		int      counter  = 0;
 		cardDeck.removeCardFromDeck(hand_1);
 		// test when hand is S
-		int counter = 0;
 		assertEquals(false, ai.wantsToExchange());
 		while(counter < 5) {
 			Card[] tmpHand_1   = hand_1.clone();
@@ -100,11 +99,7 @@ public class SimplisticPokerTest extends TestCase {
 			if(ai.isStraightOrBetter()) {
 				continue;
 			}
-			System.out.println("Testing One Card Away SF: " + Arrays.toString(tmpHand_1));
-			System.out.println("Should exchange: " + newCard);
 			assertEquals(true, ai.wantsToExchange());
-			System.out.println("wants to exchange: " + ai.toStringExchangeCard());
-			System.out.println("Wants to exchange only one: " + ai.toStringExchangeOnlyOneCard());
 			assertEquals(true, ai.containsInExchangeOnlyOneCardArr(newCard));
 			ai.resetExchange();
 			counter++;
@@ -115,9 +110,9 @@ public class SimplisticPokerTest extends TestCase {
 		CardDeck cardDeck = new CardDeck(cardPath);
 		Card[]   hand_1   = {new Card("H", "10"), new Card("D", "10"), new Card("C", "10"), new Card("S", "9"), new Card("H", "9")};
 		Player   ai       = new Player(hand_1, true);
+		int counter       = 0;
 		cardDeck.removeCardFromDeck(hand_1);
 		// test when hand is S
-		int counter = 0;
 		assertEquals(false, ai.wantsToExchange());
 		while(counter < 5) {
 			Card[] tmpHand_1   = hand_1.clone();
@@ -127,21 +122,13 @@ public class SimplisticPokerTest extends TestCase {
 			if(ai.isStraightOrBetter()) {
 				continue;
 			}
-			System.out.println("Testing One Card Away FH: " + Arrays.toString(tmpHand_1));
-			System.out.println("Should exchange: " + newCard);
 			assertEquals(true, ai.wantsToExchange());
-			System.out.println("wants to exchange: " + ai.toStringExchangeCard());
-			System.out.println("Wants to exchange only one: " + ai.toStringExchangeOnlyOneCard());
-			System.out.println("ai. " + ai.getExchangeCardArr()[0]);
-			System.out.println("nC: " + newCard);
-			System.out.println(newCard.equals(ai.getExchangeCardArr()[0]));
 			boolean newCardIsExchangeCard = newCard.equals(ai.getExchangeCardArr()[0]);
 			if(newCardIsExchangeCard == false) {
 				if(ai.getHand().getPairCounter().containsValue(3)) {
 					newCardIsExchangeCard = true;
 				}
 			}
-			System.out.println(newCardIsExchangeCard);
 			assertEquals(true, newCardIsExchangeCard);
 			ai.resetExchange();
 			counter++;
@@ -166,24 +153,19 @@ public class SimplisticPokerTest extends TestCase {
 			if(ai.isStraightOrBetter()) {
 				continue;
 			}
-			System.out.println("Current Hand " + Arrays.toString(tmpHand_1));
-			System.out.println("Should exchange: " + newCard);
 			assertEquals(true, ai.wantsToExchange());
-			System.out.println("wants to exchange: " + ai.toStringExchangeCard());
-			System.out.println("Wants to exchange only one: " + ai.toStringExchangeOnlyOneCard());
-			System.out.println(newCard.equals(ai.getExchangeCardArr()[0]));
 			newCardIsExchangeCard = newCard.equals(ai.getExchangeCardArr()[0]);
 			assertEquals(true, newCardIsExchangeCard);
 			ai.resetExchange();
 			counter++;
 		}	
 	}
-	/*
+	
 	private String generatePermutation(Card[] arr, int index){
-		ArrayList<Card[]> permutes = new ArrayList<Card[]>();
+		//ArrayList<Card[]> permutes = new ArrayList<Card[]>();
 		String permutation = "";
 	    if(index >= arr.length - 1) { 
-	    	permutes.add(arr);
+	    	//permutes.add(arr);
 	        return Arrays.toString(arr);
 	    }
 	    for(int i = index; i < arr.length; i++){ 
@@ -195,7 +177,7 @@ public class SimplisticPokerTest extends TestCase {
 	        /*for(int j = 0; j < previousRec.size(); j++) {
 	        	permutes.add(previousRec.get(j));
 	        }*/
-	 /*       t = arr[index];
+	        t = arr[index];
 	        arr[index] = arr[i];
 	        arr[i] = t;
 	    }
@@ -209,7 +191,7 @@ public class SimplisticPokerTest extends TestCase {
 			System.out.println("permutes:" + permutation);//Arrays.toString(permutation.get(i)));
 	//	}
 		return permutation;
-	}*/
+	}
 	
 	public boolean hasTwoCorrectExchangeCard(Card[] hand, Card[] exchangeCard) { 
 		int exchangeIndex_1 = util.getCardIndex(hand, exchangeCard[0]);
@@ -253,5 +235,18 @@ public class SimplisticPokerTest extends TestCase {
 		Card[] exchangeCard_3  = ai.getExchangeCardArr();
 		hasCorrectExchangeCard = hasTwoCorrectExchangeCard(hand_4, exchangeCard_3);
 		assertEquals(true, hasCorrectExchangeCard);
+	}
+	// (x, x+1, x+2, x+3, x+4)
+	public void testStrategy5() {
+		Card[] hand_1 = {new Card("C", "2"), new Card("H", "3"), new Card("D", "4"), new Card("H", "5"), new Card("S", "6")}; // CCCHK 3 card same suit
+		String permutation = getPermutation(hand_1);
+		permutation = permutation.replace(",", "").replace("[","");
+		System.out.println(permutation);
+		String[] permutationArr = permutation.split("]");
+		for(int i = 0; i < permutationArr.length; i++) {
+			System.out.println(permutationArr[i]);
+		}
+		ArrayList<Card[]> permutedHands = new ArrayList<Card[]>();
+		
 	}
 }
