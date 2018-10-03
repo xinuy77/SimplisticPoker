@@ -339,6 +339,18 @@ public class Player {
 		return false;
 	}
 	
+	@SuppressWarnings("unlikely-arg-type")
+	private boolean hasThreeSameSuit() {
+		HashMap<String, Integer> suitCount   = hand.getSuitCount();
+		int                      numSameSuit = 3;
+		if(suitCount.containsKey(numSameSuit)) {
+			String majoritySuit  = util.getKeyByValue(suitCount, numSameSuit);
+			exchangeIndex        = hand.getCardIndexNotSameSuit(majoritySuit);
+			return true;
+		}
+		return false;
+	}
+	
 	public boolean wantsToExchange() {
 		if(isStraightOrBetter()) {
 			System.out.println("Was straight or better");
@@ -346,6 +358,9 @@ public class Player {
 		}
 		else if(isOneCardAway()) {
 			System.out.println("Was one card away");
+			return true;
+		}
+		else if(hasThreeSameSuit()) {
 			return true;
 		}
 		return true;

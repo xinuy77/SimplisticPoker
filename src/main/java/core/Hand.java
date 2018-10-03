@@ -1,5 +1,6 @@
 package core;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -128,6 +129,16 @@ public class Hand {
 			}
 		}
 		return pairCounter;
+	}
+	
+	public ArrayList<Integer> getCardIndexNotSameSuit(String suit) {
+		ArrayList<Integer> notSameSuit = new ArrayList<Integer>();
+		for(int i = 0; i < hand.length; i++) {
+			if(!hand[i].getSuit().equals(suit)) {
+				notSameSuit.add(i);
+			}
+		}
+		return notSameSuit;
 	}
 	
 	public int[] getSequenceCounter() {
