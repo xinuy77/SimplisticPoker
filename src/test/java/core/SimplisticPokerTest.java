@@ -60,11 +60,44 @@ public class SimplisticPokerTest extends TestCase {
 			counter++;
 		}	
 	}
+	/*
+	public boolean canMakeSequence() {
+		
+	}*/
+	
+	public void testOneCardAwayStraight() {
+		CardDeck cardDeck = new CardDeck(cardPath);
+		Card[]   hand_1   = {new Card("H", "2"), new Card("C", "3"), new Card("S", "4"), new Card("D", "5"), new Card("C", "6")};
+		Player   ai       = new Player(hand_1, true);
+		cardDeck.removeCardFromDeck(hand_1);
+		// test when hand is S
+		int counter = 0;
+		assertEquals(false, ai.wantsToExchange());
+		while(counter < 5) {
+			Card[] tmpHand_1 = hand_1.clone();
+			Card   newCard   = cardDeck.drawCard();
+			tmpHand_1[counter] = newCard;
+			ai.setHand(tmpHand_1);
+			if(ai.isStraightOrBetter()) {
+				continue;
+			}
+			System.out.println("Testing One Card Away S: " + Arrays.toString(tmpHand_1));
+			System.out.println("Should exchange: " + newCard);
+			assertEquals(true, ai.wantsToExchange());
+			System.out.println("Wants to exchange: " + ai.getExchangeCardArr()[0]);
+			assertEquals(true, newCard.equals(ai.getExchangeCardArr()[0]));
+			ai.resetExchange();
+			counter++;
+		}	
+	}
 	
 	public void testStrategy2() {
 		System.out.println("--Testing Royal Flush--");
 		testOneCardAwayRoyalFlush();
 		System.out.println("--Testing Royal Flush Done--");
+		System.out.println("--Testing Straight--");
+		testOneCardAwayStraight();
+		System.out.println("--Testing Straight Done--");
 		/*
 		System.out.println("Testing Straight Flush");
 		testOneCardAway(ai, straightFlush, cardDeck);
