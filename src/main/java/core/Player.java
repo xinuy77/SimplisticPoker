@@ -13,11 +13,11 @@ public class Player {
 	public static void main(String[] args) {
 		String cardPath   = "./src/main/resources/card.txt";
 		CardDeck cardDeck = new CardDeck(cardPath);
-		Card first        = new Card("H", "Q");
-		Card second       = new Card("C", "J");
-		Card third        = new Card("C", "Q");
-		Card forth        = new Card("C", "K");
-		Card fifth        = new Card("C", "A");
+		Card first        = new Card("H", "2");
+		Card second       = new Card("S", "4");
+		Card third        = new Card("S", "4");
+		Card forth        = new Card("D", "5");
+		Card fifth        = new Card("C", "6");
 		Card[] hand       = {first, second, third, forth, fifth};
 		boolean isAi      = true;
 		Player player     = new Player(hand, isAi);
@@ -152,7 +152,9 @@ public class Player {
 			return 4;
 		}
 		unExpectedIndex = hasNRankInSequence(3);
-		if(util.countValueInArr(sequenceCounter, 3) == 1) {
+		int countThreeInSequence = util.countValueInArr(sequenceCounter, 3);
+		int countTwoInSequence   = util.countValueInArr(sequenceCounter, 2);
+		if(countThreeInSequence == 1) {
 			if(sequenceCounter[1] == 3) {
 				String firstRank  = util.incrementRank(util.incrementRank(hand[0].getRank()));
 				String secondRank = hand[2].getRank();
@@ -165,6 +167,23 @@ public class Player {
 					return 0;
 				}
 			}
+		
+		}
+		if(countThreeInSequence == 1 && countTwoInSequence == 1) {
+			if(sequenceCounter[0] == 3 && sequenceCounter[3] == 2) {
+				String thirdRank = hand[2].getRank();
+				String forthRank = hand[3].getRank();
+				if(thirdRank.equals(forthRank)) {
+					return 2;
+				}
+			}
+			else if(sequenceCounter[0] == 2 && sequenceCounter[2] == 3) {
+				String secondRank = hand[1].getRank();
+				String thirdRank  = hand[2].getRank();
+				if(secondRank.equals(thirdRank)) {
+					return 2;
+				}
+			}
 		}
 		if(unExpectedIndex == 4) {
 			return 4;
@@ -172,7 +191,7 @@ public class Player {
 		if(unExpectedIndex != -1) {
 			return 0;
 		}
-		if(util.countValueInArr(sequenceCounter, 2) == 2) {
+		if(countTwoInSequence == 2) {
 			if(sequenceCounter[1] == 2 && sequenceCounter[3] == 2) {
 				String firstLastSequence   = util.incrementRank(util.incrementRank(hand[2].getRank()));
 				String secondFirstSequence = hand[3].getRank();

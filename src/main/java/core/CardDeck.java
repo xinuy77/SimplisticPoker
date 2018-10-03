@@ -36,6 +36,9 @@ public class CardDeck {
 		Card[] removeCandidates = new Card[5];
 		while(cardCurIndex < 4) {
 			for(Card card: cards) {
+				if(cardCurIndex >= 5) {
+					break;
+				}
 			    String curRank = card.getRank();
 			    String curSuit = card.getSuit();
 			    if(curRank.equals(hand[cardCurIndex].getRank()) &&
