@@ -1,16 +1,15 @@
 package core;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class Player {
 	private boolean isAi;
-	private Card[]  hand;
+	private Hand    hand;
 	private ArrayList<Integer> exchangeIndex        = new ArrayList<Integer>();
 	private ArrayList<Integer> exchangeOnlyOneIndex = new ArrayList<Integer>();
 	private Util    util                            = new Util();
-	
+	/*
 	public static void main(String[] args) {
 		String cardPath   = "./src/main/resources/card.txt";
 		CardDeck cardDeck = new CardDeck(cardPath);
@@ -39,16 +38,28 @@ public class Player {
 		
 	////	System.out.println("is One card away :" + player.isOneCardAway());
 		//System.out.println("wants to exchange :" + player.wantsToExchange());
-		System.out.println("Here is card which ai want to exchange: " + player.toStringExchangeCard());
+	/*	System.out.println("Here is card which ai want to exchange: " + player.toStringExchangeCard());
 		System.out.println("Here is card which ai want to exchange: " + player.toStringExchangeOnlyOneCard());
 		//System.out.println("suspicious Sequence:" + player.getSuspiciousSequenceIndex().toString());
 		System.out.println("Here is result of sequence counter: " + Arrays.toString(player.getSequenceCounter()));
 		
 		//System.out.println("wants to exchange: " + player.wantsToExchange());
+	}*/
+	
+	public Player(Card[] hand, boolean isAi) {
+		if(hand != null) {
+			this.hand = new Hand(hand);
+		}
+		this.isAi = isAi;
+	}
+	
+	public Hand getHand() {
+		return hand;
 	}
 	
 	public String toStringExchangeOnlyOneCard() {
 		String result = "";
+		Card[] hand   = this.hand.getHand();
 		for(int i = 0; i < exchangeOnlyOneIndex.size(); i++) {
 			result += hand[exchangeOnlyOneIndex.get(i)] + " ";
 		}
@@ -57,6 +68,7 @@ public class Player {
 	
 	public Card[] getExchangeOnlyOneCardArr() {
 		Card[] exchangeCard = new Card[5];
+		Card[] hand         = this.hand.getHand();
 		for(int i = 0; i < exchangeIndex.size(); i++) {
 			exchangeCard[i] = hand[exchangeOnlyOneIndex.get(i)];
 		}
@@ -64,6 +76,7 @@ public class Player {
 	}
 	
 	public boolean containsInExchangeOnlyOneCardArr(Card card) {
+		Card[] hand = this.hand.getHand();
 		for(int i = 0; i < exchangeOnlyOneIndex.size(); i++) {
 			if(card.equals(hand[exchangeOnlyOneIndex.get(i)])) {
 				return true;
@@ -73,6 +86,7 @@ public class Player {
 	}
 	
 	public Card[] getExchangeCardArr() {
+		Card[] hand         = this.hand.getHand();
 		Card[] exchangeCard = new Card[5];
 		for(int i = 0; i < exchangeIndex.size(); i++) {
 			exchangeCard[i] = hand[exchangeIndex.get(i)];
@@ -82,13 +96,6 @@ public class Player {
 	
 	public ArrayList<Integer> getExchangeIndex() {
 		return exchangeIndex;
-	}
-	
-	public Player(Card[] hand, boolean isAi) {
-		if(hand != null) {
-			this.hand = util.sortCard(hand);
-		}
-		this.isAi = isAi;
 	}
 	
 	public void resetExchange() {
@@ -101,11 +108,12 @@ public class Player {
 	}
 	
 	public void setHand(Card[] card) {
-		this.hand = util.sortCard(card);
+		this.hand = new Hand(card);
 	}
 	
 	public String toStringExchangeCard() {
 		String result = "";
+		Card[] hand   = this.hand.getHand();
 		for(int i = 0; i < exchangeIndex.size(); i++) {
 			result += hand[exchangeIndex.get(i)].toString();
 		}
@@ -113,10 +121,11 @@ public class Player {
 	}
 	
 	private boolean isOneCardAwayFromFlush() {
+		Card[] hand = this.hand.getHand();
 		if(isFlush()) {
 			return false;
 		}
-		HashMap<String, Integer> sameSuitCount = getSuitCount();
+		HashMap<String, Integer> sameSuitCount = this.hand.getSuitCount();
 		if(sameSuitCount.containsValue(4)) {
 			String exchangeSuit = util.getKeyByValue(sameSuitCount, 1);
 			for(int i = 0; i < hand.length; i++) {
@@ -130,24 +139,8 @@ public class Player {
 		return false;
 	}
 	
-	public HashMap<String, Integer> getPairCounter() {
-		HashMap<String, Integer> pairCounter = new HashMap<String, Integer>();
-		String curRank                       = null;
-		int    curCounter                    = 0;
-		for(int i = 0; i < hand.length; i++) {
-			curRank = hand[i].getRank();
-			if(pairCounter.containsKey(curRank)) {
-				curCounter = pairCounter.get(curRank);
-				pairCounter.put(curRank, ++curCounter);
-			}
-			else {
-				pairCounter.put(curRank, 1);
-			}
-		}
-		return pairCounter;
-	}
-	
 	private boolean isOneCardAwayFromFullHouse() {
+		Card[] hand                          = this.hand.getHand();
 		HashMap<String, Integer> pairCounter = new HashMap<String, Integer>();
 		String curRank                       = null;
 		String exchangeRank                  = null;
@@ -190,6 +183,7 @@ public class Player {
 	
 	private ArrayList<Integer>	getOneCardAwaySequenceIndex() {
 		ArrayList<Integer> suspiciousIndex = new ArrayList<Integer>();
+		Card[]             hand            = this.hand.getHand();
 		for(int i = 0; i < hand.length; i++) {
 			int    suspiciousRankIndex = i;
 			Card   suspiciousCard      = hand[i];
@@ -241,7 +235,8 @@ public class Player {
 	}
 	
 	private boolean isOneCardAwayFromStraightFlush() {
-		HashMap<String, Integer> sameSuitCount = getSuitCount();
+		Card[]                   hand          = this.hand.getHand();
+		HashMap<String, Integer> sameSuitCount = this.hand.getSuitCount();
 		String                   targetSuit    = null;
 		int                      differentSuitIndex = -1;
 		if(isStraightFlush()) {
@@ -265,30 +260,12 @@ public class Player {
 				}
 				return true;
 			}
-			else if(differentSuitIndex != -1 && util.intArrayContains(getSequenceCounter(), 5)) {
+			else if(differentSuitIndex != -1 && util.intArrayContains(this.hand.getSequenceCounter(), 5)) {
 				exchangeIndex.add(differentSuitIndex);
 				return true;
 			}
 		}
 		return false;
-	}
-	
-	public int[] getSequenceCounter() {
-		int[] sequenceCount = {1, 1, 1, 1, 1};
-		int   curSequenceIndex = 0;
-		String targetRank   = util.incrementRank(hand[0].getRank());
-		for(int i = 1; i < hand.length; i++) {
-			String tmpRank = hand[i].getRank();
-			if(tmpRank.equals(targetRank)) {
-				sequenceCount[curSequenceIndex] = sequenceCount[curSequenceIndex] + 1;
-			}
-			else {
-				curSequenceIndex = i;
-				targetRank       = hand[i].getRank();
-			}
-			targetRank = util.incrementRank(targetRank);
-		}
-		return sequenceCount;
 	}
 	
 	private boolean isOneCardAwayFromRoyalFlush() {
@@ -298,8 +275,9 @@ public class Player {
 		if(isRoyalFlush()) {
 			return false;
 		}
-		HashMap<String, Integer> suitCount = getSuitCount();
+		HashMap<String, Integer> suitCount = hand.getSuitCount();
 		if(suitCount.containsValue(4)) {
+			Card[] hand = this.hand.getHand();
 			String suit = util.getKeyByValue(suitCount, 1);
 			for(int i = 0; i < hand.length; i++) {
 				if(hand[i].getSuit().equals(suit)) {
@@ -308,20 +286,20 @@ public class Player {
 				}
 			}
 		}
-		if(handHasSameSuit(n) || handHasSameSuit()) {
-			if(handHasThisRank(util.ace)) {
+		if(this.hand.handHasSameSuit(n) || this.hand.handHasSameSuit()) {
+			if(this.hand.handHasThisRank(util.ace)) {
 				containsCount++;
 			}
-			if(handHasThisRank(util.king)) {
+			if(this.hand.handHasThisRank(util.king)) {
 				containsCount++;
 			}
-			if(handHasThisRank(util.queen)) {
+			if(this.hand.handHasThisRank(util.queen)) {
 				containsCount++;
 			}
-			if(handHasThisRank(util.jack)) {
+			if(this.hand.handHasThisRank(util.jack)) {
 				containsCount++;
 			}
-			if(handHasThisRank("10")) {
+			if(this.hand.handHasThisRank("10")) {
 				containsCount++;
 			}
 		}	
@@ -378,6 +356,7 @@ public class Player {
 		int     matchCount    = 0;
 		int     matchedNum    = 0;
 		boolean changedTarget = false;
+		Card[]  hand          = this.hand.getHand();
 		String  targetRank    = hand[0].getRank();
 			
 		for(int i = 0; i < hand.length; i++) {
@@ -403,39 +382,21 @@ public class Player {
 	}
 	
 	private boolean isFourOfAKind() {
-		if(hasFourSameRank()) {
+		if(hand.hasFourSameRank()) {
 			return true;
 		}
 		return false;
 	}
 	
-	private boolean hasFourSameRank() {
-		//Card[] hand           = util.sortCard(this.hand);
-		String targetRank     = hand[0].getRank();
-		boolean changedTarget = false;
-		for(int i = 0; i < hand.length; i++) {
-			if(hand[i].getRank().equals(targetRank)) {
-				continue;
-			}
-			else if(changedTarget) {
-				return false;
-			}
-			else {
-				changedTarget = true;
-			}
-		}
-		return true;
-	}
-	
 	private boolean isStraight() {
-		if(!handHasSameSuit() && handIsSequence()) {
+		if(!hand.handHasSameSuit() && hand.handIsSequence()) {
 			return true;
 		}
 		return false;
 	}
 	
 	private boolean isFlush() {
-		if(handHasSameSuit() && !handIsSequence()) {
+		if(hand.handHasSameSuit() && !hand.handIsSequence()) {
 			return true;
 		}
 		return false;
@@ -471,97 +432,21 @@ public class Player {
 	}
 	
 	private boolean isStraightFlush() {
-		if(handHasSameSuit() && handIsSequence()) {
+		if(hand.handHasSameSuit() && hand.handIsSequence()) {
 			return true;
 		}
 		return false;
 	}
 	
 	private boolean isRoyalFlush() {
-		if(handHasSameSuit()) {
-			if(handHasThisRank(util.ace) &&
-			   handHasThisRank(util.king) &&
-			   handHasThisRank(util.queen) &&
-			   handHasThisRank(util.jack) &&
-			   handHasThisRank("10")) {
+		if(hand.handHasSameSuit()) {
+			if(hand.handHasThisRank(util.ace) &&
+		       hand.handHasThisRank(util.king) &&
+		       hand.handHasThisRank(util.queen) &&
+		       hand.handHasThisRank(util.jack) &&
+		       hand.handHasThisRank("10")) {
 				return true;
 			}
-		}
-		return false;
-	}
-	
-	private boolean handIsSequence() {
-		//Card[] hand = util.sortCard(this.hand);
-		String rank = hand[0].getRank();
-
-		for(int i = 0; i < hand.length; i++) {
-			if(!hand[i].getRank().equals(rank)) {
-				return false;
-			}
-			rank = util.incrementRank(rank);
-		}
-		
-		return true;
-	}
-	
-	private boolean handHasThisRank(String rank) {
-		for(int i = 0; i < hand.length; i++) {
-			if(hand[i].getRank().equals(rank)) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	private boolean handHasSameSuit() {
-		String suit = hand[0].getSuit();
-		for(int i = 0; i < hand.length; i++) {
-			if(!hand[i].getSuit().equals(suit)) {
-				return false;
-			}
-		}
-		return true;
-	}
-	
-	public String toStringHand() {
-		return Arrays.toString(hand);
-	}
-	
-	private HashMap<String, Integer> getSuitCount() {
-		HashMap<String, Integer> sameSuitCount = new HashMap<String, Integer>();
-		sameSuitCount.put(util.club, 0);
-		sameSuitCount.put(util.heart, 0);
-		sameSuitCount.put(util.diamond, 0);
-		sameSuitCount.put(util.spade, 0);
-		
-		for(int i = 0; i < hand.length; i++) {
-			int counter;
-			if(hand[i].getSuit().equals(util.club)) {
-				counter = sameSuitCount.get(util.club) + 1;
-				sameSuitCount.put(util.club, counter);
-			}
-			else if(hand[i].getSuit().equals(util.heart)) {
-				counter = sameSuitCount.get(util.heart) + 1;
-				sameSuitCount.put(util.heart, counter);
-			}
-			else if(hand[i].getSuit().equals(util.diamond)) {
-				counter = sameSuitCount.get(util.diamond) + 1;
-				sameSuitCount.put(util.diamond, counter);
-			}
-			else {
-				counter = sameSuitCount.get(util.spade) + 1;
-				sameSuitCount.put(util.spade, counter);
-			}
-		}
-		return sameSuitCount;
-	}
-	
-	// return true if hand has n same suit
-	private boolean handHasSameSuit(int n) {
-		HashMap<String, Integer> sameSuitCount = getSuitCount();
-
-		if(sameSuitCount.containsValue(n)) {
-			return true;
 		}
 		return false;
 	}

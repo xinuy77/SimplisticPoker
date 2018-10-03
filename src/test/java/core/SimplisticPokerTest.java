@@ -1,8 +1,6 @@
 package core;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 
 import junit.framework.TestCase;
 
@@ -10,7 +8,6 @@ public class SimplisticPokerTest extends TestCase {
 	
 	private final String cardPath         = "./src/main/resources/card.txt";
 	private Util util                     = new Util();
-	private static ArrayList<Card[]> handPermute = new ArrayList<Card[]>();
 	
 	public void testStrategy1() {
 		CardDeck cardDeck     = new CardDeck(cardPath);
@@ -140,7 +137,7 @@ public class SimplisticPokerTest extends TestCase {
 			System.out.println(newCard.equals(ai.getExchangeCardArr()[0]));
 			boolean newCardIsExchangeCard = newCard.equals(ai.getExchangeCardArr()[0]);
 			if(newCardIsExchangeCard == false) {
-				if(ai.getPairCounter().containsValue(3)) {
+				if(ai.getHand().getPairCounter().containsValue(3)) {
 					newCardIsExchangeCard = true;
 				}
 			}
