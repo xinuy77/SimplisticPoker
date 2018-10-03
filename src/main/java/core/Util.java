@@ -102,6 +102,15 @@ public class Util {
 		return counter;
 	}
 	
+	public boolean intArrayContains(int[] arr, int value) {
+		for(int i = 0; i < arr.length; i++) {
+			if(arr[i] == value) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public boolean isGreaterThan(Card card_1, Card card_2) {
 		if(toIntRank(card_1.getRank()) > toIntRank(card_2.getRank())) {
 			return true;
