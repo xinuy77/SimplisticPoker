@@ -13,14 +13,15 @@ public class Player {
 	public static void main(String[] args) {
 		String cardPath   = "./src/main/resources/card.txt";
 		CardDeck cardDeck = new CardDeck(cardPath);
-		Card first        = new Card("S", "4");
-		Card second       = new Card("S", "5");
-		Card third        = new Card("S", "6");
-		Card forth        = new Card("C", "Q");
-		Card fifth        = new Card("S", "8");
+		Card first        = new Card("H", "Q");
+		Card second       = new Card("C", "J");
+		Card third        = new Card("C", "Q");
+		Card forth        = new Card("C", "K");
+		Card fifth        = new Card("C", "A");
 		Card[] hand       = {first, second, third, forth, fifth};
 		boolean isAi      = true;
 		Player player     = new Player(hand, isAi);
+		System.out.println(player.toStringHand());
 		System.out.println("isStraightFlush:" + player.isStraightFlush());
 		System.out.println("isRoyalFlush:" + player.isRoyalFlush());
 		System.out.println("isFourofAKind:" + player.isFourOfAKind());
@@ -28,17 +29,27 @@ public class Player {
 		System.out.println("isFlush:" + player.isFlush());
 		System.out.println("isStraight:" + player.isStraight());
 		//System.out.println("isOneCardAwayRF:" + player.isOneCardAwayFromRoyalFlush());
-		System.out.println("isOneCardAwaySF:" + player.isOneCardAwayFromStraightFlush());
+		//System.out.println("isOneCardAwaySF:" + player.isOneCardAwayFromStraightFlush());
 		/*System.out.println("has four rank in sequence:" + player.hasNRankInSequence(4));
 		System.out.println("has three rank in sequence:" + player.hasNRankInSequence(3));
 		System.out.println("is One card away from full house:" + player.isOneCardAwayFromFullHouse());
 		System.out.println("is One card away from flush:" + player.isOneCardAwayFromFlush());
-		System.out.println("is One card away from straight:" + player.isOneCardAwayFromStraight());*/
+		*/System.out.println("is One card away from straight:" + player.isOneCardAwayFromStraight());
+		
 		System.out.println("is One card away :" + player.isOneCardAway());
 		System.out.println("wants to exchange :" + player.wantsToExchange());
 		System.out.println("Here is card which ai want to exchange: " + player.toStringExchangeCard());
 		System.out.println("Here is result of sequence counter: " + Arrays.toString(player.getSequenceCounter()));
+		
 		//System.out.println("wants to exchange: " + player.wantsToExchange());
+	}
+	
+	public Card[] getExchangeCardArr() {
+		Card[] exchangeCard = new Card[5];
+		for(int i = 0; i < exchangeIndex.size(); i++) {
+			exchangeCard[i] = hand[exchangeIndex.get(i)];
+		}
+		return exchangeCard;
 	}
 	
 	public ArrayList<Integer> getExchangeIndex() {
@@ -132,7 +143,8 @@ public class Player {
 	}
 	
 	private int getOneIndexNotInSequence() {
-		int unExpectedIndex = hasNRankInSequence(4);
+		int   unExpectedIndex = hasNRankInSequence(4);
+		int[] sequenceCounter = getSequenceCounter();
 		if(unExpectedIndex == 1) {
 			return 0;
 		}
@@ -140,13 +152,26 @@ public class Player {
 			return 4;
 		}
 		unExpectedIndex = hasNRankInSequence(3);
+		if(util.countValueInArr(sequenceCounter, 3) == 1) {
+			if(sequenceCounter[1] == 3) {
+				String firstRank  = util.incrementRank(util.incrementRank(hand[0].getRank()));
+				String secondRank = hand[2].getRank();
+				String fourthRank = util.incrementRank(util.incrementRank(hand[3].getRank()));
+				String lastRank   = hand[4].getRank();
+				if(firstRank.equals(secondRank)) {
+					return 4;
+				}
+				else if(fourthRank.equals(lastRank)) {
+					return 0;
+				}
+			}
+		}
 		if(unExpectedIndex == 4) {
 			return 4;
 		}
 		if(unExpectedIndex != -1) {
 			return 0;
 		}
-		int[] sequenceCounter = getSequenceCounter();
 		if(util.countValueInArr(sequenceCounter, 2) == 2) {
 			if(sequenceCounter[1] == 2 && sequenceCounter[3] == 2) {
 				String firstLastSequence   = util.incrementRank(util.incrementRank(hand[2].getRank()));
@@ -415,15 +440,32 @@ public class Player {
 		return false;
 	}
 	
-	private boolean isStraightOrBetter() {
-		if(isRoyalFlush()    || 
-		   isStraightFlush() || 
-		   isFourOfAKind()   ||
-		   isFullHouse()     ||
-		   isFlush()         ||
-		   isStraight()) {
+	public boolean isStraightOrBetter() {
+		if(isRoyalFlush()) {
+			System.out.println("Was RF!");
 			return true;
 		}
+		else if(isStraightFlush()) {
+			System.out.println("Was SF!");
+			return true;
+		}
+		else if(isFourOfAKind()) {
+			System.out.println("Was FOK!");
+			return true;
+		}
+		else if(isFullHouse()) {
+			System.out.println("Was FH!");
+			return true;
+		}
+		else if(isFlush()) {
+			System.out.println("Was F!");
+			return true;
+		}
+		else if(isStraight()) {
+			System.out.println("Was S!");
+			return true;
+		}
+		
 		return false;
 	}
 	
@@ -478,6 +520,10 @@ public class Player {
 			}
 		}
 		return true;
+	}
+	
+	public String toStringHand() {
+		return Arrays.toString(hand);
 	}
 	
 	private HashMap<String, Integer> getSuitCount() {

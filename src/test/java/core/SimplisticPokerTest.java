@@ -8,7 +8,7 @@ public class SimplisticPokerTest extends TestCase {
 	
 	private final String cardPath = "./src/main/resources/card.txt";
 	
-	public void testStrategy1() {
+/*	public void testStrategy1() {
 		System.out.println("Executing test strategy 1");
 		CardDeck cardDeck     = new CardDeck(cardPath);
 		Card[]   straight     = cardDeck.drawStraight();
@@ -31,52 +31,41 @@ public class SimplisticPokerTest extends TestCase {
 		assertEquals(true, ai.wantsToExchange());
 		System.out.println("Executing test strategy 1 done");
 	}
+	*/
 	
-	private void testOneCardAway(Player ai, Card[] hand, CardDeck cardDeck) {
-		ai.setHand(hand);
-		cardDeck.removeCardFromDeck(hand);
+	public void testOneCardAwayRoyalFlush() {
+		CardDeck cardDeck = new CardDeck(cardPath);
+		Card[]   hand_1   = {new Card("C", "10"), new Card("C", "J"), new Card("C", "Q"), new Card("C", "K"), new Card("C", "A")};
+		Player   ai       = new Player(hand_1, true);
+		
+		// test when hand is RF
 		assertEquals(false, ai.wantsToExchange());
 		
-		/*
-		//for(int i = 0; i < hand.length; i++) {
-			Card[] tmp = hand;
-			tmp[i]     = cardDeck.drawCard();
-			System.out.println(Arrays.toString(hand));
-			ai.setHand(tmp);
+		cardDeck.removeCardFromDeck(hand_1);
+		int counter = 0;
+		
+		// test all hand (10, J, Q, K, A) when card in 1 away from RF
+		while(counter < 5) {
+			Card[] tmpHand_1 = hand_1.clone();
+			Card   newCard   = cardDeck.drawCard();
+			tmpHand_1[counter] = newCard;
+			ai.setHand(tmpHand_1);
+			if(ai.isStraightOrBetter()) {
+				continue;
+			}
+			System.out.println("Testing One Card Away RF: " + Arrays.toString(tmpHand_1));
 			assertEquals(true, ai.wantsToExchange());
-			System.out.println(ai.toStringExchangeCard());
+			assertEquals(true, newCard.equals(ai.getExchangeCardArr()[0]));
 			ai.resetExchange();
-	//	}*/
-		hand[3] = cardDeck.drawCard();//cardDeck.drawCard();
-		while(hand[3].getRank() == "7") {
-			hand[3] = cardDeck.drawCard();
-		}
-		System.out.println("line 54");
-		System.out.println(Arrays.toString(hand));
-		System.out.println("line 56");
-		ai.setHand(hand);
-		System.out.println("line 58");
-		assertEquals(true, ai.wantsToExchange());
-		System.out.println("line 60");
-		System.out.println(ai.toStringExchangeCard());
-		ai.resetExchange();
+			counter++;
+		}	
 	}
 	
-	
 	public void testStrategy2() {
-	//	else if AIP is one card away from a RoyalFlush,aStraightFlush,aFullHouse,aFlush,oraStraight,it exchanges that card
-		CardDeck cardDeck      = new CardDeck(cardPath);
-		Card[]   royalFlush    = cardDeck.drawRoyalFlush();
-		Card[]   straightFlush = cardDeck.drawStraightFlush();
-		Card[]   fullHouse     = cardDeck.drawFullHouse();
-		Card[]   flush         = cardDeck.drawFlush();
-		Card[]   straight      = cardDeck.drawStraight();
-		Boolean  isAi          = true;   
-		Player   ai            = new Player(null, isAi);
-		
-		System.out.println("Testing Royal Flush");
-		testOneCardAway(ai, royalFlush, cardDeck);
-		
+		System.out.println("--Testing Royal Flush--");
+		testOneCardAwayRoyalFlush();
+		System.out.println("--Testing Royal Flush Done--");
+		/*
 		System.out.println("Testing Straight Flush");
 		testOneCardAway(ai, straightFlush, cardDeck);
 		System.out.println("Testing Full House");
@@ -84,6 +73,6 @@ public class SimplisticPokerTest extends TestCase {
 		System.out.println("Testing Flush");
 		testOneCardAway(ai, flush, cardDeck);
 		System.out.println("Testing Straight");
-		testOneCardAway(ai, straight, cardDeck);
+		testOneCardAway(ai, straight, cardDeck);*/
 	}
 }
