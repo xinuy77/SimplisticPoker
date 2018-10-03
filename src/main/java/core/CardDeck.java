@@ -1,8 +1,6 @@
 package core;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
