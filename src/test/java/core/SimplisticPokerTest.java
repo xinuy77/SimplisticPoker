@@ -215,10 +215,7 @@ public class SimplisticPokerTest extends TestCase {
 		int exchangeIndex_1 = util.getCardIndex(hand, exchangeCard[0]);
 		int exchangeIndex_2 = util.getCardIndex(hand, exchangeCard[1]);
 		
-		if(exchangeCard.length == 2) {
-			System.out.println(Arrays.toString(hand));
-			System.out.println(exchangeIndex_1);
-			System.out.println(hand[exchangeIndex_2]);
+		if(util.countCardArr(exchangeCard) == 2) {
 			if(util.containsCardInArr(exchangeCard, hand[exchangeIndex_1]) && 
 			   util.containsCardInArr(exchangeCard, hand[exchangeIndex_2])) {
 				return true;
