@@ -147,4 +147,13 @@ public class Util {
 		}
 		return false;
 	}
+	
+	public Card convertStringCardToCardObject(String card) {
+		String suit = card.substring(0, 1);
+		String rank = card.substring(1, 2);
+		if(rank.equals("1")) {
+			rank += "0";
+		}
+		return new Card(suit, rank);
+	}
 }

@@ -196,13 +196,7 @@ public class CardDeck {
 		Card     card;
 		
 		for(int i = 0; i < cardTextArr.length; i++) {
-			rank = cardTextArr[i].substring(1, 2);
-			if(rank.equals("1")) {
-				rank += "0";
-			}
-			suit = cardTextArr[i].substring(0, 1);
-			card = new Card(suit, rank);
-			cards.add(card);
+			cards.add(util.convertStringCardToCardObject(cardTextArr[i]));
 		}
 	}
 }
