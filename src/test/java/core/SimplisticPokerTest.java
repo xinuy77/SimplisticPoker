@@ -110,7 +110,8 @@ public class SimplisticPokerTest extends TestCase {
 		CardDeck cardDeck = new CardDeck(cardPath);
 		Card[]   hand_1   = {new Card("H", "10"), new Card("D", "10"), new Card("C", "10"), new Card("S", "9"), new Card("H", "9")};
 		Player   ai       = new Player(hand_1, true);
-		int counter       = 0;
+		int      counter  = 0;
+
 		cardDeck.removeCardFromDeck(hand_1);
 		// test when hand is S
 		assertEquals(false, ai.wantsToExchange());
@@ -162,91 +163,121 @@ public class SimplisticPokerTest extends TestCase {
 	}
 	
 	private String generatePermutation(Card[] arr, int index){
-		//ArrayList<Card[]> permutes = new ArrayList<Card[]>();
 		String permutation = "";
 	    if(index >= arr.length - 1) { 
-	    	//permutes.add(arr);
 	        return Arrays.toString(arr);
 	    }
 	    for(int i = index; i < arr.length; i++){ 
-	        Card t     = arr[index];
-	        arr[index] = arr[i];
-	        arr[i]     = t;  
-	        //ArrayList<Card[]> previousRec = generatePermutation(arr, index+1);
+	        Card t       = arr[index];
+	        arr[index]   = arr[i];
+	        arr[i]       = t;  
 	        permutation += generatePermutation(arr, index + 1);
-	        /*for(int j = 0; j < previousRec.size(); j++) {
-	        	permutes.add(previousRec.get(j));
-	        }*/
-	        t = arr[index];
-	        arr[index] = arr[i];
-	        arr[i] = t;
+	        t            = arr[index];
+	        arr[index]   = arr[i];
+	        arr[i]       = t;
 	    }
 	    return permutation;
 	}
 	
-	public String getPermutation(Card[] arr) {
-		//ArrayList<Card[]> permutation = generatePermutation(arr, 0);
-		String permutation = generatePermutation(arr,0);
-		//for(int i = 0; i < permutation.size(); i++) {
-			System.out.println("permutes:" + permutation);//Arrays.toString(permutation.get(i)));
-	//	}
-		return permutation;
+	public ArrayList<Card[]> getPermutation(Card[] arr) {
+		String            permutation    = generatePermutation(arr,0);
+		                  permutation    = permutation.replace(",", "").replace("[","");
+		String[]          permutationArr = permutation.split("]");
+		ArrayList<Card[]> permutedHands  = new ArrayList<Card[]>();
+		
+		for(int i = 0; i < permutationArr.length; i++) {
+			String[] permutedCardString = permutationArr[i].split("\\s+");
+			Card[]   permutedCard       = new Card[5];
+			for(int j = 0; j < permutedCardString.length; j++) {
+				permutedCard[j] = util.convertStringCardToCardObject(permutedCardString[j]);
+			}
+			permutedHands.add(permutedCard);
+		}
+		return permutedHands;
 	}
 	
-	public boolean hasTwoCorrectExchangeCard(Card[] hand, Card[] exchangeCard) { 
-		int exchangeIndex_1 = util.getCardIndex(hand, exchangeCard[0]);
-		int exchangeIndex_2 = util.getCardIndex(hand, exchangeCard[1]);
-		
-		if(util.countCardArr(exchangeCard) == 2) {
-			if(util.containsCardInArr(exchangeCard, hand[exchangeIndex_1]) && 
-			   util.containsCardInArr(exchangeCard, hand[exchangeIndex_2])) {
-				return true;
+	public boolean hasNCorrectExchangeCard(Card[] exchangeCard, Card[] correctExchangeCard) { 
+		int exchangeCardCount = util.countCardArr(exchangeCard);
+		int counter           = 0;
+		if(exchangeCardCount != correctExchangeCard.length) {
+			return false;
+		}
+		for(int i = 0; i < correctExchangeCard.length; i++) {
+			if(util.containsCardInArr(exchangeCard, correctExchangeCard[i])) {
+				counter++;
 			}
 		}
-		return false;
+		if(counter != correctExchangeCard.length) {
+			return false;
+		}
+		return true;
 	}
 	
 	public void testStrategy3() { 
-		Card[] hand_1 = {new Card("C", "10"), new Card("C", "2"), new Card("C", "5"), new Card("H", "7"), new Card("S", "K")}; // CCCHK 3 card same suit
-		Card[] hand_2 = {new Card("C", "10"), new Card("C", "2"), new Card("C", "5"), new Card("C", "7"), new Card("C", "K")}; // CCCCC all card same suit
-		Card[] hand_3 = {new Card("C", "10"), new Card("S", "2"), new Card("C", "5"), new Card("H", "7"), new Card("C", "K")}; // CSCHC 3 card same suit
-		Card[] hand_4 = {new Card("H", "10"), new Card("S", "2"), new Card("C", "5"), new Card("C", "7"), new Card("C", "K")}; // HSCCC 3 card same suit
-		Player ai     = new Player(hand_1, true);
+		Card[]            hand_1              = {new Card("C", "10"), new Card("C", "2"), new Card("C", "5"), new Card("H", "7"), new Card("S", "K")}; // CCCHK 3 card same suit
+		Card[]            hand_2              = {new Card("C", "10"), new Card("C", "2"), new Card("C", "5"), new Card("C", "7"), new Card("C", "K")}; // CCCCC all card same suit
+		Card[]            correctExchangeCard = {new Card("H", "7"), new Card("S", "K")};
+		Player            ai                  = new Player(hand_1, true);
+		ArrayList<Card[]> permutedHands       = getPermutation(hand_1);
 		
-		assertEquals(true, ai.wantsToExchange());
-		Card[] exchangeCard_1 = ai.getExchangeCardArr();
- 		boolean hasCorrectExchangeCard = hasTwoCorrectExchangeCard(hand_1, exchangeCard_1);
-		assertEquals(true, hasCorrectExchangeCard);
+		for(int i = 0; i < permutedHands.size(); i++) {
+			Card[] permutedHand = permutedHands.get(i);
+			ai.setHand(permutedHand);
+			assertEquals(true, ai.wantsToExchange());
+			Card[]  exchangeCard           = ai.getExchangeCardArr();
+	 		boolean hasCorrectExchangeCard = hasNCorrectExchangeCard(exchangeCard, correctExchangeCard);
+	        assertEquals(true, hasCorrectExchangeCard);
+			ai.resetExchange();
+		}
 		
-		ai.resetExchange();
 		ai.setHand(hand_2);
 		assertEquals(false, ai.wantsToExchange());
-		
-		ai.resetExchange();
-		ai.setHand(hand_3);
-		assertEquals(true, ai.wantsToExchange());
-		Card[] exchangeCard_2  = ai.getExchangeCardArr();
-		hasCorrectExchangeCard = hasTwoCorrectExchangeCard(hand_3, exchangeCard_2);
-		assertEquals(true, hasCorrectExchangeCard);
-		
-		ai.resetExchange();
-		ai.setHand(hand_4);
-		assertEquals(true, ai.wantsToExchange());
-		Card[] exchangeCard_3  = ai.getExchangeCardArr();
-		hasCorrectExchangeCard = hasTwoCorrectExchangeCard(hand_4, exchangeCard_3);
-		assertEquals(true, hasCorrectExchangeCard);
 	}
+
 	// (x, x+1, x+2, x+3, x+4)
 	public void testStrategy5() {
-		Card[] hand_1 = {new Card("C", "2"), new Card("H", "3"), new Card("D", "4"), new Card("H", "5"), new Card("S", "6")}; // CCCHK 3 card same suit
-		String permutation = getPermutation(hand_1);
-		permutation = permutation.replace(",", "").replace("[","");
-		System.out.println(permutation);
-		String[] permutationArr = permutation.split("]");
-		for(int i = 0; i < permutationArr.length; i++) {
-			System.out.println(permutationArr[i]);
-		}
-		ArrayList<Card[]> permutedHands = new ArrayList<Card[]>();
+		Card[]            correctExchange = {new Card("H", "8"), new Card("S", "10")};
+		Card[]            hand_1          = {new Card("C", "2"), new Card("H", "3"), new Card("D", "4"), correctExchange[0], correctExchange[1]};
+		ArrayList<Card[]> permutedHands   = getPermutation(hand_1);
 		
+		for(int i = 0; i < permutedHands.size(); i++) {
+			Card[]  permutedCards = permutedHands.get(i);
+			Player  ai            = new Player(permutedCards, true);
+			assertEquals(true, ai.wantsToExchange());
+			Card[]  exchangeCard    = ai.getExchangeCardArr();
+			boolean hasExchangeCard = hasNCorrectExchangeCard(exchangeCard, correctExchange);
+			assertEquals(true, hasExchangeCard);
+		}
+	}
+	
+	// strategy 6 would never be called -> always one card away from full house, same as strategy 4
+	public void testStrategy6() {
+		Card[]            correctExchange     = {new Card("D", "6")};
+		Card[]            hand_1              = {new Card("C", "2"), new Card("H", "2"), correctExchange[0], new Card("H", "10"), new Card("S", "10")}; 
+		ArrayList<Card[]> permutedHands       = getPermutation(hand_1);
+		
+		for(int i = 0; i < permutedHands.size(); i++) {
+			Card[]  permutedCards = permutedHands.get(i);
+			Player  ai            = new Player(permutedCards, true);
+			assertEquals(true, ai.wantsToExchange());
+			Card[]  exchangeCard    = ai.getExchangeCardArr();
+			boolean hasExchangeCard = hasNCorrectExchangeCard(exchangeCard, correctExchange);
+			assertEquals(true, hasExchangeCard);
+		}
+	}
+	
+	public void testStrategy7() {
+		Card[]            correctExchange = {new Card("D", "5"), new Card("H", "8"), new Card("S", "J")};
+		Card[]            hand_1          = {new Card("C", "2"), new Card("H", "2"), correctExchange[0], correctExchange[1], correctExchange[2]};
+		ArrayList<Card[]> permutedHands   = getPermutation(hand_1);
+		
+		for(int i = 0; i < permutedHands.size(); i++) {
+			Card[]  permutedCards = permutedHands.get(i);
+			Player  ai            = new Player(permutedCards, true);
+			assertEquals(true, ai.wantsToExchange());
+			Card[]  exchangeCard    = ai.getExchangeCardArr();
+			boolean hasExchangeCard = hasNCorrectExchangeCard(exchangeCard, correctExchange);
+			assertEquals(true, hasExchangeCard);
+		}
 	}
 }
