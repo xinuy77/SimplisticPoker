@@ -110,7 +110,7 @@ public class SimplisticPokerTest extends TestCase {
 		CardDeck cardDeck = new CardDeck(cardPath);
 		Card[]   hand_1   = {new Card("H", "10"), new Card("D", "10"), new Card("C", "10"), new Card("S", "9"), new Card("H", "9")};
 		Player   ai       = new Player(hand_1, true);
-		int counter       = 0;
+		int      counter  = 0;
 		cardDeck.removeCardFromDeck(hand_1);
 		// test when hand is S
 		assertEquals(false, ai.wantsToExchange());
@@ -162,35 +162,37 @@ public class SimplisticPokerTest extends TestCase {
 	}
 	
 	private String generatePermutation(Card[] arr, int index){
-		//ArrayList<Card[]> permutes = new ArrayList<Card[]>();
 		String permutation = "";
 	    if(index >= arr.length - 1) { 
-	    	//permutes.add(arr);
 	        return Arrays.toString(arr);
 	    }
 	    for(int i = index; i < arr.length; i++){ 
-	        Card t     = arr[index];
-	        arr[index] = arr[i];
-	        arr[i]     = t;  
-	        //ArrayList<Card[]> previousRec = generatePermutation(arr, index+1);
+	        Card t       = arr[index];
+	        arr[index]   = arr[i];
+	        arr[i]       = t;  
 	        permutation += generatePermutation(arr, index + 1);
-	        /*for(int j = 0; j < previousRec.size(); j++) {
-	        	permutes.add(previousRec.get(j));
-	        }*/
-	        t = arr[index];
-	        arr[index] = arr[i];
-	        arr[i] = t;
+	        t            = arr[index];
+	        arr[index]   = arr[i];
+	        arr[i]       = t;
 	    }
 	    return permutation;
 	}
 	
-	public String getPermutation(Card[] arr) {
-		//ArrayList<Card[]> permutation = generatePermutation(arr, 0);
-		String permutation = generatePermutation(arr,0);
-		//for(int i = 0; i < permutation.size(); i++) {
-			System.out.println("permutes:" + permutation);//Arrays.toString(permutation.get(i)));
-	//	}
-		return permutation;
+	public ArrayList<Card[]> getPermutation(Card[] arr) {
+		String            permutation    = generatePermutation(arr,0);
+		                  permutation    = permutation.replace(",", "").replace("[","");
+		String[]          permutationArr = permutation.split("]");
+		ArrayList<Card[]> permutedHands  = new ArrayList<Card[]>();
+		
+		for(int i = 0; i < permutationArr.length; i++) {
+			String[] permutedCardString = permutationArr[i].split("\\s+");
+			Card[]   permutedCard       = new Card[5];
+			for(int j = 0; j < permutedCardString.length; j++) {
+				permutedCard[j] = util.convertStringCardToCardObject(permutedCardString[j]);
+			}
+			permutedHands.add(permutedCard);
+		}
+		return permutedHands;
 	}
 	
 	public boolean hasTwoCorrectExchangeCard(Card[] hand, Card[] exchangeCard) { 
@@ -236,17 +238,21 @@ public class SimplisticPokerTest extends TestCase {
 		hasCorrectExchangeCard = hasTwoCorrectExchangeCard(hand_4, exchangeCard_3);
 		assertEquals(true, hasCorrectExchangeCard);
 	}
+	
 	// (x, x+1, x+2, x+3, x+4)
 	public void testStrategy5() {
-		Card[] hand_1 = {new Card("C", "2"), new Card("H", "3"), new Card("D", "4"), new Card("H", "5"), new Card("S", "6")}; // CCCHK 3 card same suit
-		String permutation = getPermutation(hand_1);
-		permutation = permutation.replace(",", "").replace("[","");
-		System.out.println(permutation);
-		String[] permutationArr = permutation.split("]");
-		for(int i = 0; i < permutationArr.length; i++) {
-			System.out.println(permutationArr[i]);
+		Card[]            hand_1        = {new Card("C", "2"), new Card("H", "3"), new Card("D", "4"), new Card("H", "8"), new Card("S", "10")}; // CCCHK 3 card same suit
+		ArrayList<Card[]> permutedHands = getPermutation(hand_1);
+		
+		for(int i = 0; i < permutedHands.size(); i++) {
+			Card[]  permutedCards       = permutedHands.get(i);
+			Card[]  exchangeCard        = null;
+			Player  ai                  = new Player(permutedCards, true);
+			assertEquals(true, ai.wantsToExchange());
+			exchangeCard = ai.getExchangeCardArr();
+			boolean hasExchangeCard = hasTwoCorrectExchangeCard(permutedCards, exchangeCard);
+			assertEquals(true, hasExchangeCard);
 		}
-		ArrayList<Card[]> permutedHands = new ArrayList<Card[]>();
 		
 	}
 }
