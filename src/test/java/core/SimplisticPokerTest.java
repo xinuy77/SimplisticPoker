@@ -209,34 +209,23 @@ public class SimplisticPokerTest extends TestCase {
 	}
 	
 	public void testStrategy3() { 
-		Card[] hand_1 = {new Card("C", "10"), new Card("C", "2"), new Card("C", "5"), new Card("H", "7"), new Card("S", "K")}; // CCCHK 3 card same suit
-		Card[] hand_2 = {new Card("C", "10"), new Card("C", "2"), new Card("C", "5"), new Card("C", "7"), new Card("C", "K")}; // CCCCC all card same suit
-		Card[] hand_3 = {new Card("C", "10"), new Card("S", "2"), new Card("C", "5"), new Card("H", "7"), new Card("C", "K")}; // CSCHC 3 card same suit
-		Card[] hand_4 = {new Card("H", "10"), new Card("S", "2"), new Card("C", "5"), new Card("C", "7"), new Card("C", "K")}; // HSCCC 3 card same suit
-		Player ai     = new Player(hand_1, true);
+		Card[]            hand_1        = {new Card("C", "10"), new Card("C", "2"), new Card("C", "5"), new Card("H", "7"), new Card("S", "K")}; // CCCHK 3 card same suit
+		Card[]            hand_2        = {new Card("C", "10"), new Card("C", "2"), new Card("C", "5"), new Card("C", "7"), new Card("C", "K")}; // CCCCC all card same suit
+		Player            ai            = new Player(hand_1, true);
+		ArrayList<Card[]> permutedHands = getPermutation(hand_1);
 		
-		assertEquals(true, ai.wantsToExchange());
-		Card[] exchangeCard_1 = ai.getExchangeCardArr();
- 		boolean hasCorrectExchangeCard = hasTwoCorrectExchangeCard(hand_1, exchangeCard_1);
-		assertEquals(true, hasCorrectExchangeCard);
+		for(int i = 0; i < permutedHands.size(); i++) {
+			Card[] permutedHand = permutedHands.get(i);
+			ai.setHand(permutedHand);
+			assertEquals(true, ai.wantsToExchange());
+			Card[]  exchangeCard           = ai.getExchangeCardArr();
+	 		boolean hasCorrectExchangeCard = hasTwoCorrectExchangeCard(permutedHand, exchangeCard);
+	        assertEquals(true, hasCorrectExchangeCard);
+			ai.resetExchange();
+		}
 		
-		ai.resetExchange();
 		ai.setHand(hand_2);
 		assertEquals(false, ai.wantsToExchange());
-		
-		ai.resetExchange();
-		ai.setHand(hand_3);
-		assertEquals(true, ai.wantsToExchange());
-		Card[] exchangeCard_2  = ai.getExchangeCardArr();
-		hasCorrectExchangeCard = hasTwoCorrectExchangeCard(hand_3, exchangeCard_2);
-		assertEquals(true, hasCorrectExchangeCard);
-		
-		ai.resetExchange();
-		ai.setHand(hand_4);
-		assertEquals(true, ai.wantsToExchange());
-		Card[] exchangeCard_3  = ai.getExchangeCardArr();
-		hasCorrectExchangeCard = hasTwoCorrectExchangeCard(hand_4, exchangeCard_3);
-		assertEquals(true, hasCorrectExchangeCard);
 	}
 	
 	// (x, x+1, x+2, x+3, x+4)
@@ -246,13 +235,11 @@ public class SimplisticPokerTest extends TestCase {
 		
 		for(int i = 0; i < permutedHands.size(); i++) {
 			Card[]  permutedCards       = permutedHands.get(i);
-			Card[]  exchangeCard        = null;
 			Player  ai                  = new Player(permutedCards, true);
 			assertEquals(true, ai.wantsToExchange());
-			exchangeCard = ai.getExchangeCardArr();
+			Card[]  exchangeCard    = ai.getExchangeCardArr();
 			boolean hasExchangeCard = hasTwoCorrectExchangeCard(permutedCards, exchangeCard);
 			assertEquals(true, hasExchangeCard);
 		}
-		
 	}
 }
