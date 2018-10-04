@@ -280,4 +280,19 @@ public class SimplisticPokerTest extends TestCase {
 			assertEquals(true, hasExchangeCard);
 		}
 	}
+	
+	public void testStrategy8() {
+		Card[]            correctExchange = {new Card("D", "10"), new Card("H", "8"), new Card("C", "5")};
+		Card[]            hand            = {new Card("C", "A"), new Card("S", "Q"), correctExchange[0], correctExchange[1], correctExchange[2]};
+		ArrayList<Card[]> permutedHands   = getPermutation(hand);
+		
+		for(int i = 0; i < permutedHands.size(); i++) {
+			Card[]  permutedCards = permutedHands.get(i);
+			Player  ai            = new Player(permutedCards, true);
+			assertEquals(true, ai.wantsToExchange());
+			Card[]  exchangeCard    = ai.getExchangeCardArr();
+			boolean hasExchangeCard = hasNCorrectExchangeCard(exchangeCard, correctExchange);
+			assertEquals(true, hasExchangeCard);
+		}
+	}
 }
