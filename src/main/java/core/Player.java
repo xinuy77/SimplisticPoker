@@ -2,6 +2,8 @@ package core;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class Player {
 	private boolean isAi;
@@ -366,6 +368,33 @@ public class Player {
 		return true;
 	}
 	
+	public boolean hasOnePair() {
+		HashMap<String, Integer> pairCounter = hand.getPairCounter();
+		int                      pairs       = 2;
+		
+		if(!pairCounter.containsValue(pairs)) {
+			return false;
+		}
+		int noPairCount = 0;
+		for(Map.Entry<String, Integer> pairCount : pairCounter.entrySet()) {
+			if(pairCount.getValue() == 1) {
+				noPairCount++;
+			}
+		}
+		if(noPairCount != 3) {
+			return false;
+		}
+		String pairedRank = util.getKeyByValue(pairCounter, pairs);
+		Card[] hand       = this.hand.getHand();
+		for(int i = 0; i < hand.length; i++) {
+			if(hand[i].getRank().equals(pairedRank)) {
+				continue;
+			}
+			exchangeIndex.add(i);
+		}
+		return true;
+	}
+	
 	public boolean wantsToExchange() {
 		if(isStraightOrBetter()) {
 			System.out.println("Was straight or better");
@@ -379,6 +408,9 @@ public class Player {
 			return true;
 		}
 		else if(hasThreeCardInSequence()) {
+			return true;
+		}
+		else if(hasOnePair()) {
 			return true;
 		}
 		return true;
