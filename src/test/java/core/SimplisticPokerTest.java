@@ -295,9 +295,13 @@ public class SimplisticPokerTest extends TestCase {
 	}
 	
 	public void testScore1() {
-		Card[] royalFlush_1 = {new Card("S", "10"), new Card("S", "J"), new Card("S", "Q"), new Card("S", "K"), new Card("S", "A")};
-		Card[] royalFlush_2 = {new Card("C", "10"), new Card("C", "J"), new Card("C", "Q"), new Card("C", "K"), new Card("C", "A")};
+		Card[]     royalFlush_1  = {new Card("S", "10"), new Card("S", "J"), new Card("S", "Q"), new Card("S", "K"), new Card("S", "A")};
+		Card[]     royalFlush_2  = {new Card("C", "10"), new Card("C", "J"), new Card("C", "Q"), new Card("C", "K"), new Card("C", "A")};
+		Hand       hand_1        = new Hand(royalFlush_1);
+		Hand       hand_2        = new Hand(royalFlush_2);
+		Evaluator  evaluate      = new Evaluator();
+		boolean    firstHandWins = evaluate.firstHandWins(hand_1, hand_2);
 		
-		
+		assertEquals(true, firstHandWins);
 	}
 }
