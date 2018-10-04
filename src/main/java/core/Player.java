@@ -12,42 +12,6 @@ public class Player {
 	private ArrayList<Integer> exchangeIndex        = new ArrayList<Integer>();
 	private ArrayList<Integer> exchangeOnlyOneIndex = new ArrayList<Integer>();
 	private Util    util                            = new Util();
-	/*
-	public static void main(String[] args) {
-		String cardPath   = "./src/main/resources/card.txt";
-		CardDeck cardDeck = new CardDeck(cardPath);
-		Card first        = new Card("H", "4");
-		Card second       = new Card("H", "J");
-		Card third        = new Card("H", "5");
-		Card forth        = new Card("H", "6");
-		Card fifth        = new Card("H", "7");
-		Card[] hand       = {first, second, third, forth, fifth};
-		boolean isAi      = true;
-		Player player     = new Player(hand, isAi);
-		System.out.println(player.toStringHand());
-		System.out.println("isStraightFlush:" + player.isStraightFlush());
-		System.out.println("isRoyalFlush:" + player.isRoyalFlush());
-		System.out.println("isFourofAKind:" + player.isFourOfAKind());
-		System.out.println("isFullHouse:" + player.isFullHouse());
-		System.out.println("isFlush:" + player.isFlush());
-		System.out.println("isStraight:" + player.isStraight());
-		//System.out.println("isOneCardAwayRF:" + player.isOneCardAwayFromRoyalFlush());
-		System.out.println("isOneCardAwaySF:" + player.isOneCardAwayFromStraightFlush());
-		/*System.out.println("has four rank in sequence:" + player.hasNRankInSequence(4));
-		System.out.println("has three rank in sequence:" + player.hasNRankInSequence(3));
-		System.out.println("is One card away from full house:" + player.isOneCardAwayFromFullHouse());
-		System.out.println("is One card away from flush:" + player.isOneCardAwayFromFlush());
-		*///System.out.println("is One card away from straight:" + player.isOneCardAwayFromStraight());
-		
-	////	System.out.println("is One card away :" + player.isOneCardAway());
-		//System.out.println("wants to exchange :" + player.wantsToExchange());
-	/*	System.out.println("Here is card which ai want to exchange: " + player.toStringExchangeCard());
-		System.out.println("Here is card which ai want to exchange: " + player.toStringExchangeOnlyOneCard());
-		//System.out.println("suspicious Sequence:" + player.getSuspiciousSequenceIndex().toString());
-		System.out.println("Here is result of sequence counter: " + Arrays.toString(player.getSequenceCounter()));
-		
-		//System.out.println("wants to exchange: " + player.wantsToExchange());
-	}*/
 	
 	public Player(Card[] hand, boolean isAi) {
 		if(hand != null) {

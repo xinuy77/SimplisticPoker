@@ -6,27 +6,13 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class CardDeck {
-	//String path = "./src/main/resources/card.txt";
 	private HashSet<Card> cards;
 	private Util          util = new Util();
 	
-	public static void main(String[] args) {
-		String path = "./src/main/resources/card.txt";
-		CardDeck cardDeck = new CardDeck(path);
-		System.out.println(cardDeck.toString());
-		Card[] straight = cardDeck.drawStraight();
-		System.out.println(cardDeck.toString());
-		System.out.println("got card:");
-		for(int i = 0; i < straight.length; i++) {
-			System.out.println(straight[i].toString());
-		}
-		Card[] hand = new Card[5];
-		System.out.println("drawing card..");
-		for(int i = 0; i < hand.length; i++) {
-			hand[i] = cardDeck.drawCard();
-			System.out.println(hand[i].toString());
-		}
-		System.out.println(cardDeck.toString());
+	
+	public CardDeck(String cardTextPath) {
+		String cardText = readCardText(cardTextPath);
+		initCards(cardText);
 	}
 	
 	public void removeCardFromDeck(Card[] hand) {
@@ -98,27 +84,6 @@ public class CardDeck {
 		Card   fifth      = new Card(util.club, util.ace);
 		Card[] straight = {first, second, third, forth, fifth};
 
-		/*Card[] straight = new Card[5];
-		String nextRank = null;
-		int    arr_size = 0;
-		while (arr_size < straight.length) {
-			for(Card card : cards) {
-				if(nextRank != null) {				
-					if(!card.getRank().equals(nextRank)) {
-						continue;
-					}
-				}
-				if(arr_size == straight.length) {
-					break;
-				}
-				straight[arr_size++] = card;
-				nextRank = util.incrementRank(card.getRank());
-			}
-			for(int i = 0; i < arr_size; i++) {
-				cards.remove(straight[i]);
-			}
-			
-		}*/
 		return straight;
 	}
 	
@@ -168,11 +133,6 @@ public class CardDeck {
 			break;
 		}
 		return card;
-	}
-	
-	public CardDeck(String cardTextPath) {
-		String cardText = readCardText(cardTextPath);
-		initCards(cardText);
 	}
 	
 	private String readCardText(String path) {

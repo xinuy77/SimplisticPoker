@@ -171,7 +171,7 @@ public class Hand {
 	}
 	
 	public int[] getSequenceCounter() {
-		int[] sequenceCount = {1, 1, 1, 1, 1};
+		int[] sequenceCount    = {1, 1, 1, 1, 1};
 		int   curSequenceIndex = 0;
 		String targetRank   = util.incrementRank(hand[0].getRank());
 		for(int i = 1; i < hand.length; i++) {

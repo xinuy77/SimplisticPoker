@@ -1,7 +1,5 @@
 package core;
 
-
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -294,5 +292,12 @@ public class SimplisticPokerTest extends TestCase {
 			boolean hasExchangeCard = hasNCorrectExchangeCard(exchangeCard, correctExchange);
 			assertEquals(true, hasExchangeCard);
 		}
+	}
+	
+	public void testScore1() {
+		Card[] royalFlush_1 = {new Card("S", "10"), new Card("S", "J"), new Card("S", "Q"), new Card("S", "K"), new Card("S", "A")};
+		Card[] royalFlush_2 = {new Card("C", "10"), new Card("C", "J"), new Card("C", "Q"), new Card("C", "K"), new Card("C", "A")};
+		
+		
 	}
 }
