@@ -350,6 +350,22 @@ public class Player {
 		return false;
 	}
 	
+	private boolean hasThreeCardInSequence() {
+		int[]  sequenceCounter           = hand.getSequenceCounter();
+		int    firstIndexOfThreeSequence = util.getIndexOfValueInIntArr(sequenceCounter, 3);
+		Card[] hand                      = this.hand.getHand();
+		
+		if(firstIndexOfThreeSequence == -1) {
+			return false;
+		}
+		for(int i = 0; i < hand.length; i++) {
+			if(i < firstIndexOfThreeSequence || i > firstIndexOfThreeSequence+2) {
+				exchangeIndex.add(i);
+			}
+		}
+		return true;
+	}
+	
 	public boolean wantsToExchange() {
 		if(isStraightOrBetter()) {
 			System.out.println("Was straight or better");
@@ -360,6 +376,9 @@ public class Player {
 			return true;
 		}
 		else if(hasThreeSameSuit()) {
+			return true;
+		}
+		else if(hasThreeCardInSequence()) {
 			return true;
 		}
 		return true;

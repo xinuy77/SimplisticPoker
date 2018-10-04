@@ -234,8 +234,8 @@ public class SimplisticPokerTest extends TestCase {
 		ArrayList<Card[]> permutedHands = getPermutation(hand_1);
 		
 		for(int i = 0; i < permutedHands.size(); i++) {
-			Card[]  permutedCards       = permutedHands.get(i);
-			Player  ai                  = new Player(permutedCards, true);
+			Card[]  permutedCards = permutedHands.get(i);
+			Player  ai            = new Player(permutedCards, true);
 			assertEquals(true, ai.wantsToExchange());
 			Card[]  exchangeCard    = ai.getExchangeCardArr();
 			boolean hasExchangeCard = hasTwoCorrectExchangeCard(permutedCards, exchangeCard);
