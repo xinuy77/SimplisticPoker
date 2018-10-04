@@ -1,6 +1,7 @@
 package core;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -395,6 +396,14 @@ public class Player {
 		return true;
 	}
 	
+	private void keepTwoHighestCard() {
+		int[]  indexOfThreeLowestCard = hand.getIndexOfThreeLowestCard();
+		
+		for(int i = 0; i < indexOfThreeLowestCard.length; i++) {
+			exchangeIndex.add(indexOfThreeLowestCard[i]);
+		}
+	}
+	
 	public boolean wantsToExchange() {
 		if(isStraightOrBetter()) {
 			System.out.println("Was straight or better");
@@ -412,6 +421,9 @@ public class Player {
 		}
 		else if(hasOnePair()) {
 			return true;
+		}
+		else {
+			keepTwoHighestCard();
 		}
 		return true;
 	}

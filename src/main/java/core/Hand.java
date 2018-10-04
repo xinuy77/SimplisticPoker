@@ -114,6 +114,35 @@ public class Hand {
 		return true;
 	}
 	
+	public int[] getIndexOfThreeLowestCard() {
+		int[]  threeLowestCardIndex = new int[3];
+		int    size                 = 0;
+		Card[] hand                 = getHand().clone();
+
+		for(int i = 0; i < hand.length; i++) {
+			Card    suspiciousCard = hand[i];
+			boolean wasCleanCard   = false;
+			if(size == 3) {
+				break;
+			}
+			for(int j = 0; j < hand.length; j++) {
+				if(hand[j] == null) {
+					continue;
+				}
+				if(suspiciousCard.greaterRankThan(hand[j])) {
+					wasCleanCard = true;
+					break;
+				}
+			}
+			if(!wasCleanCard) {
+				hand[i]                      = null;
+				threeLowestCardIndex[size++] = i;
+			} 
+			
+		}
+		return threeLowestCardIndex;
+	}
+	
 	public HashMap<String, Integer> getPairCounter() {
 		HashMap<String, Integer> pairCounter = new HashMap<String, Integer>();
 		String curRank                       = null;
