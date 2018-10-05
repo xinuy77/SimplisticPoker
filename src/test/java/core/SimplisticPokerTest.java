@@ -383,4 +383,23 @@ public class SimplisticPokerTest extends TestCase {
 		firstHandWins = evaluate.firstHandWins(hand_3, hand_4);
 		assertEquals(true, firstHandWins);
 	}
+	
+	
+	/*
+	public void testScore7() {
+		Card[]    twoPair_1     = {new Card("S", "A"), new Card("H", "A"), new Card("C", "3"), new Card("D", "3"),  new Card("D", "10")};
+		Card[]    twoPair_2     = {new Card("C", "4"), new Card("H", "4"), new Card("S", "8"), new Card("D", "8"),  new Card("D", "10")};
+		Card[]    twoPair_3     = {new Card("S", "A"), new Card("H", "A"), new Card("C", "3"), new Card("D", "3"),  new Card("D", "10")};
+		Card[]    twoPair_4     = {new Card("C", "A"), new Card("D", "A"), new Card("D", "3"), new Card("H", "3"),  new Card("S", "10")};
+		Hand      hand_1        = new Hand(twoPair_1);
+		Hand      hand_2        = new Hand(twoPair_2);
+		Hand      hand_3        = new Hand(twoPair_3);
+		Hand      hand_4        = new Hand(twoPair_4);
+		Evaluator evaluate      = new Evaluator();
+		boolean   firstHandWins = evaluate.firstHandWins(hand_1, hand_2);
+		
+		assertEquals(true, firstHandWins);
+		firstHandWins = evaluate.firstHandWins(hand_3, hand_4);
+		assertEquals(true, firstHandWins);
+	}*/
 }

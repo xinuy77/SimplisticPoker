@@ -53,7 +53,32 @@ public class Evaluator {
 				return true;
 			}
 		}
+		if(handResult_1 == straight) {
+			if(firstStraightWins(hand_1, hand_2)) {
+				return true;
+			}
+		}
+		if(handResult_1 == twoPair) {
+			/*if(firstTwoPairWins(hand_1, hand_2)) {
+				return true;
+			}*/
+		}
 		
+		return false;
+	}
+	
+	private boolean firstStraightWins(Hand hand_1, Hand hand_2) {
+		Card firstHandCard  = hand_1.getCard(4);
+		Card secondHandCard = hand_2.getCard(4);
+		
+		if(firstHandCard.greaterRankThan(secondHandCard)) {
+			return true;
+		}
+		if(firstHandCard.equalRank(secondHandCard)) {
+			if(firstHandCard.greaterSuitThan(secondHandCard)) {
+				return true;
+			}
+		}
 		return false;
 	}
 	

@@ -3,6 +3,7 @@ package core;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Hand {
 	private Card[] hand;
@@ -260,6 +261,24 @@ public class Hand {
 			return true;
 		}
 		return false;
+	}
+	
+	public boolean isTwoPair() {
+		HashMap<String, Integer> pairCounter = getPairCounter();
+		int                      counter     = 0;
+		
+		if(!pairCounter.containsValue(2) && !pairCounter.containsValue(1)) {
+			return false;
+		}
+		for(Map.Entry<String, Integer> pair: pairCounter.entrySet()) {
+			if(pair.getValue() == 2) {
+				counter++;
+			}
+		}
+		if(counter != 2) {
+			return false;
+		}
+		return true;
 	}
 	
 	public boolean isEqualRankHand(Hand hand) {
