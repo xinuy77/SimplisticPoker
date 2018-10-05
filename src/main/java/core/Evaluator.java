@@ -48,7 +48,27 @@ public class Evaluator {
 				return true;
 			}
 		}
+		if(handResult_1 == flush) {
+			if(firstFlushWins(hand_1, hand_2)) {
+				return true;
+			}
+		}
 		
+		return false;
+	}
+	
+	private boolean firstFlushWins(Hand hand_1, Hand hand_2) {
+		Card firstHandCard  = hand_1.getCard(4);
+		Card secondHandCard = hand_2.getCard(4);
+		
+		if(hand_1.isEqualRankHand(hand_2)) {
+			if(firstHandCard.greaterSuitThan(secondHandCard)) {
+				return true;
+			}
+		}
+		if(firstHandCard.greaterRankThan(secondHandCard)) {
+			return true;
+		}
 		return false;
 	}
 	
