@@ -55,6 +55,15 @@ public class Card {
 		return false;
 	}
 	
+	public boolean equalRank(Card card) {
+		String targetRank = card.getRank();
+		
+		if(targetRank.equals(rank)) {
+			return true;
+		}
+		return false;
+	}
+	
 	public int toIntSuit() {
 		if(suit.equals(util.spade)) {
 			return spade;

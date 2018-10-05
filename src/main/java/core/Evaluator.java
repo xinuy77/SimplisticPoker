@@ -45,7 +45,11 @@ public class Evaluator {
 			return true;
 		}
 		// here
-		
+		if(firstHandCard.equalRank(secondHandCard)) {
+			if(firstHandCard.greaterSuitThan(secondHandCard)) {
+				return true;
+			}
+		}
 		return false;
 	}
 	
