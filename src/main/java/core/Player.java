@@ -284,23 +284,18 @@ public class Player {
 	
 	private boolean isOneCardAway() {
 		if(isOneCardAwayFromRoyalFlush()) {
-			System.out.println("was one card away from RF");
 			return true;
 		}
 		else if(isOneCardAwayFromStraightFlush()) {
-			System.out.println("was one card away from SF");
 			return true;
 		}
 		else if(isOneCardAwayFromFullHouse()) {
-			System.out.println("was one card away from FF");
 			return true;
 		}
 		else if(isOneCardAwayFromFlush()) {
-			System.out.println("was one card away from FFF");
 			return true;
 		}
 		else if(isOneCardAwayFromStraight()) {
-			System.out.println("was one card away from S");
 			return true;
 		}
 		return false;
@@ -370,11 +365,9 @@ public class Player {
 	
 	public boolean wantsToExchange() {
 		if(isStraightOrBetter()) {
-			System.out.println("Was straight or better");
 			return false;
 		}
 		else if(isOneCardAway()) {
-			System.out.println("Was one card away");
 			return true;
 		}
 		else if(hasThreeSameSuit()) {
@@ -394,27 +387,21 @@ public class Player {
 	
 	public boolean isStraightOrBetter() {
 		if(hand.isRoyalFlush()) {
-			System.out.println("Was RF!");
 			return true;
 		}
 		else if(hand.isStraightFlush()) {
-			System.out.println("Was SF!");
 			return true;
 		}
 		else if(hand.isFourOfAKind()) {
-			System.out.println("Was FOK!");
 			return true;
 		}
 		else if(hand.isFullHouse()) {
-			System.out.println("Was FH!");
 			return true;
 		}
 		else if(hand.isFlush()) {
-			System.out.println("Was F!");
 			return true;
 		}
 		else if(hand.isStraight()) {
-			System.out.println("Was S!");
 			return true;
 		}
 		

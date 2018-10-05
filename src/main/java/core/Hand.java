@@ -298,6 +298,18 @@ public class Hand {
 		return true;
 	}
 	
+	public boolean isHighCard() {
+		HashMap<String, Integer> pairCounter = getPairCounter();
+		int                      counter     = 0;
+		if(pairCounter.containsValue(5) ||
+	       pairCounter.containsValue(4) ||
+	       pairCounter.containsValue(3) ||
+	       pairCounter.containsValue(2)) {
+			return false;
+		}
+		return true;
+	}
+	
 	public int length() {
 		return hand.length;
 	}

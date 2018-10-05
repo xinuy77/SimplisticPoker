@@ -19,8 +19,6 @@ public class Evaluator {
 	public boolean firstHandWins(Hand hand_1, Hand hand_2) {
 		int handResult_1 = handResultToInt(hand_1);
 		int handResult_2 = handResultToInt(hand_2);
-		System.out.println("handReesut1 : "+ handResult_1);
-		System.out.println("result 2:" + handResult_2);
 		if(handResult_1 < handResult_2) {
 			return false;
 		}
@@ -69,7 +67,27 @@ public class Evaluator {
 				return true;
 			}
 		}
+		if(handResult_1 == highCard) {
+			if(firstHighCardWins(hand_1, hand_2)) {
+				return true;
+			}
+		}
 		
+		return false;
+	}
+	
+	private boolean firstHighCardWins(Hand hand_1, Hand hand_2) {
+		Card   card_1    = hand_1.getCard(4);
+		Card   card_2    = hand_2.getCard(4);
+		
+		if(card_1.greaterRankThan(card_2)) {
+			return true;
+		}
+		if(card_1.equalRank(card_2)) {
+			if(card_1.greaterSuitThan(card_2)) {
+				return true;
+			}
+		}
 		return false;
 	}
 	
@@ -249,6 +267,9 @@ public class Evaluator {
 		}
 		else if(hand.isOnePair()) {
 			return pair;
+		}
+		else if(hand.isHighCard()) {
+			return highCard;
 		}
 		return -1;
 	}
