@@ -281,6 +281,10 @@ public class Hand {
 		return true;
 	}
 	
+	public int length() {
+		return hand.length;
+	}
+	
 	public boolean isEqualRankHand(Hand hand) {
 		for(int i = 0; i < this.hand.length; i++) {
 			if(!this.hand[i].equalRank(hand.getCard(i))) {
@@ -288,5 +292,15 @@ public class Hand {
 			}
 		}
 		return true;
+	}
+	
+	public String getOneSuitOfRank(String rank) {
+		for(int i = 0; i < hand.length; i++) {
+			if(hand[i].getRank().equals(rank)) {
+				return hand[i].getSuit();
+			}
+		}
+		
+		return null;
 	}
 }

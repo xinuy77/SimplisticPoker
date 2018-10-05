@@ -12,6 +12,10 @@ public class Util {
 	public final String club    = "C";
 	public final String heart   = "H";
 	public final String spade   = "S";
+	private final int  intSpade   = 4;
+	private final int  intHeart   = 3;
+	private final int  intDiamond = 2;
+	private final int  intClubs   = 1;
 	
 	public String incrementRank(String rank) {
 		String nextRank = "";
@@ -162,5 +166,21 @@ public class Util {
 			rank += "0";
 		}
 		return new Card(suit, rank);
+	}
+	
+	public int toIntSuit(String suit) {
+		if(suit.equals(spade)) {
+			return intSpade;
+		}
+		else if(suit.equals(heart)) {
+			return intHeart;
+		}
+		else if(suit.equals(diamond)) {
+			return intDiamond;
+		}
+		else if(suit.equals(club)){
+			return intClubs;
+		}
+		return -1;
 	}
 }

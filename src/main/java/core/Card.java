@@ -65,19 +65,7 @@ public class Card {
 	}
 	
 	public int toIntSuit() {
-		if(suit.equals(util.spade)) {
-			return spade;
-		}
-		else if(suit.equals(util.heart)) {
-			return heart;
-		}
-		else if(suit.equals(util.diamond)) {
-			return diamond;
-		}
-		else if(suit.equals(util.club)){
-			return clubs;
-		}
-		return -1;
+		return util.toIntSuit(suit);
 	}
 	
 }

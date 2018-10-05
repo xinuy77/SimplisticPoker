@@ -1,6 +1,7 @@
 package core;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Evaluator {
 	private final int royalFlush    = 9;
@@ -59,12 +60,73 @@ public class Evaluator {
 			}
 		}
 		if(handResult_1 == twoPair) {
-			/*if(firstTwoPairWins(hand_1, hand_2)) {
+			if(firstTwoPairWins(hand_1, hand_2)) {
 				return true;
-			}*/
+			}
+			System.out.println("was false....");
 		}
 		
 		return false;
+	}
+	
+	private boolean firstTwoPairWins(Hand hand_1, Hand hand_2) {
+		HashMap<String, Integer> pairCounter_1      = hand_1.getPairCounter();
+		HashMap<String, Integer> pairCounter_2      = hand_2.getPairCounter();
+		String                   firstHandPairRank  = getHighestRankInTwoPair(pairCounter_1);
+		String                   secondHandPairRank = getHighestRankInTwoPair(pairCounter_2);
+		int                      firstPairRank      = util.toIntRank(firstHandPairRank);
+		int                      secondPairRank     = util.toIntRank(secondHandPairRank);
+		System.out.println("first pair rank: " + firstPairRank);
+		System.out.println("second pair rank: " + secondPairRank);
+		if(firstPairRank > secondPairRank) {
+			return true;
+		}
+		else if(firstPairRank == secondPairRank) {
+			String firstPairSuit  = getHighestSuitInTwoPair(hand_1, firstHandPairRank);
+			String secondPairSuit = getHighestSuitInTwoPair(hand_2, secondHandPairRank);
+			
+			if(util.toIntSuit(firstPairSuit) > util.toIntSuit(secondPairSuit)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private String getHighestRankInTwoPair(HashMap<String, Integer> pairCounter) {
+		String highestRank = null;
+		
+		for(Map.Entry<String, Integer> pair: pairCounter.entrySet()) {
+			if(pair.getValue() != 2) {
+				continue;
+			}
+			String curRank = pair.getKey();
+			if(highestRank == null) {
+				highestRank = curRank;
+				continue;
+			}
+			if(util.toIntRank(highestRank) < util.toIntSuit(curRank)) {
+				highestRank = curRank;
+			}
+		}
+		return highestRank;
+	}
+	
+	private String getHighestSuitInTwoPair(Hand hand, String highestPairRank) {
+		String highestSuit = null;
+		
+		for(int i = 0; i < hand.length(); i++) {
+			Card   curCard = hand.getCard(i);
+			String curRank = curCard.getRank();
+			String curSuit = curCard.getSuit();
+			if(!curRank.equals(highestPairRank)) {
+				continue;
+			}
+			if(highestSuit == null || util.toIntSuit(highestSuit) < util.toIntSuit(curSuit)) {
+				highestSuit = curSuit;
+			}
+		}
+		
+		return highestSuit;
 	}
 	
 	private boolean firstStraightWins(Hand hand_1, Hand hand_2) {
@@ -156,6 +218,9 @@ public class Evaluator {
 		}
 		else if(hand.isThreeOfAKind()) {
 			return threeOfAKind;
+		}
+		else if(hand.isTwoPair()) {
+			return twoPair;
 		}
 		return -1;
 	}
