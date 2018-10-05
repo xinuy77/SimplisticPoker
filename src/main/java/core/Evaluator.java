@@ -63,9 +63,35 @@ public class Evaluator {
 			if(firstTwoPairWins(hand_1, hand_2)) {
 				return true;
 			}
-			System.out.println("was false....");
+		}
+		if(handResult_1 == pair) {
+			if(firstOnePairWins(hand_1, hand_2)) {
+				return true;
+			}
 		}
 		
+		return false;
+	}
+	
+	private boolean firstOnePairWins(Hand hand_1, Hand hand_2) {
+		HashMap<String, Integer> pairCounter_1 = hand_1.getPairCounter();
+		HashMap<String, Integer> pairCounter_2 = hand_2.getPairCounter();
+		String rank_1                          = util.getKeyByValue(pairCounter_1, 2);
+		String rank_2                          = util.getKeyByValue(pairCounter_2, 2);
+		int    intRank_1                       = util.toIntRank(rank_1);
+		int    intRank_2                       = util.toIntRank(rank_2);
+		
+		if(intRank_1 > intRank_2) {
+			return true;
+		}
+		else if(intRank_1 == intRank_2) {
+			String highestSuit_1 = getHighestSuitInPair(hand_1, rank_1);
+			String highestSuit_2 = getHighestSuitInPair(hand_2, rank_2);
+			if(util.toIntSuit(highestSuit_1) > util.toIntSuit(highestSuit_2)) {
+				return true;
+			}
+		}
+			
 		return false;
 	}
 	
@@ -76,14 +102,13 @@ public class Evaluator {
 		String                   secondHandPairRank = getHighestRankInTwoPair(pairCounter_2);
 		int                      firstPairRank      = util.toIntRank(firstHandPairRank);
 		int                      secondPairRank     = util.toIntRank(secondHandPairRank);
-		System.out.println("first pair rank: " + firstPairRank);
-		System.out.println("second pair rank: " + secondPairRank);
+
 		if(firstPairRank > secondPairRank) {
 			return true;
 		}
 		else if(firstPairRank == secondPairRank) {
-			String firstPairSuit  = getHighestSuitInTwoPair(hand_1, firstHandPairRank);
-			String secondPairSuit = getHighestSuitInTwoPair(hand_2, secondHandPairRank);
+			String firstPairSuit  = getHighestSuitInPair(hand_1, firstHandPairRank);
+			String secondPairSuit = getHighestSuitInPair(hand_2, secondHandPairRank);
 			
 			if(util.toIntSuit(firstPairSuit) > util.toIntSuit(secondPairSuit)) {
 				return true;
@@ -111,7 +136,7 @@ public class Evaluator {
 		return highestRank;
 	}
 	
-	private String getHighestSuitInTwoPair(Hand hand, String highestPairRank) {
+	private String getHighestSuitInPair(Hand hand, String highestPairRank) {
 		String highestSuit = null;
 		
 		for(int i = 0; i < hand.length(); i++) {
@@ -221,6 +246,9 @@ public class Evaluator {
 		}
 		else if(hand.isTwoPair()) {
 			return twoPair;
+		}
+		else if(hand.isOnePair()) {
+			return pair;
 		}
 		return -1;
 	}

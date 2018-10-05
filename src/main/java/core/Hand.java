@@ -281,6 +281,23 @@ public class Hand {
 		return true;
 	}
 	
+	public boolean isOnePair() {
+		HashMap<String, Integer> pairCounter = getPairCounter();
+		int                      counter     = 0;
+		if(!pairCounter.containsValue(2) && !pairCounter.containsValue(1)) {
+			return false;
+		}
+		for(Map.Entry<String, Integer> pair: pairCounter.entrySet()) {
+			if(pair.getValue() == 1) {
+				counter++;
+			}
+		}
+		if(counter != 3) {
+			return false;
+		}
+		return true;
+	}
+	
 	public int length() {
 		return hand.length;
 	}
