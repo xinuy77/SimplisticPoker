@@ -45,6 +45,16 @@ public class Card {
 		return false;
 	}
 	
+	public boolean greaterSuitThan(Card card) {
+		int curSuit    = toIntSuit();
+		int targetSuit = card.toIntSuit();
+		
+		if(curSuit > targetSuit) {
+			return true;
+		}
+		return false;
+	}
+	
 	public int toIntSuit() {
 		if(suit.equals(util.spade)) {
 			return spade;

@@ -13,8 +13,6 @@ public class Util {
 	public final String heart   = "H";
 	public final String spade   = "S";
 	
-	
-	
 	public String incrementRank(String rank) {
 		String nextRank = "";
 		if(rank.equals(ace)) {

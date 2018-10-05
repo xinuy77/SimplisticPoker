@@ -29,6 +29,23 @@ public class Evaluator {
 				return true;
 			}
 		}
+		if(handResult_1 == straightFlush) {
+			if(firstStraightFlushWins(hand_1, hand_2)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private boolean firstStraightFlushWins(Hand hand_1, Hand hand_2) {
+		Card firstHandCard  = hand_1.getCard(4);
+		Card secondHandCard = hand_2.getCard(4);
+		
+		if(firstHandCard.greaterRankThan(secondHandCard)) {
+			return true;
+		}
+		// here
+		
 		return false;
 	}
 	
@@ -36,7 +53,7 @@ public class Evaluator {
 		Card firstHandCard  = hand_1.getCard(0);
 		Card secondHandCard = hand_2.getCard(0);
 		
-		if(firstHandCard.toIntSuit() > secondHandCard.toIntSuit()) {
+		if(firstHandCard.greaterSuitThan(secondHandCard)) {
 			return true;
 		}
 		return false;
