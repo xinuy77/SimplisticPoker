@@ -3,8 +3,12 @@ package core;
 public class Card {
 	private String suit;
 	private String rank;
-	private Util   util = new Util();
-	
+	private Util   util       = new Util();
+	private final int spade   = 4;
+	private final int heart   = 3;
+	private final int diamond = 2;
+	private final int clubs   = 1;
+ 	
 	public Card(String suit, String rank) {
 		this.suit = suit;
 		this.rank = rank;
@@ -40,4 +44,21 @@ public class Card {
 		}
 		return false;
 	}
+	
+	public int toIntSuit() {
+		if(suit.equals(util.spade)) {
+			return spade;
+		}
+		else if(suit.equals(util.heart)) {
+			return heart;
+		}
+		else if(suit.equals(util.diamond)) {
+			return diamond;
+		}
+		else if(suit.equals(util.club)){
+			return clubs;
+		}
+		return -1;
+	}
+	
 }

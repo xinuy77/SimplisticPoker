@@ -89,7 +89,7 @@ public class Player {
 	
 	private boolean isOneCardAwayFromFlush() {
 		Card[] hand = this.hand.getHand();
-		if(isFlush()) {
+		if(this.hand.isFlush()) {
 			return false;
 		}
 		HashMap<String, Integer> sameSuitCount = this.hand.getSuitCount();
@@ -113,7 +113,7 @@ public class Player {
 		String exchangeRank                  = null;
 		int    curCounter                    = 0;
 		
-		if(isFullHouse()) {
+		if(this.hand.isFullHouse()) {
 			return false;
 		}
 		
@@ -190,7 +190,7 @@ public class Player {
 	}
 	
 	private boolean isOneCardAwayFromStraight() {
-		if(isStraight()) {
+		if(hand.isStraight()) {
 			return false;
 		}
 		ArrayList<Integer> oneCardAwaySequenceIndex = getOneCardAwaySequenceIndex();
@@ -206,7 +206,7 @@ public class Player {
 		HashMap<String, Integer> sameSuitCount = this.hand.getSuitCount();
 		String                   targetSuit    = null;
 		int                      differentSuitIndex = -1;
-		if(isStraightFlush()) {
+		if(this.hand.isStraightFlush()) {
 			return false;
 		}
 		if(sameSuitCount.containsValue(4)) {
@@ -239,7 +239,7 @@ public class Player {
 		int n               = 4;
 		int containsCount   = 0;
 		int suspiciousIndex = -1;
-		if(isRoyalFlush()) {
+		if(hand.isRoyalFlush()) {
 			return false;
 		}
 		HashMap<String, Integer> suitCount = hand.getSuitCount();
@@ -392,79 +392,28 @@ public class Player {
 		return true;
 	}
 	
-	private boolean isFullHouse() {
-	//	Card[]  hand          = util.sortCard(this.hand);
-		int     matchCount    = 0;
-		int     matchedNum    = 0;
-		boolean changedTarget = false;
-		Card[]  hand          = this.hand.getHand();
-		String  targetRank    = hand[0].getRank();
-			
-		for(int i = 0; i < hand.length; i++) {
-			if(hand[i].getRank().equals(targetRank)) {
-				matchCount++;
-			}
-			else if(changedTarget) {
-				return false;
-			}
-			else {
-				changedTarget = true;
-				matchedNum    = matchCount;
-				matchCount    = 1;
-				targetRank    = hand[i].getRank();
-			}
-		}
-		if(matchCount != 2 || matchedNum != 3) {
-			if(matchCount != 3 || matchedNum != 2) {
-				return false;
-			}
-		}
-		return true;
-	}
-	
-	private boolean isFourOfAKind() {
-		if(hand.hasFourSameRank()) {
-			return true;
-		}
-		return false;
-	}
-	
-	private boolean isStraight() {
-		if(!hand.handHasSameSuit() && hand.handIsSequence()) {
-			return true;
-		}
-		return false;
-	}
-	
-	private boolean isFlush() {
-		if(hand.handHasSameSuit() && !hand.handIsSequence()) {
-			return true;
-		}
-		return false;
-	}
-	
 	public boolean isStraightOrBetter() {
-		if(isRoyalFlush()) {
+		if(hand.isRoyalFlush()) {
 			System.out.println("Was RF!");
 			return true;
 		}
-		else if(isStraightFlush()) {
+		else if(hand.isStraightFlush()) {
 			System.out.println("Was SF!");
 			return true;
 		}
-		else if(isFourOfAKind()) {
+		else if(hand.isFourOfAKind()) {
 			System.out.println("Was FOK!");
 			return true;
 		}
-		else if(isFullHouse()) {
+		else if(hand.isFullHouse()) {
 			System.out.println("Was FH!");
 			return true;
 		}
-		else if(isFlush()) {
+		else if(hand.isFlush()) {
 			System.out.println("Was F!");
 			return true;
 		}
-		else if(isStraight()) {
+		else if(hand.isStraight()) {
 			System.out.println("Was S!");
 			return true;
 		}
@@ -472,23 +421,5 @@ public class Player {
 		return false;
 	}
 	
-	private boolean isStraightFlush() {
-		if(hand.handHasSameSuit() && hand.handIsSequence()) {
-			return true;
-		}
-		return false;
-	}
-	
-	private boolean isRoyalFlush() {
-		if(hand.handHasSameSuit()) {
-			if(hand.handHasThisRank(util.ace) &&
-		       hand.handHasThisRank(util.king) &&
-		       hand.handHasThisRank(util.queen) &&
-		       hand.handHasThisRank(util.jack) &&
-		       hand.handHasThisRank("10")) {
-				return true;
-			}
-		}
-		return false;
-	}
+
 }

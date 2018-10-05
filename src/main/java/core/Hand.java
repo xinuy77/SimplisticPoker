@@ -15,6 +15,10 @@ public class Hand {
 	public Card[] getHand() {
 		return this.hand;
 	}
+	
+	public Card getCard(int i) {
+		return hand[i];
+	}
 
 	public void setHand(Card[] hand) {
 		this.hand = util.sortCard(hand);
@@ -186,5 +190,76 @@ public class Hand {
 			targetRank = util.incrementRank(targetRank);
 		}
 		return sequenceCount;
+	}
+	
+	public boolean isFullHouse() {
+	//	Card[]  hand          = util.sortCard(this.hand);
+		int     matchCount    = 0;
+		int     matchedNum    = 0;
+		boolean changedTarget = false;
+		Card[]  hand          = this.hand;
+		String  targetRank    = hand[0].getRank();
+			
+		for(int i = 0; i < hand.length; i++) {
+			if(hand[i].getRank().equals(targetRank)) {
+				matchCount++;
+			}
+			else if(changedTarget) {
+				return false;
+			}
+			else {
+				changedTarget = true;
+				matchedNum    = matchCount;
+				matchCount    = 1;
+				targetRank    = hand[i].getRank();
+			}
+		}
+		if(matchCount != 2 || matchedNum != 3) {
+			if(matchCount != 3 || matchedNum != 2) {
+				return false;
+			}
+		}
+		return true;
+	}
+		
+	public boolean isFourOfAKind() {
+		if(hasFourSameRank()) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean isStraight() {
+		if(!handHasSameSuit() && handIsSequence()) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean isFlush() {
+		if(handHasSameSuit() && !handIsSequence()) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean isRoyalFlush() {
+		if(handHasSameSuit()) {
+			if(handHasThisRank(util.ace) &&
+		       handHasThisRank(util.king) &&
+		       handHasThisRank(util.queen) &&
+		       handHasThisRank(util.jack) &&
+		       handHasThisRank("10")) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean isStraightFlush() {
+		if(handHasSameSuit() && handIsSequence()) {
+			return true;
+		}
+		return false;
 	}
 }
