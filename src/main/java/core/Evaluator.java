@@ -1,5 +1,7 @@
 package core;
 
+import java.util.HashMap;
+
 public class Evaluator {
 	private final int royalFlush    = 9;
 	private final int straightFlush = 8;
@@ -11,11 +13,13 @@ public class Evaluator {
 	private final int twoPair       = 2;
 	private final int pair          = 1;
 	private final int highCard      = 0;
+	private Util  util              = new Util();
 	
 	public boolean firstHandWins(Hand hand_1, Hand hand_2) {
 		int handResult_1 = handResultToInt(hand_1);
 		int handResult_2 = handResultToInt(hand_2);
-		
+		System.out.println("handReesut1 : "+ handResult_1);
+		System.out.println("result 2:" + handResult_2);
 		if(handResult_1 < handResult_2) {
 			return false;
 		}
@@ -33,6 +37,23 @@ public class Evaluator {
 			if(firstStraightFlushWins(hand_1, hand_2)) {
 				return true;
 			}
+		}
+		if(handResult_1 == fourOfAKind) {
+			if(firstFourOfAKindWins(hand_1, hand_2)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private boolean firstFourOfAKindWins(Hand hand_1, Hand hand_2) {
+		HashMap<String, Integer> firstHandPairs           = hand_1.getPairCounter();
+		HashMap<String, Integer> secondHandPairs          = hand_2.getPairCounter();
+		String                   firstHandQuadrupletRank  = util.getKeyByValue(firstHandPairs, 4);
+		String                   secondHandQuadrupletRank = util.getKeyByValue(secondHandPairs, 4);
+		
+		if(util.toIntRank(firstHandQuadrupletRank) > util.toIntRank(secondHandQuadrupletRank)) {
+			return true;
 		}
 		return false;
 	}

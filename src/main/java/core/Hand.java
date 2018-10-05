@@ -101,21 +101,11 @@ public class Hand {
 	}
 	
 	public boolean hasFourSameRank() {
-		//Card[] hand           = util.sortCard(this.hand);
-		String targetRank     = hand[0].getRank();
-		boolean changedTarget = false;
-		for(int i = 0; i < hand.length; i++) {
-			if(hand[i].getRank().equals(targetRank)) {
-				continue;
-			}
-			else if(changedTarget) {
-				return false;
-			}
-			else {
-				changedTarget = true;
-			}
+		HashMap<String, Integer> pairCounter = getPairCounter();
+		if(pairCounter.containsValue(4) && pairCounter.containsValue(1)) {
+			return true;
 		}
-		return true;
+		return false;
 	}
 	
 	public int[] getIndexOfThreeLowestCard() {
