@@ -227,6 +227,7 @@ public class Hand {
 		return false;
 	}
 	
+	
 	public boolean isStraight() {
 		if(!handHasSameSuit() && handIsSequence()) {
 			return true;
@@ -259,5 +260,14 @@ public class Hand {
 			return true;
 		}
 		return false;
+	}
+	
+	public boolean isEqualRankHand(Hand hand) {
+		for(int i = 0; i < this.hand.length; i++) {
+			if(!this.hand[i].equalRank(hand.getCard(i))) {
+				return false;
+			}
+		}
+		return true;
 	}
 }
