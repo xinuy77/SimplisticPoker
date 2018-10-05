@@ -335,7 +335,7 @@ public class SimplisticPokerTest extends TestCase {
 	
 	public void testScore4() {
 		Card[]    fullHouse_1    = {new Card("H", "A"), new Card("D", "A"), new Card("C", "A"), new Card("S", "J"),  new Card("D", "J")};
-		Card[]    fullHouse_2    = {new Card("H", "2"), new Card("D", "2"), new Card("C", "2"), new Card("S", "3"),  new Card("D", "4")};
+		Card[]    fullHouse_2    = {new Card("H", "2"), new Card("D", "2"), new Card("C", "2"), new Card("S", "4"),  new Card("D", "4")};
 		Card[]    threeOfAKind_1 = {new Card("H", "A"), new Card("D", "A"), new Card("C", "A"), new Card("S", "2"),  new Card("D", "3")};
 		Card[]    threeOfAKind_2 = {new Card("H", "2"), new Card("D", "2"), new Card("C", "2"), new Card("S", "4"),  new Card("D", "5")};
 		Hand      hand_1         = new Hand(fullHouse_1);

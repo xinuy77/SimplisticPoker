@@ -39,18 +39,24 @@ public class Evaluator {
 			}
 		}
 		if(handResult_1 == fourOfAKind) {
-			if(firstFourOfAKindWins(hand_1, hand_2)) {
+			if(firstNPletWins(hand_1, hand_2, 4)) {
 				return true;
 			}
 		}
+		if(handResult_1 == fullHouse || handResult_1 == threeOfAKind) {
+			if(firstNPletWins(hand_1, hand_2, 3)) {
+				return true;
+			}
+		}
+		
 		return false;
 	}
 	
-	private boolean firstFourOfAKindWins(Hand hand_1, Hand hand_2) {
+	private boolean firstNPletWins(Hand hand_1, Hand hand_2, int n) {
 		HashMap<String, Integer> firstHandPairs           = hand_1.getPairCounter();
 		HashMap<String, Integer> secondHandPairs          = hand_2.getPairCounter();
-		String                   firstHandQuadrupletRank  = util.getKeyByValue(firstHandPairs, 4);
-		String                   secondHandQuadrupletRank = util.getKeyByValue(secondHandPairs, 4);
+		String                   firstHandQuadrupletRank  = util.getKeyByValue(firstHandPairs, n);
+		String                   secondHandQuadrupletRank = util.getKeyByValue(secondHandPairs, n);
 		
 		if(util.toIntRank(firstHandQuadrupletRank) > util.toIntRank(secondHandQuadrupletRank)) {
 			return true;
@@ -102,6 +108,9 @@ public class Evaluator {
 		}
 		else if(hand.isStraight()) {
 			return straight;
+		}
+		else if(hand.isThreeOfAKind()) {
+			return threeOfAKind;
 		}
 		return -1;
 	}

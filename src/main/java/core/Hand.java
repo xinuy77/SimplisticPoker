@@ -219,6 +219,14 @@ public class Hand {
 		return false;
 	}
 	
+	public boolean isThreeOfAKind() {
+		HashMap<String, Integer> pairCounter = getPairCounter();
+		if(pairCounter.containsValue(3) && !pairCounter.containsValue(2)) {
+			return true;
+		}
+		return false;
+	}
+	
 	public boolean isStraight() {
 		if(!handHasSameSuit() && handIsSequence()) {
 			return true;
