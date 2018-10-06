@@ -293,24 +293,7 @@ public class SimplisticPokerTest extends TestCase {
 			assertEquals(true, hasExchangeCard);
 		}
 	}
-	
-	public void testScore4() {
-		Card[]    fullHouse_1    = {new Card("H", "A"), new Card("D", "A"), new Card("C", "A"), new Card("S", "J"),  new Card("D", "J")};
-		Card[]    fullHouse_2    = {new Card("H", "2"), new Card("D", "2"), new Card("C", "2"), new Card("S", "4"),  new Card("D", "4")};
-		Card[]    threeOfAKind_1 = {new Card("H", "A"), new Card("D", "A"), new Card("C", "A"), new Card("S", "2"),  new Card("D", "3")};
-		Card[]    threeOfAKind_2 = {new Card("H", "2"), new Card("D", "2"), new Card("C", "2"), new Card("S", "4"),  new Card("D", "5")};
-		Hand      hand_1         = new Hand(fullHouse_1);
-		Hand      hand_2         = new Hand(fullHouse_2);
-		Hand      hand_3         = new Hand(threeOfAKind_1);
-		Hand      hand_4         = new Hand(threeOfAKind_2);
-		Evaluator evaluate       = new Evaluator();
-		boolean   firstHandWins  = evaluate.firstHandWins(hand_1, hand_2);
-		
-		assertEquals(true, firstHandWins);
-		firstHandWins = evaluate.firstHandWins(hand_3, hand_4);
-		assertEquals(true, firstHandWins);
-	}
-	
+
 	public void testScore5() {
 		Card[]    flush_1       = {new Card("S", "A"), new Card("S", "2"), new Card("S", "4"), new Card("S", "6"),  new Card("S", "8")};
 		Card[]    flush_2       = {new Card("H", "3"), new Card("H", "2"), new Card("H", "5"), new Card("H", "7"),  new Card("H", "9")};

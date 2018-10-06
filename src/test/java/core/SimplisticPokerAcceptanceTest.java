@@ -38,4 +38,13 @@ public class SimplisticPokerAcceptanceTest extends TestCase {
 		
 		assertEquals(true, simplisticPoker.aiWon());
 	}
+	
+	public void testScore4() {
+		String          inputPaths        = "./src/main/resources/bothFHandTOK.txt";
+		SimplisticPoker simplisticPoker   = new SimplisticPoker(inputPaths);
+		Player          ai                = simplisticPoker.getAI();
+		
+		assertEquals(true, simplisticPoker.aiWon());
+	}
+	
 }
