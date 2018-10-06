@@ -27,6 +27,18 @@ public class SimplisticPokerAcceptanceTest extends TestCase {
 		assertEquals(true, straightFlushAndHold);
 	}
 	
+	public void testFOK() {
+		String          inputPaths           = "./src/main/resources/FOK.txt";
+		SimplisticPoker simplisticPoker      = new SimplisticPoker(inputPaths);
+		Player          ai                   = simplisticPoker.getAI();
+		boolean         fourOfAKindAndHold   = false;
+		
+		if(ai.getHand().isFourOfAKind() && ai.exchangeSize() == 0) {
+			fourOfAKindAndHold = true;
+		}
+		assertEquals(true, fourOfAKindAndHold);
+	}
+	
 	public void testScore1() {
 		String          inputPaths      = "./src/main/resources/bothRF.txt";
 		SimplisticPoker simplisticPoker = new SimplisticPoker(inputPaths);
