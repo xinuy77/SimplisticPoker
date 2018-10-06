@@ -10,9 +10,21 @@ public class SimplisticPoker {
 	Evaluator           evaluator;
 	Util                util;
 	
-	public SimplisticPoker(String input) {
-		cardDeck = new CardDeck(input);
-		util     = new Util();
+	public static void main(String[] args) {
+		String inputPath = "./src/main/resources/testInput.txt";
+		SimplisticPoker simplisticPoker = new SimplisticPoker(inputPath);
+	}
+	
+	public SimplisticPoker(String inputPath) {
+	                      util            = new Util();
+	                      cardDeck        = new ArrayList<CardDeck>();
+	                      evaluator       = new Evaluator();
+		ArrayList<String> inputCardText   = util.readMultipleCardText(inputPath);
+		boolean           cardAlreadyRead = true;
+		for(int i = 0; i < inputCardText.size(); i++) {
+			System.out.println("Input Text:" + cardDeck.get(i));
+			cardDeck.add(new CardDeck(inputCardText.get(i), cardAlreadyRead));
+		}
 		for(int i = 0; i < cardDeck.size(); i++) {
 			opponent = new Player(cardDeck.get(i).drawHand(), false);
 			ai       = new Player(cardDeck.get(i).drawHand(), true);
@@ -36,7 +48,7 @@ public class SimplisticPoker {
 			System.out.println("AI LOSES!");
 		}
 		System.out.println("AI had " + evaluator.handResultToString(ai.getHand()));
-		System.out.println("Opponent had " + evaluator.handResultToString(opponent_hand));
+		System.out.println("Opponent had " + evaluator.handResultToString(opponent.getHand()));
 	}
 	
 	public void exchangeCard(int cardDeckIndex) {

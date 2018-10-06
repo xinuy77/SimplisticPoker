@@ -21,6 +21,10 @@ public class CardDeck {
 		initCards(cardText);
 	}
 	
+	public CardDeck(String cardText, boolean cardTextAlreadyRead) {
+		initCards(cardText);
+	}
+	
 	public void shuffleDeck() {
 		Collections.shuffle(cards);
 	}
