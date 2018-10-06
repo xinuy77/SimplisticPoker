@@ -294,25 +294,6 @@ public class SimplisticPokerTest extends TestCase {
 		}
 	}
 	
-	
-	
-	public void testScore2() {
-		Card[]     straightFlush_1  = {new Card("H", "2"), new Card("H", "3"), new Card("H", "4"), new Card("H", "5"),  new Card("H", "6")};  // highest card
-		Card[]     straightFlush_2  = {new Card("D", "K"), new Card("D", "Q"), new Card("D", "J"), new Card("D", "10"), new Card("D", "9")}; // highest card
-		Card[]     straightFlush_3  = {new Card("C", "2"), new Card("C", "3"), new Card("C", "4"), new Card("C", "5"),  new Card("C", "6")};  // suit of highest card
-		Card[]     straightFlush_4  = {new Card("S", "2"), new Card("S", "3"), new Card("S", "4"), new Card("S", "5"),  new Card("S", "6")};  //suit of highest card
-		Hand       hand_1           = new Hand(straightFlush_1);
-		Hand       hand_2           = new Hand(straightFlush_2);
-		Hand       hand_3           = new Hand(straightFlush_3);
-		Hand       hand_4           = new Hand(straightFlush_4);
-		Evaluator  evaluate         = new Evaluator();
-		boolean    firstHandWins    = evaluate.firstHandWins(hand_2, hand_1);
-		
-		assertEquals(true, firstHandWins);
-		firstHandWins = evaluate.firstHandWins(hand_4, hand_3);
-		assertEquals(true, firstHandWins);
-	}
-	
 	public void testScore3() {
 		Card[]     fourOfAKind_1  = {new Card("H", "A"), new Card("D", "A"), new Card("C", "A"), new Card("S", "A"),  new Card("D", "3")};  // highest card
 		Card[]     fourOfAKind_2  = {new Card("H", "2"), new Card("S", "2"), new Card("C", "2"), new Card("D", "2"),  new Card("H", "10")};

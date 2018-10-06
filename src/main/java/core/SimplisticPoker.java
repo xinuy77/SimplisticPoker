@@ -9,7 +9,7 @@ public class SimplisticPoker {
 	ArrayList<CardDeck> cardDeck;
 	Evaluator           evaluator;
 	Util                util;
-	boolean             aiWon = false;
+	ArrayList<Integer>  aiWon;
 	
 	public static void main(String[] args) {
 		String inputPath = "./src/main/resources/testInput.txt";
@@ -17,12 +17,18 @@ public class SimplisticPoker {
 	}
 	
 	public boolean aiWon() {
-		return aiWon;
+		for(int i = 0; i < aiWon.size(); i++) {
+			if(aiWon.get(i) == 0) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	public SimplisticPoker(String inputPath) {
 	                      util            = new Util();
 	                      cardDeck        = new ArrayList<CardDeck>();
+	                      aiWon           = new ArrayList<Integer>();
 	                      evaluator       = new Evaluator();
 		ArrayList<String> inputCardText   = util.readMultipleCardText(inputPath);
 		boolean           cardAlreadyRead = true;
@@ -54,10 +60,11 @@ public class SimplisticPoker {
 	public void printResult() {
 		if(evaluator.firstHandWins(ai.getHand(), opponent.getHand())) {
 			System.out.println("AI WINS!");
-			aiWon = true;
+			aiWon.add(1);
 		}
 		else {
 			System.out.println("AI LOSES!");
+			aiWon.add(0);
 		}
 		System.out.println("AI had " + evaluator.handResultToString(ai.getHand()));
 		System.out.println("Opponent had " + evaluator.handResultToString(opponent.getHand()));
