@@ -12,19 +12,17 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class CardDeck {
-	private LinkedHashSet<Card> cards;
-	private Util                util = new Util();
+	private ArrayList<Card> cards;
+	private Util            util = new Util();
 	
 	
 	public CardDeck(String cardTextPath) {
 		String cardText = readCardText(cardTextPath);
 		initCards(cardText);
-		shuffleDeck();
 	}
 	
 	public void shuffleDeck() {
-		List<Card> list = new ArrayList<Card>(cards);
-		cards = (LinkedHashSet<Card>) newShuffledSet(list);
+		Collections.shuffle(cards);
 	}
 	
 	public static <T> Set<T> newShuffledSet(Collection<T> collection) {
@@ -151,12 +149,8 @@ public class CardDeck {
 	
 	//returns null if no card is left
 	public Card drawCard() {
-		Card card = null;
-		for(Card tmp: cards) {
-			cards.remove(tmp);
-			card = tmp;
-			break;
-		}
+		Card card = cards.get(0);
+		cards.remove(0);
 		return card;
 	}
 	
@@ -183,7 +177,7 @@ public class CardDeck {
 	
 	private void initCards(String cardText) {
 		String[] cardTextArr = cardText.split("\\s+");
-		         cards       = new LinkedHashSet<Card>();
+		         cards       = new ArrayList<Card>();
 		String   rank;
 		String   suit;
 		Card     card;

@@ -7,8 +7,8 @@ import junit.framework.TestCase;
 
 public class SimplisticPokerTest extends TestCase {
 	
-	private final String cardPath         = "./src/main/resources/card.txt";
-	private Util util                     = new Util();
+	private final String cardPath = "./src/main/resources/card.txt";
+	private Util util             = new Util();
 	
 	public void testStrategy1() {
 		CardDeck cardDeck     = new CardDeck(cardPath);
