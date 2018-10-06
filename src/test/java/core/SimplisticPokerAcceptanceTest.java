@@ -3,8 +3,8 @@ package core;
 import junit.framework.TestCase;
 
 public class SimplisticPokerAcceptanceTest extends TestCase {
-	public void testRoyalFlush() {
-		String          inputPaths        = "./src/main/resources/royalFlushInput.txt";
+	public void testRF() {
+		String          inputPaths        = "./src/main/resources/allSuitRF.txt";
 		SimplisticPoker simplisticPoker   = new SimplisticPoker(inputPaths);
 		Player          ai                = simplisticPoker.getAI();
 		boolean         royalFlushAndHold = false;
@@ -13,6 +13,18 @@ public class SimplisticPokerAcceptanceTest extends TestCase {
 			royalFlushAndHold = true;
 		}
 		assertEquals(true, royalFlushAndHold);
+	}
+	
+	public void testSF() {
+		String          inputPaths           = "./src/main/resources/SF.txt";
+		SimplisticPoker simplisticPoker      = new SimplisticPoker(inputPaths);
+		Player          ai                   = simplisticPoker.getAI();
+		boolean         straightFlushAndHold = false;
+		
+		if(ai.getHand().isStraightFlush() && ai.exchangeSize() == 0) {
+			straightFlushAndHold = true;
+		}
+		assertEquals(true, straightFlushAndHold);
 	}
 	
 	public void testScore1() {
