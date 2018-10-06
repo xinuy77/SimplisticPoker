@@ -1,5 +1,8 @@
 package core;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
 
@@ -52,6 +55,34 @@ public class Util {
 			cleanedCards[i] = cards[i];
 		}
 		return cleanedCards;
+	}
+	
+	private String readCardText(String path) {
+		String cardText = "";
+		try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+	        String sCurrentLine;
+	        int    lineNum = 0;
+	        while ((sCurrentLine = br.readLine()) != null) {
+	            cardText = sCurrentLine;
+	        }
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+		return cardText;
+	}
+	
+	private ArrayList<String> readMultipleCardText(String path) {
+		ArrayList<String> cardText = new ArrayList<String()>();
+		try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+	        String sCurrentLine;
+	        int    lineNum = 0;
+	        while ((sCurrentLine = br.readLine()) != null) {
+	            cardText = sCurrentLine;
+	        }
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+		return cardText;
 	}
 	
 	public int toIntRank(String rank) {

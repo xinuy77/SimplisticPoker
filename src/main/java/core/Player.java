@@ -24,6 +24,10 @@ public class Player {
 		return hand;
 	}
 	
+	public int exchangeSize() {
+		return exchangeIndex.size() + exchangeOnlyOneIndex.size();
+	}
+	
 	public void exchange(Card[] exchangeCard, Card[] newCard) {
 		Card[] hand       = this.hand.getHand();
 		int    newCardPos = 0;
