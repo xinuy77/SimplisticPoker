@@ -40,6 +40,20 @@ public class Util {
 		return nextRank;
 	}
 	
+	public Card[] cleanNullCard(Card[] cards) {
+		int nullCount = 0;
+		for(int i = 0; i < cards.length; i++) {
+			if(cards[i] == null) {
+				nullCount++;
+			}
+		}
+		Card[] cleanedCards = new Card[5-nullCount];
+		for(int i = 0; i < cleanedCards.length; i++) {
+			cleanedCards[i] = cards[i];
+		}
+		return cleanedCards;
+	}
+	
 	public int toIntRank(String rank) {
 		if(rank.equals(ace)) {
 			return 14;

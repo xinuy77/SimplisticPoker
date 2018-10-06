@@ -240,7 +240,7 @@ public class Evaluator {
 		return false;
 	}
 	
-	private int handResultToInt(Hand hand) {
+	public int handResultToInt(Hand hand) {
 		if(hand.isRoyalFlush()) {
 			return royalFlush;
 		}
@@ -272,5 +272,39 @@ public class Evaluator {
 			return highCard;
 		}
 		return -1;
+	}
+	
+	public String handResultToString(Hand hand) {
+		if(hand.isRoyalFlush()) {
+			return "RoyalFlush";
+		}
+		else if(hand.isStraightFlush()) {
+			return "StraightFlush";
+		}
+		else if(hand.isFourOfAKind()) {
+			return "FourOfAKind";
+		}
+		else if(hand.isFullHouse()) {
+			return "FullHouse";
+		}
+		else if(hand.isFlush()) {
+			return "Flush";
+		}
+		else if(hand.isStraight()) {
+			return "Straight";
+		}
+		else if(hand.isThreeOfAKind()) {
+			return "ThreeOfAKind";
+		}
+		else if(hand.isTwoPair()) {
+			return "TwoPair";
+		}
+		else if(hand.isOnePair()) {
+			return "Pair";
+		}
+		else if(hand.isHighCard()) {
+			return "HighCard";
+		}
+		return "Something Went Wrong";
 	}
 }

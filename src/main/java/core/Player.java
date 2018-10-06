@@ -24,6 +24,24 @@ public class Player {
 		return hand;
 	}
 	
+	public void exchange(Card[] exchangeCard, Card[] newCard) {
+		Card[] hand       = this.hand.getHand();
+		int    newCardPos = 0;
+		
+		for(int j = 0; j < exchangeCard.length; j++) {
+			if(exchangeCard[j] == null) {
+				continue;
+			}
+			for(int i = 0; i < hand.length; i++) {
+				if(exchangeCard[j].equals(hand[i])) {
+					hand[i] = newCard[newCardPos++];
+				}
+			}
+		}
+		
+		this.hand.setHand(hand);
+	}
+	
 	public String toStringExchangeOnlyOneCard() {
 		String result = "";
 		Card[] hand   = this.hand.getHand();
@@ -36,7 +54,7 @@ public class Player {
 	public Card[] getExchangeOnlyOneCardArr() {
 		Card[] exchangeCard = new Card[5];
 		Card[] hand         = this.hand.getHand();
-		for(int i = 0; i < exchangeIndex.size(); i++) {
+		for(int i = 0; i < exchangeOnlyOneIndex.size(); i++) {
 			exchangeCard[i] = hand[exchangeOnlyOneIndex.get(i)];
 		}
 		return exchangeCard;
@@ -58,6 +76,7 @@ public class Player {
 		for(int i = 0; i < exchangeIndex.size(); i++) {
 			exchangeCard[i] = hand[exchangeIndex.get(i)];
 		}
+		exchangeCard = util.cleanNullCard(exchangeCard);
 		return exchangeCard;
 	}
 	
@@ -82,7 +101,7 @@ public class Player {
 		String result = "";
 		Card[] hand   = this.hand.getHand();
 		for(int i = 0; i < exchangeIndex.size(); i++) {
-			result += hand[exchangeIndex.get(i)].toString();
+			result += hand[exchangeIndex.get(i)].toString() + " ";
 		}
 		return result;
 	}
