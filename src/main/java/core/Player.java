@@ -8,6 +8,7 @@ import java.util.Map;
 
 public class Player {
 	private boolean isAi;
+	private boolean exchanged                       =false;
 	private Hand    hand;
 	private ArrayList<Integer> exchangeIndex        = new ArrayList<Integer>();
 	private ArrayList<Integer> exchangeOnlyOneIndex = new ArrayList<Integer>();
@@ -18,6 +19,10 @@ public class Player {
 			this.hand = new Hand(hand);
 		}
 		this.isAi = isAi;
+	}
+	
+	public boolean exchanged() {
+		return exchanged;
 	}
 	
 	public Hand getHand() {
@@ -42,7 +47,7 @@ public class Player {
 				}
 			}
 		}
-		
+		exchanged = true;
 		this.hand.setHand(hand);
 	}
 	

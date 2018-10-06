@@ -556,10 +556,10 @@ public class SimplisticPokerTest extends TestCase {
 		Card[] hand_2 = {new Card("S", "J"), new Card("H", "J"), new Card("D", "9"), new Card("C", "8"),  new Card("S", "2")};	
 		Hand   hand_F = new Hand(hand_1);
 		Hand   hand_S = new Hand(hand_2);
-		boolean independent = false;
+		boolean independent = true;
 		
 		if(hand_F.equals(hand_S)) {
-			independent = true;
+			independent = false;
 		}
 		assertEquals(false, independent);
 	}
