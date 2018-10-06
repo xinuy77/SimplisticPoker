@@ -33,6 +33,13 @@ public class CardDeck {
 	    return new LinkedHashSet<T>(shuffleMe);
 	}
 	
+	public boolean hasFiftyTwoCard() {
+		if(cards.size() == 52) {
+			return true;
+		}
+		return false;
+	}
+	
 	public void removeCardFromDeck(Card[] hand) {
 		int    cardCurIndex = 0;
 		Card[] removeCandidates = new Card[5];
