@@ -449,4 +449,14 @@ public class SimplisticPokerTest extends TestCase {
 		}
 		assertEquals(true, correctRank);
 	}
+	
+	public void testSuit() {
+		Card    card_1 = new Card("S", "A");
+		Card    card_2 = new Card("C", "2");
+		boolean correctSuit = false;
+		if(card_1.greaterSuitThan(card_2)) {
+			correctSuit = true;
+		}
+		assertEquals(true, correctSuit);
+	}
 }
