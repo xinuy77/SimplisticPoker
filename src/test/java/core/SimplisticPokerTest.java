@@ -434,4 +434,9 @@ public class SimplisticPokerTest extends TestCase {
 		firstHandWins = evaluate.firstHandWins(hand_3, hand_4);
 		assertEquals(true, firstHandWins);
 	}
+	
+	public void testCardDeck() {
+		CardDeck cardDeck = new CardDeck(cardPath);
+		assertEquals(true, cardDeck.hasFiftyTwoCards());
+	}
 }
