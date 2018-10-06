@@ -293,23 +293,6 @@ public class SimplisticPokerTest extends TestCase {
 			assertEquals(true, hasExchangeCard);
 		}
 	}
-
-	public void testScore5() {
-		Card[]    flush_1       = {new Card("S", "A"), new Card("S", "2"), new Card("S", "4"), new Card("S", "6"),  new Card("S", "8")};
-		Card[]    flush_2       = {new Card("H", "3"), new Card("H", "2"), new Card("H", "5"), new Card("H", "7"),  new Card("H", "9")};
-		Card[]    flush_3       = {new Card("S", "A"), new Card("S", "2"), new Card("S", "4"), new Card("S", "6"),  new Card("S", "8")};
-		Card[]    flush_4       = {new Card("H", "A"), new Card("H", "2"), new Card("H", "4"), new Card("H", "6"),  new Card("H", "8")};
-		Hand      hand_1        = new Hand(flush_1);
-		Hand      hand_2        = new Hand(flush_2);
-		Hand      hand_3        = new Hand(flush_3);
-		Hand      hand_4        = new Hand(flush_4);
-		Evaluator evaluate      = new Evaluator();
-		boolean   firstHandWins = evaluate.firstHandWins(hand_1, hand_2);
-		
-		assertEquals(true, firstHandWins);
-		firstHandWins = evaluate.firstHandWins(hand_3, hand_4);
-		assertEquals(true, firstHandWins);
-	}
 	
 	public void testCardDeck() {
 		CardDeck cardDeck = new CardDeck(cardPath);

@@ -78,4 +78,12 @@ public class SimplisticPokerAcceptanceTest extends TestCase {
 		
 		assertEquals(true, simplisticPoker.aiWon());
 	}
+	
+	public void testScore5() {
+		String          inputPaths      = "./src/main/resources/bothF.txt";
+		SimplisticPoker simplisticPoker = new SimplisticPoker(inputPaths);
+		Player          ai              = simplisticPoker.getAI();
+		
+		assertEquals(true, simplisticPoker.aiWon());
+	}
 }

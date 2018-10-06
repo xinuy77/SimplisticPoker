@@ -48,7 +48,7 @@ public class Evaluator {
 			}
 		}
 		if(handResult_1 == flush) {
-			if(firstFlushWins(hand_1, hand_2)) {
+			if(firstFlushWins(hand_1, hand_2, 4)) {
 				return true;
 			}
 		}
@@ -187,9 +187,13 @@ public class Evaluator {
 		return false;
 	}
 	
-	private boolean firstFlushWins(Hand hand_1, Hand hand_2) {
-		Card firstHandCard  = hand_1.getCard(4);
-		Card secondHandCard = hand_2.getCard(4);
+	private boolean firstFlushWins(Hand hand_1, Hand hand_2, int i) {
+		if(i == -1) {
+			return false;
+		}
+		
+		Card firstHandCard  = hand_1.getCard(i);
+		Card secondHandCard = hand_2.getCard(i);
 		
 		if(hand_1.isEqualRankHand(hand_2)) {
 			if(firstHandCard.greaterSuitThan(secondHandCard)) {
@@ -198,6 +202,9 @@ public class Evaluator {
 		}
 		if(firstHandCard.greaterRankThan(secondHandCard)) {
 			return true;
+		}
+		else if(firstHandCard.equalRank(secondHandCard)) {
+			return firstFlushWins(hand_1, hand_2, i-1);
 		}
 		return false;
 	}
