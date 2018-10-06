@@ -8,8 +8,8 @@ public class Main {
 	
 	public static void main(String[] args) {
 		CardDeck  cardDeck      = new CardDeck(cardPath);
-		Card[]    ai_hand       = cardDeck.drawHand();
 		Hand      opponent_hand = new Hand(cardDeck.drawHand());
+		Card[]    ai_hand       = cardDeck.drawHand();
 		Player    ai            = new Player(ai_hand, true);
 		Evaluator evaluator     = new Evaluator();
 		Util      util          = new Util();

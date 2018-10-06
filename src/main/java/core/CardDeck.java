@@ -166,6 +166,7 @@ public class CardDeck {
 		String cardText = "";
 		try (BufferedReader br = new BufferedReader(new FileReader(path))) {
 	        String sCurrentLine;
+	        int    lineNum = 0;
 	        while ((sCurrentLine = br.readLine()) != null) {
 	            cardText = sCurrentLine;
 	        }

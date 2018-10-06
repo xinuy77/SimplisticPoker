@@ -439,4 +439,5 @@ public class SimplisticPokerTest extends TestCase {
 		CardDeck cardDeck = new CardDeck(cardPath);
 		assertEquals(true, cardDeck.hasFiftyTwoCard());
 	}
+	
 }
