@@ -323,6 +323,19 @@ public class Hand {
 		return true;
 	}
 	
+	public boolean equals(Hand hand) {
+		int counter = 0;
+		for(int i = 0; i < this.hand.length; i++) {
+			if(this.hand[i].equals(hand.getCard(i))) {
+				counter++;
+			}
+		}
+		if(counter == 5) {
+			return true;
+		}
+		return false;
+	}
+	
 	public String getOneSuitOfRank(String rank) {
 		for(int i = 0; i < hand.length; i++) {
 			if(hand[i].getRank().equals(rank)) {
