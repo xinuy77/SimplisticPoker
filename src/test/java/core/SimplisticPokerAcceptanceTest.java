@@ -40,15 +40,27 @@ public class SimplisticPokerAcceptanceTest extends TestCase {
 	}
 	
 	public void testFH() {
-		String          inputPaths           = "./src/main/resources/FH.txt";
-		SimplisticPoker simplisticPoker      = new SimplisticPoker(inputPaths);
-		Player          ai                   = simplisticPoker.getAI();
-		boolean         FHAndHold   = false;
+		String          inputPaths      = "./src/main/resources/FH.txt";
+		SimplisticPoker simplisticPoker = new SimplisticPoker(inputPaths);
+		Player          ai              = simplisticPoker.getAI();
+		boolean         FHAndHold       = false;
 		
 		if(ai.getHand().isFullHouse() && ai.exchangeSize() == 0) {
 			FHAndHold = true;
 		}
 		assertEquals(true, FHAndHold);
+	}
+	
+	public void testS() {
+		String          inputPaths      = "./src/main/resources/S.txt";
+		SimplisticPoker simplisticPoker = new SimplisticPoker(inputPaths);
+		Player          ai              = simplisticPoker.getAI();
+		boolean         SAndHold        = false;
+		
+		if(ai.getHand().isStraight() && ai.exchangeSize() == 0) {
+			SAndHold = true;
+		}
+		assertEquals(true, SAndHold);
 	}
 	
 	public void testScore1() {
