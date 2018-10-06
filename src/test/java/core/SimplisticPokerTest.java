@@ -459,4 +459,95 @@ public class SimplisticPokerTest extends TestCase {
 		}
 		assertEquals(true, correctSuit);
 	}
+	
+	public void testRFPermutation() {
+		Card[]            rf            = {new Card("S", "A"), new Card("S", "K"), new Card("S", "Q"), new Card("S", "J"),  new Card("S", "10")};	
+        ArrayList<Card[]> permutedHands = getPermutation(rf);
+		
+		for(int i = 0; i < permutedHands.size(); i++) {
+			Card[] permutedHand = permutedHands.get(i);
+	        assertEquals(true, new Hand(permutedHand).isRoyalFlush());
+		}
+		
+	}
+	
+	public void testSFPermutation() {
+		Card[]            sf            = {new Card("S", "J"), new Card("S", "10"), new Card("S", "9"), new Card("S", "8"),  new Card("S", "7")};	
+        ArrayList<Card[]> permutedHands = getPermutation(sf);
+		
+		for(int i = 0; i < permutedHands.size(); i++) {
+			Card[] permutedHand = permutedHands.get(i);
+	        assertEquals(true, new Hand(permutedHand).isStraightFlush());
+		}
+	}
+	
+	public void testFOAKPermutation() {
+		Card[]            foak          = {new Card("S", "J"), new Card("H", "J"), new Card("D", "J"), new Card("C", "J"),  new Card("S", "7")};	
+        ArrayList<Card[]> permutedHands = getPermutation(foak);
+		
+		for(int i = 0; i < permutedHands.size(); i++) {
+			Card[] permutedHand = permutedHands.get(i);
+	        assertEquals(true, new Hand(permutedHand).isFourOfAKind());
+		}
+	}
+	
+	public void testFHPermutation() {
+		Card[]            fh            = {new Card("S", "J"), new Card("D", "J"), new Card("C", "J"), new Card("H", "2"),  new Card("D", "2")};	
+        ArrayList<Card[]> permutedHands = getPermutation(fh);
+		
+		for(int i = 0; i < permutedHands.size(); i++) {
+			Card[] permutedHand = permutedHands.get(i);
+	        assertEquals(true, new Hand(permutedHand).isFullHouse());
+		}
+	}
+	
+	public void testFPermutation() {
+		Card[]            f             = {new Card("S", "J"), new Card("S", "9"), new Card("S", "8"), new Card("S", "4"),  new Card("S", "2")};	
+        ArrayList<Card[]> permutedHands = getPermutation(f);
+		
+		for(int i = 0; i < permutedHands.size(); i++) {
+			Card[] permutedHand = permutedHands.get(i);
+	        assertEquals(true, new Hand(permutedHand).isFlush());
+		}
+	}
+	
+	public void testSPermutation() {
+		Card[]            s             = {new Card("S", "J"), new Card("H", "10"), new Card("D", "9"), new Card("C", "8"),  new Card("S", "7")};	
+        ArrayList<Card[]> permutedHands = getPermutation(s);
+		
+		for(int i = 0; i < permutedHands.size(); i++) {
+			Card[] permutedHand = permutedHands.get(i);
+	        assertEquals(true, new Hand(permutedHand).isStraight());
+		}
+	}
+	
+	public void testTOKPermutation() {
+		Card[]            TOK           = {new Card("S", "J"), new Card("H", "J"), new Card("D", "J"), new Card("C", "8"),  new Card("S", "7")};	
+        ArrayList<Card[]> permutedHands = getPermutation(TOK);
+		
+		for(int i = 0; i < permutedHands.size(); i++) {
+			Card[] permutedHand = permutedHands.get(i);
+	        assertEquals(true, new Hand(permutedHand).isThreeOfAKind());
+		}
+	}
+	
+	public void testTPPermutation() {
+		Card[]            TP            = {new Card("S", "J"), new Card("H", "J"), new Card("D", "8"), new Card("C", "8"),  new Card("S", "2")};	
+        ArrayList<Card[]> permutedHands = getPermutation(TP);
+		
+		for(int i = 0; i < permutedHands.size(); i++) {
+			Card[] permutedHand = permutedHands.get(i);
+	        assertEquals(true, new Hand(permutedHand).isTwoPair());
+		}
+	}
+	
+	public void testPPermutation() {
+		Card[]            P            = {new Card("S", "J"), new Card("H", "J"), new Card("D", "9"), new Card("C", "8"),  new Card("S", "2")};	
+        ArrayList<Card[]> permutedHands = getPermutation(P);
+		
+		for(int i = 0; i < permutedHands.size(); i++) {
+			Card[] permutedHand = permutedHands.get(i);
+	        assertEquals(true, new Hand(permutedHand).isOnePair());
+		}
+	}
 }
