@@ -14,4 +14,13 @@ public class SimplisticPokerAcceptanceTest extends TestCase {
 		}
 		assertEquals(true, royalFlushAndHold);
 	}
+	
+	public void testScore1() {
+		String          inputPaths        = "./src/main/resources/bothRF.txt";
+		SimplisticPoker simplisticPoker   = new SimplisticPoker(inputPaths);
+		Player          ai                = simplisticPoker.getAI();
+		boolean         royalFlushAndHold = false;
+		
+		assertEquals(true, simplisticPoker.aiWon());
+	}
 }

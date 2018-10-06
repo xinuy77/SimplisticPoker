@@ -9,10 +9,15 @@ public class SimplisticPoker {
 	ArrayList<CardDeck> cardDeck;
 	Evaluator           evaluator;
 	Util                util;
+	boolean             aiWon = false;
 	
 	public static void main(String[] args) {
 		String inputPath = "./src/main/resources/testInput.txt";
 		SimplisticPoker simplisticPoker = new SimplisticPoker(inputPath);
+	}
+	
+	public boolean aiWon() {
+		return aiWon;
 	}
 	
 	public SimplisticPoker(String inputPath) {
@@ -49,6 +54,7 @@ public class SimplisticPoker {
 	public void printResult() {
 		if(evaluator.firstHandWins(ai.getHand(), opponent.getHand())) {
 			System.out.println("AI WINS!");
+			aiWon = true;
 		}
 		else {
 			System.out.println("AI LOSES!");
