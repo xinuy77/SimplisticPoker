@@ -550,4 +550,17 @@ public class SimplisticPokerTest extends TestCase {
 	        assertEquals(true, new Hand(permutedHand).isOnePair());
 		}
 	}
+	
+	public void testHandIndependence() {
+		Card[] hand_1 = {new Card("S", "J"), new Card("H", "J"), new Card("D", "9"), new Card("C", "8"),  new Card("S", "2")};	
+		Card[] hand_2 = {new Card("S", "J"), new Card("H", "J"), new Card("D", "9"), new Card("C", "8"),  new Card("S", "2")};	
+		Hand   hand_F = new Hand(hand_1);
+		Hand   hand_S = new Hand(hand_2);
+		boolean independent = false;
+		
+		if(hand_F.equals(hand_S)) {
+			independent = true;
+		}
+		assertEquals(false, independent);
+	}
 }
