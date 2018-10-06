@@ -563,4 +563,17 @@ public class SimplisticPokerTest extends TestCase {
 		}
 		assertEquals(false, independent);
 	}
+	
+	public void testExchangeStatus() {
+		Card[] card_1 = {new Card("H", "J"), new Card("H", "A"), new Card("H", "K"), new Card("H", "Q"),  new Card("H", "9")};
+		Card[] exchange = {new Card("H", "10")};
+		Player ai_1   = new Player(card_1, true);
+		
+		if(ai_1.wantsToExchange()) {
+			assertEquals(false, ai_1.exchanged());
+			Card[] exchangeCard = ai_1.getExchangeCardArr();
+			ai_1.exchange(exchangeCard, exchange);
+			assertEquals(true, ai_1.exchanged());
+		}
+	}
 }
