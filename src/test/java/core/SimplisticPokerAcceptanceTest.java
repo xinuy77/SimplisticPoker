@@ -4,9 +4,8 @@ import junit.framework.TestCase;
 
 public class SimplisticPokerAcceptanceTest extends TestCase {
 	public void testRoyalFlush() {
-		String          inputPaths        = "";
-		String          inputCard         = util.readInputCard(inputPaths);
-		SimplisticPoker simplisticPoker   = new SimplisticPoker(inputCard);
+		String          inputPaths        = "./src/main/resources/royalFlushInput.txt";
+		SimplisticPoker simplisticPoker   = new SimplisticPoker(inputPaths);
 		Player          ai                = simplisticPoker.getAI();
 		boolean         royalFlushAndHold = false;
 		

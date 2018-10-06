@@ -22,14 +22,20 @@ public class SimplisticPoker {
 		ArrayList<String> inputCardText   = util.readMultipleCardText(inputPath);
 		boolean           cardAlreadyRead = true;
 		for(int i = 0; i < inputCardText.size(); i++) {
-			System.out.println("Input Text:" + cardDeck.get(i));
+			System.out.println("Input Text:" + inputCardText.get(i));
 			cardDeck.add(new CardDeck(inputCardText.get(i), cardAlreadyRead));
 		}
 		for(int i = 0; i < cardDeck.size(); i++) {
 			opponent = new Player(cardDeck.get(i).drawHand(), false);
 			ai       = new Player(cardDeck.get(i).drawHand(), true);
+			System.out.println("----- ROUND " + (i + 1) + " -----");
 			startGame(i);
+			System.out.println("------- END -------");
 		}
+	}
+	
+	public Player getAI() {
+		return ai;
 	}
 	
 	public void startGame(int cardDeckIndex) {

@@ -440,4 +440,13 @@ public class SimplisticPokerTest extends TestCase {
 		assertEquals(true, cardDeck.hasFiftyTwoCard());
 	}
 	
+	public void testRank() {
+		Card    card_1 = new Card("C", "A");
+		Card    card_2 = new Card("C", "2");
+		boolean correctRank = false;
+		if(card_1.greaterRankThan(card_2)) {
+			correctRank = true;
+		}
+		assertEquals(true, correctRank);
+	}
 }
