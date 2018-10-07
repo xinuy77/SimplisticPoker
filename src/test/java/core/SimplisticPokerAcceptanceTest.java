@@ -194,4 +194,16 @@ public class SimplisticPokerAcceptanceTest extends TestCase {
 		}
 		assertEquals(true, detectsAndExchangedCard);
 	}
+	
+	public void testThreeSameSuit_AT() {
+		String          inputPaths               = "./src/main/resources/threeSameSuit.txt";
+		SimplisticPoker simplisticPoker          = new SimplisticPoker(inputPaths);
+		Player          ai                       = simplisticPoker.getAI();
+		boolean         detectsAndExchangedCard  = false;
+		
+		if(ai.exchanged() && ai.exchangeSize() == 2) {
+			detectsAndExchangedCard = true;
+		}
+		assertEquals(true, detectsAndExchangedCard);
+	}
 }
