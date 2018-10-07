@@ -207,13 +207,25 @@ public class SimplisticPokerAcceptanceTest extends TestCase {
 		assertEquals(true, detectsAndExchangedCard);
 	}
 	
-	public void testThreeCardSequencet_AT() {
+	public void testThreeCardSequence_AT() {
 		String          inputPaths               = "./src/main/resources/threeCardSequence.txt";
 		SimplisticPoker simplisticPoker          = new SimplisticPoker(inputPaths);
 		Player          ai                       = simplisticPoker.getAI();
 		boolean         detectsAndExchangedCard  = false;
 		
 		if(ai.exchanged() && ai.exchangeSize() == 2) {
+			detectsAndExchangedCard = true;
+		}
+		assertEquals(true, detectsAndExchangedCard);
+	}
+	
+	public void testTwoDistinctPair_AT() {
+		String          inputPaths               = "./src/main/resources/twoDistinctPair.txt";
+		SimplisticPoker simplisticPoker          = new SimplisticPoker(inputPaths);
+		Player          ai                       = simplisticPoker.getAI();
+		boolean         detectsAndExchangedCard  = false;
+		
+		if(ai.exchanged() && ai.exchangeSize() == 1) {
 			detectsAndExchangedCard = true;
 		}
 		assertEquals(true, detectsAndExchangedCard);
