@@ -303,4 +303,11 @@ public class SimplisticPokerAcceptanceTest extends TestCase {
 		
 		assertEquals(true, simplisticPoker.aiWon());
 	}
+	
+	public void testTPBeat() {
+		String          inputPaths               = "./src/main/resources/TPbeat.txt";
+		SimplisticPoker simplisticPoker          = new SimplisticPoker(inputPaths);
+		
+		assertEquals(true, simplisticPoker.aiWon());
+	}
 }
