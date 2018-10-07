@@ -317,4 +317,16 @@ public class SimplisticPokerAcceptanceTest extends TestCase {
 		
 		assertEquals(true, simplisticPoker.aiWon());
 	}
+	
+	public void testComplexOneAway() {
+		String          inputPaths               = "./src/main/resources/complexOneAway.txt";
+		SimplisticPoker simplisticPoker          = new SimplisticPoker(inputPaths);
+		Player          ai                       = simplisticPoker.getAI();
+		boolean         detectsAndExchangedCard  = false;
+		
+		if(ai.exchanged() && ai.exchangeSize() == 1) {
+			detectsAndExchangedCard = true;
+		}
+		assertEquals(true, detectsAndExchangedCard);
+	}
 }
