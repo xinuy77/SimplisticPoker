@@ -282,4 +282,11 @@ public class SimplisticPokerAcceptanceTest extends TestCase {
 		
 		assertEquals(true, simplisticPoker.aiWon());
 	}
+	
+	public void testFBeat() {
+		String          inputPaths               = "./src/main/resources/Fbeat.txt";
+		SimplisticPoker simplisticPoker          = new SimplisticPoker(inputPaths);
+		
+		assertEquals(true, simplisticPoker.aiWon());
+	}
 }
