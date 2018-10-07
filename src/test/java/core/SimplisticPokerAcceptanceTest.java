@@ -63,6 +63,18 @@ public class SimplisticPokerAcceptanceTest extends TestCase {
 		assertEquals(true, SAndHold);
 	}
 	
+	public void testF() {
+		String          inputPaths      = "./src/main/resources/F.txt";
+		SimplisticPoker simplisticPoker = new SimplisticPoker(inputPaths);
+		Player          ai              = simplisticPoker.getAI();
+		boolean         FAndHold        = false;
+		
+		if(ai.getHand().isFlush() && ai.exchangeSize() == 0) {
+			FAndHold = true;
+		}
+		assertEquals(true, FAndHold);
+	}
+	
 	public void testScore1() {
 		String          inputPaths      = "./src/main/resources/bothRF.txt";
 		SimplisticPoker simplisticPoker = new SimplisticPoker(inputPaths);
@@ -133,5 +145,17 @@ public class SimplisticPokerAcceptanceTest extends TestCase {
 		Player          ai              = simplisticPoker.getAI();
 		
 		assertEquals(true, simplisticPoker.aiWon());
+	}
+	
+	public void OneCardAwayRF_AT() {
+		String          inputPaths               = "./src/main/resources/oneCardRF.txt";
+		SimplisticPoker simplisticPoker          = new SimplisticPoker(inputPaths);
+		Player          ai                       = simplisticPoker.getAI();
+		boolean         detectsAndExchangedCard  = false;
+		
+		if(ai.exchanged() && ai.exchangeSize() == 1) {
+			detectsAndExchangedCard = true;
+		}
+		assertEquals(true, detectsAndExchangedCard);
 	}
 }
