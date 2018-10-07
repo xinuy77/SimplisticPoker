@@ -296,4 +296,11 @@ public class SimplisticPokerAcceptanceTest extends TestCase {
 		
 		assertEquals(true, simplisticPoker.aiWon());
 	}
+	
+	public void testTOKBeat() {
+		String          inputPaths               = "./src/main/resources/TOKbeat.txt";
+		SimplisticPoker simplisticPoker          = new SimplisticPoker(inputPaths);
+		
+		assertEquals(true, simplisticPoker.aiWon());
+	}
 }
