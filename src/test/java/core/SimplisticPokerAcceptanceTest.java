@@ -254,4 +254,13 @@ public class SimplisticPokerAcceptanceTest extends TestCase {
 		}
 		assertEquals(true, detectsAndExchangedCard);
 	}
+	
+	public void testRFBeat() {
+		String          inputPaths               = "./src/main/resources/RFbeat.txt";
+		SimplisticPoker simplisticPoker          = new SimplisticPoker(inputPaths);
+		Player          ai                       = simplisticPoker.getAI();
+		boolean         detectsAndExchangedCard  = false;
+		
+		assertEquals(true, simplisticPoker.aiWon());
+	}
 }
