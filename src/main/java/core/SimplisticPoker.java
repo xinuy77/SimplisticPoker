@@ -12,7 +12,7 @@ public class SimplisticPoker {
 	ArrayList<Integer>  aiWon;
 	
 	public static void main(String[] args) {
-		String inputPath = "./src/main/resources/testInput.txt";
+		String          inputPath       = "./src/main/resources/testInput.txt";
 		SimplisticPoker simplisticPoker = new SimplisticPoker(inputPath);
 	}
 	
@@ -25,24 +25,48 @@ public class SimplisticPoker {
 		return true;
 	}
 	
+	public SimplisticPoker(String inputPath, boolean isCucumberTestMode) {
+		initFields();
+		initCardDeck(inputPath);
+		if(!isCucumberTestMode) {
+		
+		}
+	}
+
 	public SimplisticPoker(String inputPath) {
-	                      util            = new Util();
-	                      cardDeck        = new ArrayList<CardDeck>();
-	                      aiWon           = new ArrayList<Integer>();
-	                      evaluator       = new Evaluator();
+		initFields();
+		initCardDeck(inputPath);
+		startEachRound();
+	}
+	
+	public void startEachRound() {
+		for(int i = 0; i < cardDeck.size(); i++) {
+			opponentAndAIDrawsHand(i);
+			System.out.println("----- ROUND " + (i + 1) + " -----");
+			startGame(i);
+			System.out.println("------- END -------");
+		}
+	}
+	
+	private void initCardDeck(String inputPath) {
 		ArrayList<String> inputCardText   = util.readMultipleCardText(inputPath);
 		boolean           cardAlreadyRead = true;
 		for(int i = 0; i < inputCardText.size(); i++) {
 			System.out.println("Input Text:" + inputCardText.get(i));
 			cardDeck.add(new CardDeck(inputCardText.get(i), cardAlreadyRead));
 		}
-		for(int i = 0; i < cardDeck.size(); i++) {
-			opponent = new Player(cardDeck.get(i).drawHand(), false);
-			ai       = new Player(cardDeck.get(i).drawHand(), true);
-			System.out.println("----- ROUND " + (i + 1) + " -----");
-			startGame(i);
-			System.out.println("------- END -------");
-		}
+	}
+	
+	private void initFields() {
+		 util            = new Util();
+         cardDeck        = new ArrayList<CardDeck>();
+         aiWon           = new ArrayList<Integer>();
+         evaluator       = new Evaluator();
+	}
+	
+	public void opponentAndAIDrawsHand(int cardDeckIndex) {
+		opponent = new Player(cardDeck.get(cardDeckIndex).drawHand(), false);
+		ai       = new Player(cardDeck.get(cardDeckIndex).drawHand(), true);
 	}
 	
 	public Player getAI() {
