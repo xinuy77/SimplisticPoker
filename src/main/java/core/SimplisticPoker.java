@@ -29,7 +29,7 @@ public class SimplisticPoker {
 		initFields();
 		initCardDeck(inputPath);
 		if(!isCucumberTestMode) {
-		
+			startEachRound();
 		}
 	}
 
@@ -71,6 +71,10 @@ public class SimplisticPoker {
 	
 	public Player getAI() {
 		return ai;
+	}
+	
+	public Player getOpponent() {
+		return opponent;
 	}
 	
 	public void startGame(int cardDeckIndex) {
