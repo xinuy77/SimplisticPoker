@@ -187,4 +187,284 @@ public class HTBBeatsAIPTest {
 	    assertEquals(simplisticPoker.getAI().getHand().isHighCard(), true);
 	    assertEquals(simplisticPoker.getOpponent().getHand().isStraightFlush(), true);
 	}
+	
+	@Given("^HTB draws FOK card and API draws FH card$")
+	public void htb_draws_FOK_card_and_API_draws_FH_card() throws Throwable {
+		int deckIndex   = 0;
+	    simplisticPoker = new SimplisticPoker(inputPath+"HTB_FOKbeat.txt", isCucumberTestMode);
+	    simplisticPoker.opponentAndAIDrawsHand(deckIndex);
+	    simplisticPoker.startGame(deckIndex);
+	    assertEquals(simplisticPoker.getAI().getHand().isFullHouse(), true);
+	    assertEquals(simplisticPoker.getOpponent().getHand().isFourOfAKind(), true);
+	}
+
+	@Given("^HTB draws FOK card and API draws F card$")
+	public void htb_draws_FOK_card_and_API_draws_F_card() throws Throwable {
+		int deckIndex   = 1;
+	    simplisticPoker = new SimplisticPoker(inputPath+"HTB_FOKbeat.txt", isCucumberTestMode);
+	    simplisticPoker.opponentAndAIDrawsHand(deckIndex);
+	    simplisticPoker.startGame(deckIndex);
+	    assertEquals(simplisticPoker.getAI().getHand().isFlush(), true);
+	    assertEquals(simplisticPoker.getOpponent().getHand().isFourOfAKind(), true);
+	}
+
+	@Given("^HTB draws FOK card and API draws S card$")
+	public void htb_draws_FOK_card_and_API_draws_S_card() throws Throwable {
+		int deckIndex   = 2;
+	    simplisticPoker = new SimplisticPoker(inputPath+"HTB_FOKbeat.txt", isCucumberTestMode);
+	    simplisticPoker.opponentAndAIDrawsHand(deckIndex);
+	    simplisticPoker.startGame(deckIndex);
+	    assertEquals(simplisticPoker.getAI().getHand().isStraight(), true);
+	    assertEquals(simplisticPoker.getOpponent().getHand().isFourOfAKind(), true);
+	}
+
+	@Given("^HTB draws FOK card and API draws TOK card$")
+	public void htb_draws_FOK_card_and_API_draws_TOK_card() throws Throwable {
+		int deckIndex   = 3;
+	    simplisticPoker = new SimplisticPoker(inputPath+"HTB_FOKbeat.txt", isCucumberTestMode);
+	    simplisticPoker.opponentAndAIDrawsHand(deckIndex);
+	    simplisticPoker.startGame(deckIndex);
+	    assertEquals(simplisticPoker.getAI().getHand().isThreeOfAKind(), true);
+	    assertEquals(simplisticPoker.getOpponent().getHand().isFourOfAKind(), true);
+	}
+
+	@Given("^HTB draws FOK card and API draws TP card$")
+	public void htb_draws_FOK_card_and_API_draws_TP_card() throws Throwable {
+		int deckIndex   = 4;
+	    simplisticPoker = new SimplisticPoker(inputPath+"HTB_FOKbeat.txt", isCucumberTestMode);
+	    simplisticPoker.opponentAndAIDrawsHand(deckIndex);
+	    simplisticPoker.startGame(deckIndex);
+	    assertEquals(simplisticPoker.getAI().getHand().isTwoPair(), true);
+	    assertEquals(simplisticPoker.getOpponent().getHand().isFourOfAKind(), true);
+	}
+
+	@Given("^HTB draws FOK card and API draws OP card$")
+	public void htb_draws_FOK_card_and_API_draws_OP_card() throws Throwable {
+		int deckIndex   = 5;
+	    simplisticPoker = new SimplisticPoker(inputPath+"HTB_FOKbeat.txt", isCucumberTestMode);
+	    simplisticPoker.opponentAndAIDrawsHand(deckIndex);
+	    simplisticPoker.startGame(deckIndex);
+	    assertEquals(simplisticPoker.getAI().getHand().isOnePair(), true);
+	    assertEquals(simplisticPoker.getOpponent().getHand().isFourOfAKind(), true);
+	}
+
+	@Given("^HTB draws FOK card and API draws HC card$")
+	public void htb_draws_FOK_card_and_API_draws_HC_card() throws Throwable {
+		int deckIndex   = 6;
+	    simplisticPoker = new SimplisticPoker(inputPath+"HTB_FOKbeat.txt", isCucumberTestMode);
+	    simplisticPoker.opponentAndAIDrawsHand(deckIndex);
+	    simplisticPoker.startGame(deckIndex);
+	    assertEquals(simplisticPoker.getAI().getHand().isHighCard(), true);
+	    assertEquals(simplisticPoker.getOpponent().getHand().isFourOfAKind(), true);
+	}
+	
+	@Given("^HTB draws FH card and API draws F card$")
+	public void htb_draws_FH_card_and_API_draws_F_card() throws Throwable {
+		int deckIndex   = 0;
+	    simplisticPoker = new SimplisticPoker(inputPath+"HTB_FHbeat.txt", isCucumberTestMode);
+	    simplisticPoker.opponentAndAIDrawsHand(deckIndex);
+	    simplisticPoker.startGame(deckIndex);
+	    assertEquals(simplisticPoker.getAI().getHand().isFlush(), true);
+	    assertEquals(simplisticPoker.getOpponent().getHand().isFullHouse(), true);
+	}
+
+	@Given("^HTB draws FH card and API draws S card$")
+	public void htb_draws_FH_card_and_API_draws_S_card() throws Throwable {
+		int deckIndex   = 1;
+	    simplisticPoker = new SimplisticPoker(inputPath+"HTB_FHbeat.txt", isCucumberTestMode);
+	    simplisticPoker.opponentAndAIDrawsHand(deckIndex);
+	    simplisticPoker.startGame(deckIndex);
+	    assertEquals(simplisticPoker.getAI().getHand().isStraight(), true);
+	    assertEquals(simplisticPoker.getOpponent().getHand().isFullHouse(), true);
+	}
+
+	@Given("^HTB draws FH card and API draws TOK card$")
+	public void htb_draws_FH_card_and_API_draws_TOK_card() throws Throwable {
+		int deckIndex   = 2;
+	    simplisticPoker = new SimplisticPoker(inputPath+"HTB_FHbeat.txt", isCucumberTestMode);
+	    simplisticPoker.opponentAndAIDrawsHand(deckIndex);
+	    simplisticPoker.startGame(deckIndex);
+	    assertEquals(simplisticPoker.getAI().getHand().isThreeOfAKind(), true);
+	    assertEquals(simplisticPoker.getOpponent().getHand().isFullHouse(), true);
+	}
+
+	@Given("^HTB draws FH card and API draws TP card$")
+	public void htb_draws_FH_card_and_API_draws_TP_card() throws Throwable {
+		int deckIndex   = 3;
+	    simplisticPoker = new SimplisticPoker(inputPath+"HTB_FHbeat.txt", isCucumberTestMode);
+	    simplisticPoker.opponentAndAIDrawsHand(deckIndex);
+	    simplisticPoker.startGame(deckIndex);
+	    assertEquals(simplisticPoker.getAI().getHand().isTwoPair(), true);
+	    assertEquals(simplisticPoker.getOpponent().getHand().isFullHouse(), true);
+	}
+
+	@Given("^HTB draws FH card and API draws OP card$")
+	public void htb_draws_FH_card_and_API_draws_OP_card() throws Throwable {
+		int deckIndex   = 4;
+	    simplisticPoker = new SimplisticPoker(inputPath+"HTB_FHbeat.txt", isCucumberTestMode);
+	    simplisticPoker.opponentAndAIDrawsHand(deckIndex);
+	    simplisticPoker.startGame(deckIndex);
+	    assertEquals(simplisticPoker.getAI().getHand().isOnePair(), true);
+	    assertEquals(simplisticPoker.getOpponent().getHand().isFullHouse(), true);
+	}
+
+	@Given("^HTB draws FH card and API draws HC card$")
+	public void htb_draws_FH_card_and_API_draws_HC_card() throws Throwable {
+		int deckIndex   = 5;
+	    simplisticPoker = new SimplisticPoker(inputPath+"HTB_FHbeat.txt", isCucumberTestMode);
+	    simplisticPoker.opponentAndAIDrawsHand(deckIndex);
+	    simplisticPoker.startGame(deckIndex);
+	    assertEquals(simplisticPoker.getAI().getHand().isHighCard(), true);
+	    assertEquals(simplisticPoker.getOpponent().getHand().isFullHouse(), true);
+	}
+	
+	@Given("^HTB draws F card and API draws S card$")
+	public void htb_draws_F_card_and_API_draws_S_card() throws Throwable {
+		int deckIndex   = 0;
+	    simplisticPoker = new SimplisticPoker(inputPath+"HTB_Fbeat.txt", isCucumberTestMode);
+	    simplisticPoker.opponentAndAIDrawsHand(deckIndex);
+	    simplisticPoker.startGame(deckIndex);
+	    assertEquals(simplisticPoker.getAI().getHand().isStraight(), true);
+	    assertEquals(simplisticPoker.getOpponent().getHand().isFlush(), true);
+	}
+
+	@Given("^HTB draws F card and API draws TOK card$")
+	public void htb_draws_F_card_and_API_draws_TOK_card() throws Throwable {
+		int deckIndex   = 1;
+	    simplisticPoker = new SimplisticPoker(inputPath+"HTB_Fbeat.txt", isCucumberTestMode);
+	    simplisticPoker.opponentAndAIDrawsHand(deckIndex);
+	    simplisticPoker.startGame(deckIndex);
+	    assertEquals(simplisticPoker.getAI().getHand().isThreeOfAKind(), true);
+	    assertEquals(simplisticPoker.getOpponent().getHand().isFlush(), true);
+	}
+
+	@Given("^HTB draws F card and API draws TP card$")
+	public void htb_draws_F_card_and_API_draws_TP_card() throws Throwable {
+		int deckIndex   = 2;
+	    simplisticPoker = new SimplisticPoker(inputPath+"HTB_Fbeat.txt", isCucumberTestMode);
+	    simplisticPoker.opponentAndAIDrawsHand(deckIndex);
+	    simplisticPoker.startGame(deckIndex);
+	    assertEquals(simplisticPoker.getAI().getHand().isTwoPair(), true);
+	    assertEquals(simplisticPoker.getOpponent().getHand().isFlush(), true);
+	}
+
+	@Given("^HTB draws F card and API draws OP card$")
+	public void htb_draws_F_card_and_API_draws_OP_card() throws Throwable {
+		int deckIndex   = 3;
+	    simplisticPoker = new SimplisticPoker(inputPath+"HTB_Fbeat.txt", isCucumberTestMode);
+	    simplisticPoker.opponentAndAIDrawsHand(deckIndex);
+	    simplisticPoker.startGame(deckIndex);
+	    assertEquals(simplisticPoker.getAI().getHand().isOnePair(), true);
+	    assertEquals(simplisticPoker.getOpponent().getHand().isFlush(), true);
+	}
+
+	@Given("^HTB draws F card and API draws HC card$")
+	public void htb_draws_F_card_and_API_draws_HC_card() throws Throwable {
+		int deckIndex   = 4;
+	    simplisticPoker = new SimplisticPoker(inputPath+"HTB_Fbeat.txt", isCucumberTestMode);
+	    simplisticPoker.opponentAndAIDrawsHand(deckIndex);
+	    simplisticPoker.startGame(deckIndex);
+	    assertEquals(simplisticPoker.getAI().getHand().isHighCard(), true);
+	    assertEquals(simplisticPoker.getOpponent().getHand().isFlush(), true);
+	}
+	
+	@Given("^HTB draws S card and API draws TOK card$")
+	public void htb_draws_S_card_and_API_draws_TOK_card() throws Throwable {
+		int deckIndex   = 0;
+	    simplisticPoker = new SimplisticPoker(inputPath+"HTB_Sbeat.txt", isCucumberTestMode);
+	    simplisticPoker.opponentAndAIDrawsHand(deckIndex);
+	    simplisticPoker.startGame(deckIndex);
+	    assertEquals(simplisticPoker.getAI().getHand().isThreeOfAKind(), true);
+	    assertEquals(simplisticPoker.getOpponent().getHand().isStraight(), true);
+	}
+
+	@Given("^HTB draws S card and API draws TP card$")
+	public void htb_draws_S_card_and_API_draws_TP_card() throws Throwable {
+		int deckIndex   = 1;
+	    simplisticPoker = new SimplisticPoker(inputPath+"HTB_Sbeat.txt", isCucumberTestMode);
+	    simplisticPoker.opponentAndAIDrawsHand(deckIndex);
+	    simplisticPoker.startGame(deckIndex);
+	    assertEquals(simplisticPoker.getAI().getHand().isTwoPair(), true);
+	    assertEquals(simplisticPoker.getOpponent().getHand().isStraight(), true);
+	}
+
+	@Given("^HTB draws S card and API draws OP card$")
+	public void htb_draws_S_card_and_API_draws_OP_card() throws Throwable {
+		int deckIndex   = 2;
+	    simplisticPoker = new SimplisticPoker(inputPath+"HTB_Sbeat.txt", isCucumberTestMode);
+	    simplisticPoker.opponentAndAIDrawsHand(deckIndex);
+	    simplisticPoker.startGame(deckIndex);
+	    assertEquals(simplisticPoker.getAI().getHand().isOnePair(), true);
+	    assertEquals(simplisticPoker.getOpponent().getHand().isStraight(), true);
+	}
+
+	@Given("^HTB draws S card and API draws HC card$")
+	public void htb_draws_S_card_and_API_draws_HC_card() throws Throwable {
+		int deckIndex   = 3;
+	    simplisticPoker = new SimplisticPoker(inputPath+"HTB_Sbeat.txt", isCucumberTestMode);
+	    simplisticPoker.opponentAndAIDrawsHand(deckIndex);
+	    simplisticPoker.startGame(deckIndex);
+	    assertEquals(simplisticPoker.getAI().getHand().isHighCard(), true);
+	    assertEquals(simplisticPoker.getOpponent().getHand().isStraight(), true);
+	}
+	
+	@Given("^HTB draws TOK card and API draws TP card$")
+	public void htb_draws_TOK_card_and_API_draws_TP_card() throws Throwable {
+		int deckIndex   = 0;
+	    simplisticPoker = new SimplisticPoker(inputPath+"HTB_TOKbeat.txt", isCucumberTestMode);
+	    simplisticPoker.opponentAndAIDrawsHand(deckIndex);
+	    simplisticPoker.startGame(deckIndex);
+	    assertEquals(simplisticPoker.getAI().getHand().isTwoPair(), true);
+	    assertEquals(simplisticPoker.getOpponent().getHand().isThreeOfAKind(), true);
+	}
+
+	@Given("^HTB draws TOK card and API draws OP card$")
+	public void htb_draws_TOK_card_and_API_draws_OP_card() throws Throwable {
+		int deckIndex   = 1;
+	    simplisticPoker = new SimplisticPoker(inputPath+"HTB_TOKbeat.txt", isCucumberTestMode);
+	    simplisticPoker.opponentAndAIDrawsHand(deckIndex);
+	    simplisticPoker.startGame(deckIndex);
+	    assertEquals(simplisticPoker.getAI().getHand().isOnePair(), true);
+	    assertEquals(simplisticPoker.getOpponent().getHand().isThreeOfAKind(), true);
+	}
+
+	@Given("^HTB draws TOK card and API draws HC card$")
+	public void htb_draws_TOK_card_and_API_draws_HC_card() throws Throwable {
+		int deckIndex   = 2;
+	    simplisticPoker = new SimplisticPoker(inputPath+"HTB_TOKbeat.txt", isCucumberTestMode);
+	    simplisticPoker.opponentAndAIDrawsHand(deckIndex);
+	    simplisticPoker.startGame(deckIndex);
+	    assertEquals(simplisticPoker.getAI().getHand().isHighCard(), true);
+	    assertEquals(simplisticPoker.getOpponent().getHand().isThreeOfAKind(), true);
+	}
+	
+	@Given("^HTB draws TP card and API draws OP card$")
+	public void htb_draws_TP_card_and_API_draws_OP_card() throws Throwable {
+		int deckIndex   = 0;
+	    simplisticPoker = new SimplisticPoker(inputPath+"HTB_TPbeat.txt", isCucumberTestMode);
+	    simplisticPoker.opponentAndAIDrawsHand(deckIndex);
+	    simplisticPoker.startGame(deckIndex);
+	    assertEquals(simplisticPoker.getAI().getHand().isOnePair(), true);
+	    assertEquals(simplisticPoker.getOpponent().getHand().isTwoPair(), true);
+	}
+
+	@Given("^HTB draws TP card and API draws HC card$")
+	public void htb_draws_TP_card_and_API_draws_HC_card() throws Throwable {
+		int deckIndex   = 1;
+	    simplisticPoker = new SimplisticPoker(inputPath+"HTB_TPbeat.txt", isCucumberTestMode);
+	    simplisticPoker.opponentAndAIDrawsHand(deckIndex);
+	    simplisticPoker.startGame(deckIndex);
+	    assertEquals(simplisticPoker.getAI().getHand().isHighCard(), true);
+	    assertEquals(simplisticPoker.getOpponent().getHand().isTwoPair(), true);
+	}
+	
+	@Given("^HTB draws OP card and API draws HC card$")
+	public void htb_draws_OP_card_and_API_draws_HC_card() throws Throwable {
+		int deckIndex   = 0;
+	    simplisticPoker = new SimplisticPoker(inputPath+"HTB_OPbeat.txt", isCucumberTestMode);
+	    simplisticPoker.opponentAndAIDrawsHand(deckIndex);
+	    simplisticPoker.startGame(deckIndex);
+	    assertEquals(simplisticPoker.getAI().getHand().isHighCard(), true);
+	    assertEquals(simplisticPoker.getOpponent().getHand().isOnePair(), true);
+	}
 }
