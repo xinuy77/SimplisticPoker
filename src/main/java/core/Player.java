@@ -156,7 +156,19 @@ public class Player {
 			}
 		}
 		if(pairCounter.containsValue(3) && pairCounter.containsValue(1)) {
-			exchangeRank = util.getKeyByValue(pairCounter, 1);
+			String rank_1 = util.getKeyByValue(pairCounter, 1);
+			int numRank_1 = util.toIntRank(rank_1);
+			pairCounter.remove(rank_1);
+			String rank_2 = util.getKeyByValue(pairCounter, 1);
+			int numRank_2 = util.toIntRank(rank_2);
+			pairCounter.remove(rank_2);
+			if(numRank_1 < numRank_2) {
+				exchangeRank = rank_1;
+			}
+			else {
+				exchangeRank = rank_2;
+			}
+			//exchangeRank = util.getKeyByValue(pairCounter, 1);
 		}
 		else if(pairCounter.containsValue(2)) {
 			String twoPairRank = util.getKeyByValue(pairCounter, 2);
