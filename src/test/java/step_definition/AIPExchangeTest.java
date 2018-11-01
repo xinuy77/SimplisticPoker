@@ -96,4 +96,18 @@ public class AIPExchangeTest {
 	public void aip_has_FH() throws Throwable {
 	    assertEquals(true, simplisticPoker.getAI().getHand().isFullHouse());
 	}
+	
+	@Given("^HTB draws card and AIP draws TOK from deck without TOK$")
+	public void htb_draws_card_and_AIP_draws_TOK_from_deck_without_TOK() throws Throwable {
+		int deckIndex   = 5;
+	    simplisticPoker = new SimplisticPoker(inputPath+"exchange.txt", isCucumberTestMode);
+	    simplisticPoker.opponentAndAIDrawsHand(deckIndex);
+	    simplisticPoker.startGame(deckIndex);
+	}
+
+	@Given("^AIP does not have FH$")
+	public void aip_does_not_have_FH() throws Throwable {
+	    assertEquals(false, simplisticPoker.getAI().getHand().isFullHouse());
+	}
+
 }

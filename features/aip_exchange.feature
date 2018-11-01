@@ -29,3 +29,9 @@ Feature: AIP exchanges in game
 		And AIP exchanges one card
 		And AIP has FH
 		Then AIP wins HTB
+		
+	Scenario: AIP has TOK and exchanges lowest rank card and loses without FH
+		Given HTB draws card and AIP draws TOK from deck without TOK
+		And AIP exchanges one card
+		And AIP does not have FH
+		Then AIP loses HTB
