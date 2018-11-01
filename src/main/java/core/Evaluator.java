@@ -143,11 +143,12 @@ public class Evaluator {
 				continue;
 			}
 			String curRank = pair.getKey();
+			
 			if(highestRank == null) {
 				highestRank = curRank;
 				continue;
 			}
-			if(util.toIntRank(highestRank) < util.toIntSuit(curRank)) {
+			if(util.toIntRank(highestRank) < util.toIntRank(curRank)) {
 				highestRank = curRank;
 			}
 		}
