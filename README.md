@@ -1,5 +1,5 @@
 # SimplisticPoker
-4004 A1   
+4004 A1, A2
 
 ## Environment
 - JavaSE 1.7
@@ -19,4 +19,9 @@
 ### Acceptance Test Execution
 - Every input is located at src/main/resources
 1. open SimplisticPokerAcceptanceTest class
+2. execute with JUnit
+
+### Cucumber Test Execution
+- Every input is located at src/main/resources
+1. open CucumberRunner class
 2. execute with JUnit
