@@ -25,6 +25,11 @@ public class SimplisticPoker {
 		return true;
 	}
 	
+	public SimplisticPoker(ArrayList<String> inputCardText) {
+		initFields();
+		initCardDeck(inputCardText);
+	}
+	
 	public SimplisticPoker(String inputPath, boolean isCucumberTestMode) {
 		initFields();
 		initCardDeck(inputPath);
@@ -57,6 +62,14 @@ public class SimplisticPoker {
 		}
 	}
 	
+	private void initCardDeck(ArrayList<String> inputCardText) {
+		boolean           cardAlreadyRead = true;
+		for(int i = 0; i < inputCardText.size(); i++) {
+			System.out.println("Input Text:" + inputCardText.get(i));
+			cardDeck.add(new CardDeck(inputCardText.get(i), cardAlreadyRead));
+		}
+	}
+	
 	private void initFields() {
 		 util            = new Util();
          cardDeck        = new ArrayList<CardDeck>();
@@ -65,7 +78,15 @@ public class SimplisticPoker {
 	}
 	
 	public void opponentAndAIDrawsHand(int cardDeckIndex) {
+		opponentDrawHand(cardDeckIndex);
+		aiDrawHand(cardDeckIndex);
+	}
+	
+	public void opponentDrawHand(int cardDeckIndex) {
 		opponent = new Player(cardDeck.get(cardDeckIndex).drawHand(), false);
+	}
+	
+	public void aiDrawHand(int cardDeckIndex) {
 		ai       = new Player(cardDeck.get(cardDeckIndex).drawHand(), true);
 	}
 	
