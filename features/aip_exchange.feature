@@ -18,7 +18,7 @@ Feature: AIP exchanges in game
 		And AIP has SF
 		Then AIP wins HTB
 		
-	Scenario: AIP is one card away SF and exchanges that card and wins with SF
+	Scenario: AIP is one card away SF and exchanges that card and loses with SF
 		Given HTB draws card and AIP draws one card away SF from deck without SF 
 		And AIP exchanges one card
 		And AIP does not have SF
