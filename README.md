@@ -1,5 +1,4 @@
 # SimplisticPoker
-4004 A1, A2
 
 ## Environment
 - JavaSE 1.7
